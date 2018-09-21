@@ -129,17 +129,54 @@ TIM_HandleTypeDef htim4;
 		// 						  			0x3E			// reserved for production tests
 		// 						  			0x3F			// reserved for production tests
 		
-//PCD_Command 
-		uint8_t PCD_Idle				= 0x00;		// no action, cancels current command execution
-		uint8_t PCD_Mem					= 0x01;		// stores 25 bytes into the internal buffer
-		uint8_t PCD_GenerateRandomID	= 0x02;		// generates a 10-byte random ID number
-		uint8_t PCD_CalcCRC				= 0x03;		// activates the CRC coprocessor or performs a self-test
-		uint8_t PCD_Transmit			= 0x04;		// transmits data from the FIFO buffer
-		uint8_t PCD_NoCmdChange			= 0x07;		// no command change, can be used to modify the CommandReg register bits without affecting the command, for example, the PowerDown bit
-		uint8_t PCD_Receive				= 0x08;		// activates the receiver circuits
-		uint8_t PCD_Transceive 			= 0x0C;		// transmits data from FIFO buffer to antenna and automatically activates the receiver after transmission
-		uint8_t PCD_MFAuthent 			= 0x0E;		// performs the MIFARE standard authentication as a reader
-		uint8_t PCD_SoftReset			= 0x0F;		// resets the MFRC522
+//PCD_Command. Estos son los comandos al lector. 
+	uint8_t PCD_Idle				= 0x00;		// no action, cancels current command execution
+	uint8_t PCD_Mem					= 0x01;		// stores 25 bytes into the internal buffer
+	uint8_t PCD_GenerateRandomID	= 0x02;		// generates a 10-byte random ID number
+	uint8_t PCD_CalcCRC				= 0x03;		// activates the CRC coprocessor or performs a self-test
+	uint8_t PCD_Transmit			= 0x04;		// transmits data from the FIFO buffer
+	uint8_t PCD_NoCmdChange			= 0x07;		// no command change, can be used to modify the CommandReg register bits without affecting the command, for example, the PowerDown bit
+	uint8_t PCD_Receive				= 0x08;		// activates the receiver circuits
+	uint8_t PCD_Transceive 			= 0x0C;		// transmits data from FIFO buffer to antenna and automatically activates the receiver after transmission
+	uint8_t PCD_MFAuthent 			= 0x0E;		// performs the MIFARE standard authentication as a reader
+	uint8_t PCD_SoftReset			= 0x0F;		// resets the MFRC522
+
+//Posibles estados
+	uint8_t STATUS_OK	= 0x00	;	// Success
+	uint8_t STATUS_ERROR	= 0x01		;	// Error in communication
+	uint8_t STATUS_COLLISION	= 0x02	;	// Collission detected
+	uint8_t STATUS_TIMEOUT	= 0x03		;	// Timeout in communication.
+	uint8_t STATUS_NO_ROOM	= 0x04		;	// A buffer is not big enough.
+	uint8_t STATUS_INTERNAL_ERROR	 = 0x05;	// Internal error in the code. Should not happen ;-)
+	uint8_t STATUS_INVALID		= 0x06	;	// Invalid argument.
+	uint8_t STATUS_CRC_WRONG	= 0x07	;	// The CRC_A does not match
+	uint8_t STATUS_MIFARE_NACK = 0xff;	// A MIFARE PICC responded with NAK.
+	
+//RFID_CMD. Estos son los comandos a las tarjetas propiamente dichas	
+	// The commands used by the PCD to manage communication with several PICCs (ISO 14443-3, Type A, section 6.4)
+	uint8_t RFID_CMD_REQA			= 0x26;		// REQuest command, Type A. Invites PICCs in state IDLE to go to READY and prepare for anticollision or selection. 7 bit frame.
+	uint8_t RFID_CMD_WUPA			= 0x52;		// Wake-UP command, Type A. Invites PICCs in state IDLE and HALT to go to READY(*) and prepare for anticollision or selection. 7 bit frame.
+	uint8_t RFID_CMD_CT				= 0x88;		// Cascade Tag. Not really a command, but used during anti collision.
+	uint8_t RFID_CMD_SEL_CL1		= 0x93;		// Anti collision/Select, Cascade Level 1
+	uint8_t RFID_CMD_SEL_CL2		= 0x95;		// Anti collision/Select, Cascade Level 2
+	uint8_t RFID_CMD_SEL_CL3		= 0x97;		// Anti collision/Select, Cascade Level 3
+	uint8_t RFID_CMD_HLTA			= 0x50;		// HaLT command, Type A. Instructs an ACTIVE PICC to go to state HALT.
+	uint8_t RFID_CMD_RATS           = 0xE0;     // Request command for Answer To Reset.
+	// The commands used for MIFARE Classic (from http://www.mouser.com/ds/2/302/MF1S503x-89574.pdf, Section 9)
+	// Use PCD_MFAuthent to authenticate access to a sector, then use these commands to read/write/modify the blocks on the sector.
+	// The read/write commands can also be used for MIFARE Ultralight.
+	uint8_t RFID_CMD_MF_AUTH_KEY_A	= 0x60;		// Perform authentication with Key A
+	uint8_t RFID_CMD_MF_AUTH_KEY_B	= 0x61;		// Perform authentication with Key B
+	uint8_t RFID_CMD_MF_READ		= 0x30;		// Reads one 16 byte block from the authenticated sector of the PICC. Also used for MIFARE Ultralight.
+	uint8_t RFID_CMD_MF_WRITE		= 0xA0;		// Writes one 16 byte block to the authenticated sector of the PICC. Called "COMPATIBILITY WRITE" for MIFARE Ultralight.
+	uint8_t RFID_CMD_MF_DECREMENT	= 0xC0;		// Decrements the contents of a block and stores the result in the internal data register.
+	uint8_t RFID_CMD_MF_INCREMENT	= 0xC1;		// Increments the contents of a block and stores the result in the internal data register.
+	uint8_t RFID_CMD_MF_RESTORE		= 0xC2;		// Reads the contents of a block into the internal data register.
+	uint8_t RFID_CMD_MF_TRANSFER	= 0xB0;		// Writes the contents of the internal data register to a block.
+	// The commands used for MIFARE Ultralight (from http://www.nxp.com/documents/data_sheet/MF0ICU1.pdf, Section 8.6)
+	// The PICC_CMD_MF_READ and PICC_CMD_MF_WRITE can also be used for MIFARE Ultralight.
+	uint8_t RFID_CMD_UL_WRITE		= 0xA2;		// Writes one 4 byte page to the PICC.
+
 
 int flag;
 /* USER CODE END PV */
@@ -160,6 +197,17 @@ void RFID_Reset(void);
 void RFID_WriteRegister(uint8_t, uint8_t);
 void RFID_AntennaOn(void);
 uint8_t RFID_ReadRegister(uint8_t);
+uint8_t RFID_IsNewCardPresent(void);
+uint8_t RFID_RequestA(uint8_t*,uint8_t*);
+uint8_t RFID_REQA_or_WUPA(uint8_t,uint8_t*, uint8_t*);
+void RFID_ClearRegisterBitMask(uint8_t,uint8_t);
+uint8_t RFID_TransceiveData(uint8_t*,uint8_t,uint8_t*,uint8_t*,uint8_t*,uint8_t,uint8_t);
+uint8_t RFID_CommunicateWithPICC(uint8_t,uint8_t,uint8_t*,uint8_t,uint8_t*,uint8_t*,uint8_t*,uint8_t,uint8_t);
+
+
+
+int SPI_Send(uint8_t data, uint8_t read);
+
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -443,22 +491,224 @@ void RFID_Reset(void){
 }// Termina RFID_Reset
 
 void RFID_WriteRegister(uint8_t Reg, uint8_t Value){
-	SPI.beginTransaction(SPISettings(MFRC522_SPICLOCK, MSBFIRST, SPI_MODE0));	// Set the settings to work with SPI bus
-	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_4,GPIO_PIN_RESET);		// Select slave
-	SPI.transfer(reg);						// MSB == 0 is for writing. LSB is not used in address. Datasheet section 8.1.2.3.
-	SPI.transfer(value);
-	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_4,GPIO_PIN_SET);		// Release slave again
-	SPI.endTransaction(); // Stop using the SPI bus
+	// Para que funcione debe estar configurado el SPI como MSB, CPOL y CPHA = 0, y a una velocidad de clock menor a 10Mbps
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_4,GPIO_PIN_RESET);			// Select slave
+	SPI_Send(Reg,0);								// MSB == 0 is for writing. LSB is not used in address. Datasheet section 8.1.2.3.
+	SPI_Send(Value,0);
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_4,GPIO_PIN_SET);				// Release slave again
+	
 } // Termina RFID_WriteRegister
 
 uint8_t RFID_ReadRegister(uint8_t Reg){
-	
+	uint8_t value;
+	// Para que funcione debe estar configurado el SPI como MSB, CPOL y CPHA = 0, y a una velocidad de clock menor a 10Mbps
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_4,GPIO_PIN_RESET);			// Select slave
+	value = SPI_Send(Reg,1);							// Read the value back. Send 0 to stop reading.
+	HAL_GPIO_WritePin(GPIOC,GPIO_PIN_4,GPIO_PIN_SET);				// Release slave again
+	return value;
 } // Termina RFID_ReadRegister
 
 
 void RFID_AntennaOn(void){
-	
+	uint8_t value = RFID_ReadRegister(TxControlReg);
+	if ((value & 0x03) != 0x03) {
+		RFID_WriteRegister(TxControlReg, value | 0x03);
+	}
 } //Termina RFID_AntennaOn
+
+uint8_t RFID_IsNewCardPresent() {
+	uint8_t	bufferATQA[2];
+	uint8_t bufferSize = sizeof(bufferATQA);
+
+	// Reset baud rates
+	RFID_WriteRegister(TxModeReg, 0x00);
+	RFID_WriteRegister(RxModeReg, 0x00);
+	// Reset ModWidthReg
+	RFID_WriteRegister(ModWidthReg, 0x26);
+
+	int result = RFID_RequestA(bufferATQA, &bufferSize); //Aca le esta pasando dos punteros en realidad, porque bufferATQA
+	return result;
+} // Termina RFID_IsNewCardPresent()
+
+uint8_t RFID_RequestA(uint8_t *bufferATQA,uint8_t *bufferSize	///< The buffer to store the ATQA (Answer to request) in //< Buffer size, at least two bytes. Also number of bytes returned if STATUS_OK.
+										) {
+	return RFID_REQA_or_WUPA(RFID_CMD_REQA, bufferATQA, bufferSize); //Aca tambien me estoy refiriendo a las posiciones de memoria y esta bien que utilice asi la funcion.
+} // Termina RFID_RequestA()
+
+uint8_t RFID_REQA_or_WUPA(uint8_t command,uint8_t *bufferATQA,uint8_t *bufferSize) { ///< The command to send - PICC_CMD_REQA or PICC_CMD_WUPA ///< The buffer to store the ATQA (Answer to request) in ///< Buffer size, at least two bytes. Also number of bytes returned if STATUS_OK.
+	
+	uint8_t validBits;
+	uint8_t status;
+	
+	if (bufferATQA == NULL || *bufferSize < 2) {	// The ATQA response is 2 bytes long.
+		return STATUS_NO_ROOM;
+	}
+	RFID_ClearRegisterBitMask(CollReg, 0x80);		// ValuesAfterColl=1 => Bits received after collision are cleared.
+	validBits = 7;									// For REQA and WUPA we need the short frame format - transmit only 7 bits of the last (and only) byte. TxLastBits = BitFramingReg[2..0]
+	status = RFID_TransceiveData(&command, 1, bufferATQA, bufferSize, &validBits);
+	if (status != STATUS_OK) {
+		return status;
+	}
+	if (*bufferSize != 2 || validBits != 0) {		// ATQA must be exactly 16 bits.
+		return STATUS_ERROR;
+	}
+	return STATUS_OK;
+	
+} // Termina PICC_REQA_or_WUPA()
+
+void RFID_ClearRegisterBitMask(uint8_t reg,uint8_t mask) { ///< The register to update. One of the PCD_Register enums.	///< The bits to clear.
+	uint8_t tmp;
+	tmp = RFID_ReadRegister(reg);
+	RFID_WriteRegister(reg, tmp & (~mask));		// clear bit mask
+} // Termina PCD_ClearRegisterBitMask()
+
+uint8_t RFID_TransceiveData(uint8_t *sendData,uint8_t sendLen,uint8_t *backData,uint8_t *backLen,uint8_t *validBits,uint8_t rxAlign,uint8_t checkCRC) {
+	/*											byte *sendData,		///< Pointer to the data to transfer to the FIFO.
+													byte sendLen,		///< Number of bytes to transfer to the FIFO.
+													byte *backData,		///< NULL or pointer to buffer if data should be read back after executing the command.
+													byte *backLen,		///< In: Max number of bytes to write to *backData. Out: The number of bytes returned.
+													byte *validBits,	///< In/Out: The number of valid bits in the last byte. 0 for 8 valid bits. Default NULL.
+													byte rxAlign,		///< In: Defines the bit position in backData[0] for the first bit received. Default 0.
+													bool checkCRC		///< In: True => The last two bytes of the response is assumed to be a CRC_A that must be validated.*/
+	uint8_t waitIRq = 0x30;		// RxIRq and IdleIRq
+	return RFID_CommunicateWithPICC(PCD_Transceive, waitIRq, sendData, sendLen, backData, backLen, validBits, rxAlign, checkCRC);
+} // Termina PCD_TransceiveData()
+
+uint8_t RFID_CommunicateWithPICC(uint8_t command,uint8_t waitIRq,uint8_t *sendData,uint8_t sendLen,uint8_t *backData,uint8_t *backLen,uint8_t *validBits,uint8_t rxAlign,uint8_t checkCRC) {
+	/*												byte command,		///< The command to execute. One of the PCD_Command enums.
+														byte waitIRq,		///< The bits in the ComIrqReg register that signals successful completion of the command.
+														byte *sendData,		///< Pointer to the data to transfer to the FIFO.
+														byte sendLen,		///< Number of bytes to transfer to the FIFO.
+														byte *backData,		///< NULL or pointer to buffer if data should be read back after executing the command.
+														byte *backLen,		///< In: Max number of bytes to write to *backData. Out: The number of bytes returned.
+														byte *validBits,	///< In/Out: The number of valid bits in the last byte. 0 for 8 valid bits.
+														byte rxAlign,		///< In: Defines the bit position in backData[0] for the first bit received. Default 0.
+														bool checkCRC		///< In: True => The last two bytes of the response is assumed to be a CRC_A that must be validated.*/
+	// Prepare values for BitFramingReg
+	uint8_t txLastBits = validBits ? *validBits : 0;
+	uint8_t bitFraming = (rxAlign << 4) + txLastBits;		// RxAlign = BitFramingReg[6..4]. TxLastBits = BitFramingReg[2..0]
+	
+	RFID_WriteRegister(CommandReg, PCD_Idle);			// Stop any active command.
+	RFID_WriteRegister(ComIrqReg, 0x7F);					// Clear all seven interrupt request bits
+	RFID_WriteRegister(FIFOLevelReg, 0x80);				// FlushBuffer = 1, FIFO initialization
+	RFID_WriteRegister(FIFODataReg, sendLen, sendData);	// Write sendData to the FIFO
+	RFID_WriteRegister(BitFramingReg, bitFraming);		// Bit adjustments
+	RFID_WriteRegister(CommandReg, command);				// Execute the command
+	if (command == PCD_Transceive) {
+		PCD_SetRegisterBitMask(BitFramingReg, 0x80);	// StartSend=1, transmission of data starts
+	}
+	
+	// Wait for the command to complete.
+	// In PCD_Init() we set the TAuto flag in TModeReg. This means the timer automatically starts when the PCD stops transmitting.
+	// Each iteration of the do-while-loop takes 17.86µs.
+	// TODO check/modify for other architectures than Arduino Uno 16bit
+	uint16_t i;
+	for (i = 2000; i > 0; i--) {
+		byte n = PCD_ReadRegister(ComIrqReg);	// ComIrqReg[7..0] bits are: Set1 TxIRq RxIRq IdleIRq HiAlertIRq LoAlertIRq ErrIRq TimerIRq
+		if (n & waitIRq) {					// One of the interrupts that signal success has been set.
+			break;
+		}
+		if (n & 0x01) {						// Timer interrupt - nothing received in 25ms
+			return STATUS_TIMEOUT;
+		}
+	}
+	// 35.7ms and nothing happend. Communication with the MFRC522 might be down.
+	if (i == 0) {
+		return STATUS_TIMEOUT;
+	}
+	
+	// Stop now if any errors except collisions were detected.
+	byte errorRegValue = PCD_ReadRegister(ErrorReg); // ErrorReg[7..0] bits are: WrErr TempErr reserved BufferOvfl CollErr CRCErr ParityErr ProtocolErr
+	if (errorRegValue & 0x13) {	 // BufferOvfl ParityErr ProtocolErr
+		return STATUS_ERROR;
+	}
+  
+	byte _validBits = 0;
+	
+	// If the caller wants data back, get it from the MFRC522.
+	if (backData && backLen) {
+		byte n = PCD_ReadRegister(FIFOLevelReg);	// Number of bytes in the FIFO
+		if (n > *backLen) {
+			return STATUS_NO_ROOM;
+		}
+		*backLen = n;											// Number of bytes returned
+		PCD_ReadRegister(FIFODataReg, n, backData, rxAlign);	// Get received data from FIFO
+		_validBits = PCD_ReadRegister(ControlReg) & 0x07;		// RxLastBits[2:0] indicates the number of valid bits in the last received byte. If this value is 000b, the whole byte is valid.
+		if (validBits) {
+			*validBits = _validBits;
+		}
+	}
+	
+	// Tell about collisions
+	if (errorRegValue & 0x08) {		// CollErr
+		return STATUS_COLLISION;
+	}
+	
+	// Perform CRC_A validation if requested.
+	if (backData && backLen && checkCRC) {
+		// In this case a MIFARE Classic NAK is not OK.
+		if (*backLen == 1 && _validBits == 4) {
+			return STATUS_MIFARE_NACK;
+		}
+		// We need at least the CRC_A value and all 8 bits of the last byte must be received.
+		if (*backLen < 2 || _validBits != 0) {
+			return STATUS_CRC_WRONG;
+		}
+		// Verify CRC_A - do our own calculation and store the control in controlBuffer.
+		byte controlBuffer[2];
+		MFRC522::StatusCode status = PCD_CalculateCRC(&backData[0], *backLen - 2, &controlBuffer[0]);
+		if (status != STATUS_OK) {
+			return status;
+		}
+		if ((backData[*backLen - 2] != controlBuffer[0]) || (backData[*backLen - 1] != controlBuffer[1])) {
+			return STATUS_CRC_WRONG;
+		}
+	}
+	
+	return STATUS_OK;
+} // End PCD_CommunicateWithPICC()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int SPI_Send(uint8_t data, uint8_t leer){
+	
+	uint8_t spi_tx_buffer[2];
+	uint8_t spi_rx_buffer[2];
+	
+	if(leer){
+		spi_tx_buffer[0] = data|READ;
+		HAL_SPI_Transmit(&hspi1,(uint8_t*) spi_tx_buffer,(uint16_t) 1,(uint32_t) 5);
+		HAL_SPI_Receive(&hspi1,(uint8_t*) spi_rx_buffer,(uint16_t) 1,(uint32_t) 5);
+	} 
+	else {
+		spi_tx_buffer[0] = data&WRITE;
+		HAL_SPI_Transmit(&hspi1,(uint8_t*) spi_tx_buffer,(uint16_t) 1,(uint32_t) 5);
+	}
+	
+	return spi_rx_buffer[0];
+
+} // Acá termina SPI_Send
+
+
 
 /* USER CODE END 4 */
 
