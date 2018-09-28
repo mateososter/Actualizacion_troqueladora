@@ -545,7 +545,7 @@ uint8_t RFID_REQA_or_WUPA(uint8_t command,uint8_t *bufferATQA,uint8_t *bufferSiz
 	}
 	RFID_ClearRegisterBitMask(CollReg, 0x80);		// ValuesAfterColl=1 => Bits received after collision are cleared.
 	validBits = 7;									// For REQA and WUPA we need the short frame format - transmit only 7 bits of the last (and only) byte. TxLastBits = BitFramingReg[2..0]
-	status = RFID_TransceiveData(&command, 1, bufferATQA, bufferSize, &validBits);
+	status = RFID_TransceiveData(&command, 1, bufferATQA, bufferSize, &validBits, 0, 0);
 	if (status != STATUS_OK) {
 		return status;
 	}
