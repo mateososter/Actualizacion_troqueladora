@@ -1,0 +1,24 @@
+--cpu=Cortex-M4.fp
+"logica\startup_stm32f411xe.o"
+"logica\stm32f4xx_it.o"
+"logica\main.o"
+"logica\stm32f4xx_hal_msp.o"
+"logica\system_stm32f4xx.o"
+"logica\stm32f4xx_hal_rcc_ex.o"
+"logica\stm32f4xx_hal_dma_ex.o"
+"logica\stm32f4xx_hal_tim_ex.o"
+"logica\stm32f4xx_hal_dma.o"
+"logica\stm32f4xx_hal_flash.o"
+"logica\stm32f4xx_hal_flash_ex.o"
+"logica\stm32f4xx_hal_flash_ramfunc.o"
+"logica\stm32f4xx_hal_pwr.o"
+"logica\stm32f4xx_hal_cortex.o"
+"logica\stm32f4xx_hal_rcc.o"
+"logica\stm32f4xx_hal_tim.o"
+"logica\stm32f4xx_hal_gpio.o"
+"logica\stm32f4xx_hal.o"
+"logica\stm32f4xx_hal_pwr_ex.o"
+--library_type=microlib --strict --scatter "Logica\Logica.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "Logica.map" -o Logica\Logica.axf
