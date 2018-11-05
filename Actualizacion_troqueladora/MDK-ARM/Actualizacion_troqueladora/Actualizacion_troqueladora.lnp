@@ -19,6 +19,7 @@
 "actualizacion_troqueladora\stm32f4xx_it.o"
 "actualizacion_troqueladora\stm32f4xx_hal_msp.o"
 "actualizacion_troqueladora\main.o"
+"actualizacion_troqueladora\lcd_txt.o"
 --library_type=microlib --strict --scatter "Actualizacion_troqueladora\Actualizacion_troqueladora.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

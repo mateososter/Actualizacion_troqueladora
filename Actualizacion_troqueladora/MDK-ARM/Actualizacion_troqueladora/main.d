@@ -1,5 +1,6 @@
 actualizacion_troqueladora\main.o: ../Src/main.c
 actualizacion_troqueladora\main.o: ../Inc/main.h
+actualizacion_troqueladora\main.o: ..\..\Actualizacion_troqueladora\lcd_txt.h
 actualizacion_troqueladora\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 actualizacion_troqueladora\main.o: ../Inc/stm32f4xx_hal_conf.h
 actualizacion_troqueladora\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
