@@ -49,18 +49,10 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
-#define fila1			8
-#define fila2			9
-#define fila3			10
-#define fila4			11
-#define columna1	12
-#define columna2	13
-#define columna3	14
-#define columna4	15
-
-
-int flag=0;
-
+int fila =0;
+int col =0;
+int f_boton_pres =0; // flag boton presionado
+int ms_ar=30; //milisegundos anti-rebote
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +61,7 @@ static void MX_GPIO_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
-
+void get_boton(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -106,17 +98,27 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   /* USER CODE BEGIN 2 */
-
+	
+	HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET); //Prende E8, 9, 10 y 11 al mismo tiempo.
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	if(flag){
-		HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
-		flag=0;
-	}
+		
+		
+		if(!ms_ar&&f_boton_pres){
+			f_boton_pres=0;
+			get_boton();
+			
+			HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET);
+			
+		}
+		
+		
+	
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -211,7 +213,7 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pins : PE12 PE13 PE14 PE15 */
   GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PD12 PD13 PD14 PD15 */
@@ -221,12 +223,38 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+
 }
 
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
-	if(GPIO_Pin==GPIO_PIN_6) flag=1;
+	fila=GPIO_Pin;
+	ms_ar=30;
+	f_boton_pres=1;
+}
+
+void HAL_SYSTICK_Callback(void)
+{
+	if (f_boton_pres==1) ms_ar--;
+}
+
+void get_boton(void){
 	
+	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+		HAL_GPIO_WritePin(GPIOE,GPIO_PIN_8,GPIO_PIN_RESET);
+		if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+			HAL_GPIO_WritePin(GPIOE,GPIO_PIN_9,GPIO_PIN_RESET);
+			if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+				HAL_GPIO_WritePin(GPIOE,GPIO_PIN_10,GPIO_PIN_RESET);
+				if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+					col=4;
+				}else col=3;
+			}else col=2;
+		}else col=1;
+	} else col=0;
 }
 /* USER CODE END 4 */
 
