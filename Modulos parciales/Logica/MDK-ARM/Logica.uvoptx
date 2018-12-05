@@ -152,9 +152,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>116</LineNumber>
+          <LineNumber>314</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134221202</Address>
+          <Address>134221288</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,7 +163,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>../Src/main.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Logica\../Src/main.c\116</Expression>
+          <Expression>\\Logica\../Src/main.c\314</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -176,6 +176,11 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>col</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>linea1</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

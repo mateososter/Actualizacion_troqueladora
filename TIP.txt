@@ -1,0 +1,1 @@
+EL circuito piola de pull up es de VDD, R de 3k3, a la entrada y el pulsador a masa

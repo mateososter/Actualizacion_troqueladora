@@ -62,6 +62,7 @@ static void MX_GPIO_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void get_boton(void);
+void display_tecla(void);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -109,10 +110,10 @@ int main(void)
   {
 		
 		
-		if(!ms_ar&&f_boton_pres){
+		if(!ms_ar && f_boton_pres){
 			f_boton_pres=0;
 			get_boton();
-			
+			display_tecla();
 			HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET);
 			
 		}
@@ -256,6 +257,64 @@ void get_boton(void){
 		}else col=1;
 	} else col=0;
 }
+
+void display_tecla(void){
+	char linea1[1];
+	
+	switch (fila){
+		case 0x00001000:
+			switch(col){
+				case 1: sprintf(linea1,"1");
+				break;
+				case 2:	sprintf(linea1,"4");
+				break;
+				case 3: sprintf(linea1,"7");
+				break;
+				case 4: sprintf(linea1,"*");
+				break;
+			}
+		break;	
+		case 0x00002000:
+			switch(col){
+				case 1: sprintf(linea1,"2");
+				break;
+				case 2:	sprintf(linea1,"5");
+				break;
+				case 3: sprintf(linea1,"8");
+				break;
+				case 4: sprintf(linea1,"0");
+				break;
+			}
+		break;
+		case 0x00004000:
+			switch(col){
+				case 1: sprintf(linea1,"3");
+				break;
+				case 2:	sprintf(linea1,"6");
+				break;
+				case 3: sprintf(linea1,"9");
+				break;
+				case 4: sprintf(linea1,"#");
+				break;
+			}
+		break;		
+		case 0x00008000:			
+			switch(col){
+				case 1: sprintf(linea1,"A");
+				break;
+				case 2:	sprintf(linea1,"B");
+				break;
+				case 3: sprintf(linea1,"C");
+				break;
+				case 4: sprintf(linea1,"D");
+				break;
+			}
+		break;
+	}
+	col=0;
+	
+}
+
 /* USER CODE END 4 */
 
 /**

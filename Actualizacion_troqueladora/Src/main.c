@@ -67,6 +67,14 @@ TIM_HandleTypeDef htim4;
 #define Err_TagExiste 12
 #define Err_NMaestro 13
 
+//-	Seccion teclado	----------------------
+
+int fila =0;
+int col =0;
+int f_boton_pres =0; // flag boton presionado
+int ms_ar=30; //milisegundos anti-rebote
+//-----------------------
+
 int flag;
 /* USER CODE END PV */
 
@@ -79,6 +87,11 @@ static void MX_TIM4_Init(void);
 /* Private function prototypes -----------------------------------------------*/
 void delayus_block(int n);
 void display_escribir(int instancia);
+
+//-	Seccion teclado	----------------------
+void get_boton(void);
+void display_tecla(void);
+//-----------------------
 
 /* Prototipos de funciones del lector de tarjetas RFID */
 
@@ -122,45 +135,68 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
 	
+//-	Seccion teclado	----------------------	
+	HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET); //Prende E8, 9, 10 y 11 al mismo tiempo.
+//----------------------------------------
+	
 	LCD_ini();
+	HAL_Delay(3);
+	LCD_SetPos(0,0);
+	HAL_Delay(3);
 	LCD_Clear();
-	LCD_CursorOff();	
+	HAL_Delay(3);
+	LCD_CursorOff();
+	HAL_Delay(3);	
 
+	display_escribir(Menu_0);
+	HAL_Delay(2000);
+	display_escribir(Menu_1);
+	HAL_Delay(2000);
+	display_escribir(Menu_2);
+	HAL_Delay(2000);
+	display_escribir(Menu_3);
+	HAL_Delay(2000);
+	display_escribir( Menu_1x);
+	HAL_Delay(2000);
+	display_escribir( Menu_2x);
+	HAL_Delay(2000);
+	display_escribir( Menu_3x);
+	HAL_Delay(2000);
+	display_escribir( TrabajoEC_G); //Trabajo en curso - Golpes
+	HAL_Delay(2000);
+	display_escribir( TrabajoEC_U); //Trabajo en curso - Unidades
+	HAL_Delay(2000);
+	display_escribir( AgrOp_Maestro);
+	HAL_Delay(2000);
+	display_escribir( AgrOp_Nuevo);
+	HAL_Delay(2000);
+	display_escribir( AgrOp_Nombre);
+	HAL_Delay(2000);
+	display_escribir( Err_TagExiste);
+	HAL_Delay(2000);
+	display_escribir( Err_NMaestro);
+	
+//	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+	
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	display_escribir(Menu_0);
-	HAL_Delay(3000);
-	display_escribir(Menu_1);
-	HAL_Delay(3000);
-	display_escribir(Menu_2);
-	HAL_Delay(3000);
-	display_escribir(Menu_3);
-	HAL_Delay(3000);
-	display_escribir( Menu_1x);
-	HAL_Delay(3000);
-	display_escribir( Menu_2x);
-	HAL_Delay(3000);
-	display_escribir( Menu_3x);
-	HAL_Delay(3000);
-	display_escribir( TrabajoEC_G); //Trabajo en curso - Golpes
-	HAL_Delay(3000);
-	display_escribir( TrabajoEC_U); //Trabajo en curso - Unidades
-	HAL_Delay(3000);
-	display_escribir( AgrOp_Maestro);
-	HAL_Delay(3000);
-	display_escribir( AgrOp_Nuevo);
-	HAL_Delay(3000);
-	display_escribir( AgrOp_Nombre);
-	HAL_Delay(3000);
-	display_escribir( Err_TagExiste);
-	HAL_Delay(3000);
-	display_escribir( Err_NMaestro);
-
 	
+	//-------	Seccion teclado -----------
+		if(!ms_ar&&f_boton_pres){
+			f_boton_pres=0;
+			get_boton();
+			if(!col) display_tecla();
+			
+			HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET);
+			
+		}
+	//---------------------------------------
+		
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -272,12 +308,17 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOE_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4|GPIO_PIN_5, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
+	
+	/*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PC4 PC5 */
   GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5;
@@ -286,13 +327,66 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : PD4 PD5 PD6 PD7 PD8 PD9 PD12 */
-  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_12;
+  /*Configure GPIO pin : PD4 PD5 PD6 PD7 PD8 PD9 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+	
+	/*Configure GPIO pins : PE8 PE9 PE10 PE11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : PE12 PE13 PE14 PE15 */
+  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+	/* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn,0,0);
+//  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+	
+	
+////------	Seccion teclado	---------------------------------------
+//	/* GPIO Ports Clock Enable */
+//	__HAL_RCC_GPIOE_CLK_ENABLE();
+
+//	/*Configure GPIO pin Output Level */
+//  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11, GPIO_PIN_RESET);
+
+//	/*Configure GPIO pin Output Level */
+//  HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
+//	
+//	/*Configure GPIO pins : PE8 PE9 PE10 PE11 */
+//  GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
+//  /*Configure GPIO pins : PE12 PE13 PE14 PE15 */
+//  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+//  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+//  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+//  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+//	
+//	/*Configure GPIO pins : PD12 PD13 PD14 PD15 */
+//  GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+//	
+//	/* EXTI interrupt init*/
+//  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+//  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+//	
+////---------------------------------------------
 }
 
 /* USER CODE BEGIN 4 */
@@ -371,6 +465,96 @@ void display_escribir(int instancia){
 	LCD_String(linea2);
 }
 
+//------------ Seccion teclado --------------------
+void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
+	fila=GPIO_Pin;
+	ms_ar=30;
+	f_boton_pres=1;
+}
+
+void HAL_SYSTICK_Callback(void)
+{
+	if (f_boton_pres==1) ms_ar--;
+}
+
+void get_boton(void){
+	
+	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+		HAL_GPIO_WritePin(GPIOE,GPIO_PIN_8,GPIO_PIN_RESET);
+		if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+			HAL_GPIO_WritePin(GPIOE,GPIO_PIN_9,GPIO_PIN_RESET);
+			if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+				HAL_GPIO_WritePin(GPIOE,GPIO_PIN_10,GPIO_PIN_RESET);
+				if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
+					col=4;
+				}else col=3;
+			}else col=2;
+		}else col=1;
+	} else col=0;
+	
+}
+
+void display_tecla(void){
+	char linea1[16];
+	
+	switch (fila){
+		case 0x0100:
+			switch(col){
+				case 1: sprintf(linea1,"1");
+				break;
+				case 2:	sprintf(linea1,"2");
+				break;
+				case 3: sprintf(linea1,"3");
+				break;
+				case 4: sprintf(linea1,"A");
+				break;
+			}
+		break;	
+		case 0x0200:
+			switch(col){
+				case 1: sprintf(linea1,"4");
+				break;
+				case 2:	sprintf(linea1,"5");
+				break;
+				case 3: sprintf(linea1,"6");
+				break;
+				case 4: sprintf(linea1,"B");
+				break;
+			}
+		break;
+		case 0x0400:
+			switch(col){
+				case 1: sprintf(linea1,"7");
+				break;
+				case 2:	sprintf(linea1,"8");
+				break;
+				case 3: sprintf(linea1,"9");
+				break;
+				case 4: sprintf(linea1,"C");
+				break;
+			}
+		break;		
+		case 0x0800:			
+			switch(col){
+				case 1: sprintf(linea1,"*");
+				break;
+				case 2:	sprintf(linea1,"0");
+				break;
+				case 3: sprintf(linea1,"#");
+				break;
+				case 4: sprintf(linea1,"D");
+				break;
+			}
+		break;
+	}
+	col=0;
+	
+	LCD_Clear();
+	LCD_SetPos(0,0);
+	LCD_String(linea1);
+}
+
+//-------------------------------------------------
 
 /* USER CODE END 4 */
 
