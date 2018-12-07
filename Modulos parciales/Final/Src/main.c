@@ -53,7 +53,7 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-#define Menu_0 0
+#define Inicio 0
 #define Menu_1 1
 #define Menu_2 2
 #define Menu_3 3
@@ -76,6 +76,8 @@ int f_boton_pres =0; // flag boton presionado
 int ms_ar=30; //milisegundos anti-rebote
 //-----------------------
 
+int cont_unidades=0;
+int f_unidades=0;
 int flag;
 /* USER CODE END PV */
 
@@ -90,6 +92,7 @@ static void MX_TIM3_Init(void);
 /* Private function prototypes -----------------------------------------------*/
 void delayus_block(int n);
 void display_escribir(int instancia);
+void display_unidades(void);
 
 //-	Seccion teclado	----------------------
 void get_boton(void);
@@ -147,13 +150,14 @@ int main(void)
 	HAL_Delay(3);
 	LCD_CursorOff();
 	HAL_Delay(3);	
+	
+	display_escribir(Inicio);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
 		//-------	Seccion teclado -----------
 		if(!ms_ar&&f_boton_pres){
 			f_boton_pres=0;
@@ -164,6 +168,12 @@ int main(void)
 			
 		}
 	//---------------------------------------
+		
+		if(!ms_ar&&f_unidades){
+			f_unidades=0;
+			cont_unidades++;
+			display_unidades();0
+		}
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -339,7 +349,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = Sensor_golpes_Pin|Sensor_unidades_Pin|Teclado_C1_Pin|Teclado_C2_Pin 
                           |Teclado_C3_Pin|Teclado_C4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Teclado_L1_Pin Teclado_L2_Pin Teclado_L3_Pin Teclado_L4_Pin */
@@ -390,8 +400,7 @@ void delayus_block(int n){
 			_Error_Handler(__FILE__, __LINE__);
 		}
 		HAL_TIM_Base_Start_IT(&htim4);
-		while(flag == 0) {
-		}
+		while(flag == 0) {		}
 	}
 }
 
@@ -454,6 +463,7 @@ void display_escribir(int instancia){
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 	if(GPIO_Pin==GPIO_PIN_7){
 		HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
+		f_unidades=1;
 	} else {
 	fila=GPIO_Pin;
 	ms_ar=30;
@@ -545,6 +555,18 @@ void display_tecla(void){
 
 //-------------------------------------------------
 
+void display_unidades(void){
+	char linea1[16];
+	char linea2[16];
+	sprintf(linea1,"UNIDADES");
+	sprintf(linea2,"%d",cont_unidades);
+	
+	LCD_Clear();
+	LCD_SetPos(0,0);
+	LCD_String(linea1);
+	LCD_SetPos(0,1);
+	LCD_String(linea2);
+}
 /* USER CODE END 4 */
 
 /**
