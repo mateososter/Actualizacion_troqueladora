@@ -49,6 +49,7 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
+long contador_golpes =0;
 int fila =0;
 int col =0;
 int f_boton_pres =0; // flag boton presionado
@@ -215,6 +216,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+	HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+	
+	/*Configure GPIO pins : PE7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PD12 PD13 PD14 PD15 */
@@ -227,14 +234,21 @@ static void MX_GPIO_Init(void)
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+	HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 1);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 }
 
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
-	fila=GPIO_Pin;
-	ms_ar=30;
-	f_boton_pres=1;
+	if(GPIO_Pin==GPIO_PIN_7){
+		contador_golpes++;
+		HAL_GPIO_TogglePin(GPIOD,GPIO_PIN_12);
+	}else {
+			fila=GPIO_Pin;
+			ms_ar=30;
+			f_boton_pres=1;
+	}
 }
 
 void HAL_SYSTICK_Callback(void)

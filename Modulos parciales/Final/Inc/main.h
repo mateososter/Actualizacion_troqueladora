@@ -49,10 +49,16 @@
 
 /* Private define ------------------------------------------------------------*/
 
+#define Sensor_golpes_Pin GPIO_PIN_6
+#define Sensor_golpes_GPIO_Port GPIOE
+#define Sensor_golpes_EXTI_IRQn EXTI9_5_IRQn
 #define RFID_Uart2Tx_Pin GPIO_PIN_2
 #define RFID_Uart2Tx_GPIO_Port GPIOA
 #define RFID_Uart2Rx_Pin GPIO_PIN_3
 #define RFID_Uart2Rx_GPIO_Port GPIOA
+#define Sensor_unidades_Pin GPIO_PIN_7
+#define Sensor_unidades_GPIO_Port GPIOE
+#define Sensor_unidades_EXTI_IRQn EXTI9_5_IRQn
 #define Teclado_L1_Pin GPIO_PIN_8
 #define Teclado_L1_GPIO_Port GPIOE
 #define Teclado_L2_Pin GPIO_PIN_9
