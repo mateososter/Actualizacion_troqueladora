@@ -1,0 +1,169 @@
+EESchema Schematic File Version 4
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Connector_Generic:Conn_02x25_Odd_Even J1
+U 1 1 5C33EF4F
+P 3250 3550
+F 0 "J1" H 3300 4967 50  0000 C CNN
+F 1 "STM32_P1" H 3300 4876 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x25_Pitch2.00mm" H 3250 3550 50  0001 C CNN
+F 3 "~" H 3250 3550 50  0001 C CNN
+	1    3250 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_02x25_Odd_Even J2
+U 1 1 5C33EFD9
+P 5100 3550
+F 0 "J2" H 5150 4967 50  0000 C CNN
+F 1 "STM32_P2" H 5150 4876 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x25_Pitch2.00mm" H 5100 3550 50  0001 C CNN
+F 3 "~" H 5100 3550 50  0001 C CNN
+	1    5100 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x16 J?
+U 1 1 5C33F278
+P 7150 3700
+F 0 "J?" H 7229 3692 50  0000 L CNN
+F 1 "Display_16x2" H 7229 3601 50  0000 L CNN
+F 2 "" H 7150 3700 50  0001 C CNN
+F 3 "~" H 7150 3700 50  0001 C CNN
+	1    7150 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x08 J?
+U 1 1 5C33F443
+P 1050 4750
+F 0 "J?" H 970 4125 50  0000 C CNN
+F 1 "Teclado" H 970 4216 50  0000 C CNN
+F 2 "" H 1050 4750 50  0001 C CNN
+F 3 "~" H 1050 4750 50  0001 C CNN
+	1    1050 4750
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J?
+U 1 1 5C33F63F
+P 1050 2850
+F 0 "J?" H 970 2525 50  0000 C CNN
+F 1 "Sensor_Golpes" H 970 2616 50  0000 C CNN
+F 2 "" H 1050 2850 50  0001 C CNN
+F 3 "~" H 1050 2850 50  0001 C CNN
+	1    1050 2850
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J?
+U 1 1 5C33F6D3
+P 6950 2450
+F 0 "J?" H 7030 2492 50  0000 L CNN
+F 1 "Sensor_Unidades" H 7030 2401 50  0000 L CNN
+F 2 "" H 6950 2450 50  0001 C CNN
+F 3 "~" H 6950 2450 50  0001 C CNN
+	1    6950 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J?
+U 1 1 5C33F7CB
+P 7150 5000
+F 0 "J?" H 7229 5042 50  0000 L CNN
+F 1 "Lector_RFID" H 7229 4951 50  0000 L CNN
+F 2 "" H 7150 5000 50  0001 C CNN
+F 3 "~" H 7150 5000 50  0001 C CNN
+	1    7150 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:LED D?
+U 1 1 5C33F9B2
+P 9650 1950
+F 0 "D?" V 9688 1832 50  0000 R CNN
+F 1 "LED_Power" V 9597 1832 50  0000 R CNN
+F 2 "" H 9650 1950 50  0001 C CNN
+F 3 "~" H 9650 1950 50  0001 C CNN
+	1    9650 1950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5C33FB26
+P 9650 2400
+F 0 "R?" H 9720 2446 50  0000 L CNN
+F 1 "R" H 9720 2355 50  0000 L CNN
+F 2 "" V 9580 2400 50  0001 C CNN
+F 3 "~" H 9650 2400 50  0001 C CNN
+	1    9650 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_SPST SW?
+U 1 1 5C34008C
+P 10500 1150
+F 0 "SW?" V 10454 1248 50  0000 L CNN
+F 1 "SW_Power" V 10545 1248 50  0000 L CNN
+F 2 "" H 10500 1150 50  0001 C CNN
+F 3 "" H 10500 1150 50  0001 C CNN
+	1    10500 1150
+	0    1    1    0   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x02 J?
+U 1 1 5C34038E
+P 10400 600
+F 0 "J?" V 10366 412 50  0000 R CNN
+F 1 "IN_Alimentación" V 10275 412 50  0000 R CNN
+F 2 "" H 10400 600 50  0001 C CNN
+F 3 "~" H 10400 600 50  0001 C CNN
+	1    10400 600 
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	10500 800  10500 950 
+$Comp
+L power:GND #PWR?
+U 1 1 5C3408C2
+P 10400 1500
+F 0 "#PWR?" H 10400 1250 50  0001 C CNN
+F 1 "GND" H 10405 1327 50  0000 C CNN
+F 2 "" H 10400 1500 50  0001 C CNN
+F 3 "" H 10400 1500 50  0001 C CNN
+	1    10400 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5C340901
+P 10750 1500
+F 0 "#PWR?" H 10750 1350 50  0001 C CNN
+F 1 "+5V" H 10765 1673 50  0000 C CNN
+F 2 "" H 10750 1500 50  0001 C CNN
+F 3 "" H 10750 1500 50  0001 C CNN
+	1    10750 1500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10400 800  10400 1500
+Wire Wire Line
+	10500 1350 10500 1600
+Wire Wire Line
+	10500 1600 10750 1600
+Wire Wire Line
+	10750 1600 10750 1500
+$EndSCHEMATC
