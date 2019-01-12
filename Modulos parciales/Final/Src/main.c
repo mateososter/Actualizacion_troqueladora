@@ -159,7 +159,8 @@ int main(void)
   while (1)
   {
 		//-------	Seccion teclado -----------
-		if(!ms_ar&&f_boton_pres){
+//		if(!ms_ar&&f_boton_pres){
+		if(f_boton_pres){
 			f_boton_pres=0;
 			get_boton();
 			if(!col) display_tecla();
@@ -169,10 +170,11 @@ int main(void)
 		}
 	//---------------------------------------
 		
-		if(!ms_ar&&f_unidades){
+//		if(!ms_ar&&f_unidades){
+		if(f_unidades){
 			f_unidades=0;
 			cont_unidades++;
-			display_unidades();0
+			display_unidades();
 		}
   /* USER CODE END WHILE */
 
@@ -466,7 +468,6 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 		f_unidades=1;
 	} else {
 	fila=GPIO_Pin;
-	ms_ar=30;
 	f_boton_pres=1;
 	}
 }
@@ -491,9 +492,6 @@ void get_boton(void){
 		}else col=1;
 	} else col=0;
 	
-}
-
-void display_tecla(void){
 	char linea1[16];
 	
 	switch (fila){
@@ -551,6 +549,10 @@ void display_tecla(void){
 	LCD_Clear();
 	LCD_SetPos(0,0);
 	LCD_String(linea1);
+}
+
+void display_tecla(void){
+	
 }
 
 //-------------------------------------------------

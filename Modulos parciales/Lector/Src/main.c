@@ -105,7 +105,7 @@ int main(void)
   while (1)
   {
 		
-		
+	//	HAL_UART_Receive(&huart2, uart_buffer, 13, 10);
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
@@ -216,7 +216,7 @@ static void MX_GPIO_Init(void)
 void HAL_UART_RxCpltCallback (UART_HandleTypeDef *huart)
 {
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_SET);
-	HAL_Delay(1000);
+	HAL_Delay(500);
 	HAL_GPIO_WritePin(GPIOD, GPIO_PIN_12, GPIO_PIN_RESET);
 }
 /* USER CODE END 4 */
