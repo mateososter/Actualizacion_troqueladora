@@ -159,8 +159,12 @@ int main(void)
   while (1)
   {
 		//-------	Seccion teclado -----------
+<<<<<<< HEAD
 //		if(!ms_ar&&f_boton_pres){
 		if(f_boton_pres){
+=======
+		if(!(ms_ar)&&f_boton_pres){
+>>>>>>> master
 			f_boton_pres=0;
 			get_boton();
 			if(!col) display_tecla();
@@ -170,8 +174,12 @@ int main(void)
 		}
 	//---------------------------------------
 		
+<<<<<<< HEAD
 //		if(!ms_ar&&f_unidades){
 		if(f_unidades){
+=======
+		if(!(ms_ar)&&f_unidades){
+>>>>>>> master
 			f_unidades=0;
 			cont_unidades++;
 			display_unidades();
@@ -381,7 +389,7 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
@@ -466,6 +474,7 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 	if(GPIO_Pin==GPIO_PIN_7){
 		HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
 		f_unidades=1;
+		ms_ar=30;
 	} else {
 	fila=GPIO_Pin;
 	f_boton_pres=1;
@@ -474,7 +483,7 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 
 void HAL_SYSTICK_Callback(void)
 {
-	if (f_boton_pres==1) ms_ar--;
+	if (f_boton_pres==1||f_unidades) ms_ar--;
 }
 
 void get_boton(void){
@@ -493,62 +502,66 @@ void get_boton(void){
 	} else col=0;
 	
 	char linea1[16];
+	char linea2[16];
 	
 	switch (fila){
 		case 0x0100:
 			switch(col){
-				case 1: sprintf(linea1,"1");
+				case 1: sprintf(linea1,"1    ");
 				break;
-				case 2:	sprintf(linea1,"2");
+				case 2:	sprintf(linea1,"2    ");
 				break;
-				case 3: sprintf(linea1,"3");
+				case 3: sprintf(linea1,"3    ");
 				break;
-				case 4: sprintf(linea1,"A");
+				case 4: sprintf(linea1,"A    ");
 				break;
 			}
 		break;	
 		case 0x0200:
 			switch(col){
-				case 1: sprintf(linea1,"4");
+				case 1: sprintf(linea1,"4    ");
 				break;
-				case 2:	sprintf(linea1,"5");
+				case 2:	sprintf(linea1,"5    ");
 				break;
-				case 3: sprintf(linea1,"6");
+				case 3: sprintf(linea1,"6    ");
 				break;
-				case 4: sprintf(linea1,"B");
+				case 4: sprintf(linea1,"B    ");
 				break;
 			}
 		break;
 		case 0x0400:
 			switch(col){
-				case 1: sprintf(linea1,"7");
+				case 1: sprintf(linea1,"7    ");
 				break;
-				case 2:	sprintf(linea1,"8");
+				case 2:	sprintf(linea1,"8    ");
 				break;
-				case 3: sprintf(linea1,"9");
+				case 3: sprintf(linea1,"9    ");
 				break;
-				case 4: sprintf(linea1,"C");
+				case 4: sprintf(linea1,"C    ");
 				break;
 			}
 		break;		
 		case 0x0800:			
 			switch(col){
-				case 1: sprintf(linea1,"*");
+				case 1: sprintf(linea1,"*    ");
 				break;
-				case 2:	sprintf(linea1,"0");
+				case 2:	sprintf(linea1,"0    ");
 				break;
-				case 3: sprintf(linea1,"#");
+				case 3: sprintf(linea1,"#    ");
 				break;
-				case 4: sprintf(linea1,"D");
+				case 4: sprintf(linea1,"D    ");
 				break;
 			}
 		break;
 	}
 	col=0;
 	
+	sprintf(linea2,"                ");
 	LCD_Clear();
 	LCD_SetPos(0,0);
 	LCD_String(linea1);
+	LCD_SetPos(0,1);
+	LCD_String(linea2);
 }
 
 void display_tecla(void){

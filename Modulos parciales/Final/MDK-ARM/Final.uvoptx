@@ -152,9 +152,15 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
+<<<<<<< HEAD
           <LineNumber>500</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>134225738</Address>
+=======
+          <LineNumber>492</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>134226170</Address>
+>>>>>>> master
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,6 +169,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>../Src/main.c</Filename>
           <ExecCommand></ExecCommand>
+<<<<<<< HEAD
           <Expression>\\Final\../Src/main.c\500</Expression>
         </Bp>
         <Bp>
@@ -196,6 +203,9 @@
           <Filename>../Src/main.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
+=======
+          <Expression>\\Final\../Src/main.c\492</Expression>
+>>>>>>> master
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -208,6 +218,11 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>col</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>fila</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>
