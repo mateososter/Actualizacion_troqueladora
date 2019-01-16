@@ -1,6 +1,5 @@
 final\main.o: ../Src/main.c
 final\main.o: ../Inc/main.h
-final\main.o: ..\..\Final\lcd_txt.h
 final\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h
 final\main.o: ../Inc/stm32f4xx_hal_conf.h
 final\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h
@@ -31,3 +30,4 @@ final\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h
 final\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 final\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
 final\main.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+final\main.o: ..\..\Final\lcd_txt.h

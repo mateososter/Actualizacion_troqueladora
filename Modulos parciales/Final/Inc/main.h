@@ -10,7 +10,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2018 STMicroelectronics
+  * COPYRIGHT(c) 2019 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -49,40 +49,32 @@
 
 /* Private define ------------------------------------------------------------*/
 
-#define Sensor_golpes_Pin GPIO_PIN_6
-#define Sensor_golpes_GPIO_Port GPIOE
-#define Sensor_golpes_EXTI_IRQn EXTI9_5_IRQn
-#define RFID_Uart2Tx_Pin GPIO_PIN_2
-#define RFID_Uart2Tx_GPIO_Port GPIOA
-#define RFID_Uart2Rx_Pin GPIO_PIN_3
-#define RFID_Uart2Rx_GPIO_Port GPIOA
-#define Sensor_unidades_Pin GPIO_PIN_7
+#define Sensor_unidades_Pin GPIO_PIN_6
 #define Sensor_unidades_GPIO_Port GPIOE
 #define Sensor_unidades_EXTI_IRQn EXTI9_5_IRQn
-#define Teclado_L1_Pin GPIO_PIN_8
-#define Teclado_L1_GPIO_Port GPIOE
-#define Teclado_L2_Pin GPIO_PIN_9
-#define Teclado_L2_GPIO_Port GPIOE
-#define Teclado_L3_Pin GPIO_PIN_10
-#define Teclado_L3_GPIO_Port GPIOE
-#define Teclado_L4_Pin GPIO_PIN_11
-#define Teclado_L4_GPIO_Port GPIOE
-#define Teclado_C1_Pin GPIO_PIN_12
+#define Teclado_C4_Pin GPIO_PIN_1
+#define Teclado_C4_GPIO_Port GPIOA
+#define Sensor_golpes_Pin GPIO_PIN_4
+#define Sensor_golpes_GPIO_Port GPIOC
+#define Sensor_golpes_EXTI_IRQn EXTI4_IRQn
+#define Teclado_C3_Pin GPIO_PIN_5
+#define Teclado_C3_GPIO_Port GPIOC
+#define Teclado_C2_Pin GPIO_PIN_1
+#define Teclado_C2_GPIO_Port GPIOB
+#define Teclado_C1_Pin GPIO_PIN_7
 #define Teclado_C1_GPIO_Port GPIOE
-#define Teclado_C1_EXTI_IRQn EXTI15_10_IRQn
-#define Teclado_C2_Pin GPIO_PIN_13
-#define Teclado_C2_GPIO_Port GPIOE
-#define Teclado_C2_EXTI_IRQn EXTI15_10_IRQn
-#define Teclado_C3_Pin GPIO_PIN_14
-#define Teclado_C3_GPIO_Port GPIOE
-#define Teclado_C3_EXTI_IRQn EXTI15_10_IRQn
-#define Teclado_C4_Pin GPIO_PIN_15
-#define Teclado_C4_GPIO_Port GPIOE
-#define Teclado_C4_EXTI_IRQn EXTI15_10_IRQn
-#define Display_RS_Pin GPIO_PIN_8
-#define Display_RS_GPIO_Port GPIOD
-#define Display_E_Pin GPIO_PIN_9
-#define Display_E_GPIO_Port GPIOD
+#define Teclado_F4_Pin GPIO_PIN_9
+#define Teclado_F4_GPIO_Port GPIOE
+#define Teclado_F4_EXTI_IRQn EXTI9_5_IRQn
+#define Teclado_F3_Pin GPIO_PIN_11
+#define Teclado_F3_GPIO_Port GPIOE
+#define Teclado_F3_EXTI_IRQn EXTI15_10_IRQn
+#define Teclado_F2_Pin GPIO_PIN_13
+#define Teclado_F2_GPIO_Port GPIOE
+#define Teclado_F2_EXTI_IRQn EXTI15_10_IRQn
+#define Teclado_F1_Pin GPIO_PIN_15
+#define Teclado_F1_GPIO_Port GPIOE
+#define Teclado_F1_EXTI_IRQn EXTI15_10_IRQn
 #define Led_Verde_Pin GPIO_PIN_12
 #define Led_Verde_GPIO_Port GPIOD
 #define Led_Naranja_Pin GPIO_PIN_13
@@ -91,14 +83,22 @@
 #define Led_Rojo_GPIO_Port GPIOD
 #define Led_Azul_Pin GPIO_PIN_15
 #define Led_Azul_GPIO_Port GPIOD
-#define Display_D4_Pin GPIO_PIN_4
-#define Display_D4_GPIO_Port GPIOD
-#define Display_D5_Pin GPIO_PIN_5
-#define Display_D5_GPIO_Port GPIOD
-#define Display_D6_Pin GPIO_PIN_6
+#define Rx_LectorRFID_Pin GPIO_PIN_6
+#define Rx_LectorRFID_GPIO_Port GPIOC
+#define Tx_LectorRFID_Pin GPIO_PIN_7
+#define Tx_LectorRFID_GPIO_Port GPIOC
+#define Display_D7_Pin GPIO_PIN_11
+#define Display_D7_GPIO_Port GPIOC
+#define Display_D6_Pin GPIO_PIN_0
 #define Display_D6_GPIO_Port GPIOD
-#define Display_D7_Pin GPIO_PIN_7
-#define Display_D7_GPIO_Port GPIOD
+#define Display_D5_Pin GPIO_PIN_2
+#define Display_D5_GPIO_Port GPIOD
+#define Display_D4_Pin GPIO_PIN_6
+#define Display_D4_GPIO_Port GPIOD
+#define Display_E_Pin GPIO_PIN_5
+#define Display_E_GPIO_Port GPIOB
+#define Display_RS_Pin GPIO_PIN_7
+#define Display_RS_GPIO_Port GPIOB
 
 /* ########################## Assert Selection ############################## */
 /**

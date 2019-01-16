@@ -10,7 +10,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * COPYRIGHT(c) 2018 STMicroelectronics
+  * COPYRIGHT(c) 2019 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -38,18 +38,16 @@
   */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "lcd_txt.h"
 #include "stm32f4xx_hal.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "lcd_txt.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
-
-UART_HandleTypeDef huart2;
+UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
@@ -68,8 +66,7 @@ UART_HandleTypeDef huart2;
 #define Err_TagExiste 12
 #define Err_NMaestro 13
 
-//-	Seccion teclado	----------------------
-
+//-----------------------
 int fila =0;
 int col =0;
 int f_boton_pres =0; // flag boton presionado
@@ -84,9 +81,9 @@ int flag;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
-static void MX_USART2_UART_Init(void);
 static void MX_TIM4_Init(void);
 static void MX_TIM3_Init(void);
+static void MX_USART6_UART_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -109,8 +106,7 @@ void display_tecla(void);
   *
   * @retval None
   */
-int main(void)
-{
+int main(void){
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -133,9 +129,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_USART2_UART_Init();
   MX_TIM4_Init();
   MX_TIM3_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 	
 //-	Seccion teclado	----------------------	
@@ -159,12 +155,9 @@ int main(void)
   while (1)
   {
 		//-------	Seccion teclado -----------
-<<<<<<< HEAD
 //		if(!ms_ar&&f_boton_pres){
 		if(f_boton_pres){
-=======
 		if(!(ms_ar)&&f_boton_pres){
->>>>>>> master
 			f_boton_pres=0;
 			get_boton();
 			if(!col) display_tecla();
@@ -173,13 +166,10 @@ int main(void)
 			
 		}
 	//---------------------------------------
-		
-<<<<<<< HEAD
+	}	
 //		if(!ms_ar&&f_unidades){
 		if(f_unidades){
-=======
 		if(!(ms_ar)&&f_unidades){
->>>>>>> master
 			f_unidades=0;
 			cont_unidades++;
 			display_unidades();
@@ -191,6 +181,7 @@ int main(void)
   }
   /* USER CODE END 3 */
 
+}
 }
 
 /**
@@ -286,9 +277,9 @@ static void MX_TIM4_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 1;
+  htim4.Init.Prescaler = 0;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 15;
+  htim4.Init.Period = 0;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
   {
@@ -310,19 +301,19 @@ static void MX_TIM4_Init(void)
 
 }
 
-/* USART2 init function */
-static void MX_USART2_UART_Init(void)
+/* USART6 init function */
+static void MX_USART6_UART_Init(void)
 {
 
-  huart2.Instance = USART2;
-  huart2.Init.BaudRate = 115200;
-  huart2.Init.WordLength = UART_WORDLENGTH_8B;
-  huart2.Init.StopBits = UART_STOPBITS_1;
-  huart2.Init.Parity = UART_PARITY_NONE;
-  huart2.Init.Mode = UART_MODE_TX_RX;
-  huart2.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart2.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart2) != HAL_OK)
+  huart6.Instance = USART6;
+  huart6.Init.BaudRate = 9600;
+  huart6.Init.WordLength = UART_WORDLENGTH_8B;
+  huart6.Init.StopBits = UART_STOPBITS_1;
+  huart6.Init.Parity = UART_PARITY_NONE;
+  huart6.Init.Mode = UART_MODE_RX;
+  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart6) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
@@ -344,39 +335,67 @@ static void MX_GPIO_Init(void)
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOC_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, Teclado_L1_Pin|Teclado_L2_Pin|Teclado_L3_Pin|Teclado_L4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, Display_RS_Pin|Display_E_Pin|Led_Verde_Pin|Led_Naranja_Pin 
-                          |Led_Rojo_Pin|Led_Azul_Pin|Display_D4_Pin|Display_D5_Pin 
-                          |Display_D6_Pin|Display_D7_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, Teclado_C3_Pin|Display_D7_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : Sensor_golpes_Pin Sensor_unidades_Pin Teclado_C1_Pin Teclado_C2_Pin 
-                           Teclado_C3_Pin Teclado_C4_Pin */
-  GPIO_InitStruct.Pin = Sensor_golpes_Pin|Sensor_unidades_Pin|Teclado_C1_Pin|Teclado_C2_Pin 
-                          |Teclado_C3_Pin|Teclado_C4_Pin;
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOB, Teclado_C2_Pin|Display_E_Pin|Display_RS_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOD, Led_Verde_Pin|Led_Naranja_Pin|Led_Rojo_Pin|Led_Azul_Pin 
+                          |Display_D6_Pin|Display_D5_Pin|Display_D4_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : Sensor_unidades_Pin Teclado_F4_Pin Teclado_F3_Pin Teclado_F2_Pin 
+                           Teclado_F1_Pin */
+  GPIO_InitStruct.Pin = Sensor_unidades_Pin|Teclado_F4_Pin|Teclado_F3_Pin|Teclado_F2_Pin 
+                          |Teclado_F1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Teclado_L1_Pin Teclado_L2_Pin Teclado_L3_Pin Teclado_L4_Pin */
-  GPIO_InitStruct.Pin = Teclado_L1_Pin|Teclado_L2_Pin|Teclado_L3_Pin|Teclado_L4_Pin;
+  /*Configure GPIO pin : Teclado_C4_Pin */
+  GPIO_InitStruct.Pin = Teclado_C4_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+  HAL_GPIO_Init(Teclado_C4_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : Display_RS_Pin Display_E_Pin Display_D4_Pin Display_D5_Pin 
-                           Display_D6_Pin Display_D7_Pin */
-  GPIO_InitStruct.Pin = Display_RS_Pin|Display_E_Pin|Display_D4_Pin|Display_D5_Pin 
-                          |Display_D6_Pin|Display_D7_Pin;
+  /*Configure GPIO pin : Sensor_golpes_Pin */
+  GPIO_InitStruct.Pin = Sensor_golpes_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(Sensor_golpes_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Teclado_C3_Pin */
+  GPIO_InitStruct.Pin = Teclado_C3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Teclado_C3_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Teclado_C2_Pin */
+  GPIO_InitStruct.Pin = Teclado_C2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Teclado_C2_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : Teclado_C1_Pin */
+  GPIO_InitStruct.Pin = Teclado_C1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Teclado_C1_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : Led_Verde_Pin Led_Naranja_Pin Led_Rojo_Pin Led_Azul_Pin */
   GPIO_InitStruct.Pin = Led_Verde_Pin|Led_Naranja_Pin|Led_Rojo_Pin|Led_Azul_Pin;
@@ -385,11 +404,35 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+  /*Configure GPIO pin : Display_D7_Pin */
+  GPIO_InitStruct.Pin = Display_D7_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(Display_D7_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Display_D6_Pin Display_D5_Pin Display_D4_Pin */
+  GPIO_InitStruct.Pin = Display_D6_Pin|Display_D5_Pin|Display_D4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : Display_E_Pin Display_RS_Pin */
+  GPIO_InitStruct.Pin = Display_E_Pin|Display_RS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
   /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI4_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI4_IRQn);
+
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 1, 0);
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
@@ -481,8 +524,7 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 	}
 }
 
-void HAL_SYSTICK_Callback(void)
-{
+void HAL_SYSTICK_Callback(void){
 	if (f_boton_pres==1||f_unidades) ms_ar--;
 }
 
