@@ -55,27 +55,70 @@ UART_HandleTypeDef huart6;
 #define Menu_1 1
 #define Menu_2 2
 #define Menu_3 3
-#define Menu_1x 4
-#define Menu_2x 5
-#define Menu_3x 6
-#define TrabajoEC_G 7 //Trabajo en curso - Golpes
-#define TrabajoEC_U 8 //Trabajo en curso - Unidades
-#define AgrOp_Maestro 9
-#define AgrOp_Nuevo 10
-#define AgrOp_Nombre 11
-#define Err_TagExiste 12
-#define Err_NMaestro 13
+#define Menu_4 4
+#define Menu_1x 5
+#define Menu_21 6
+#define Menu_22 7
+#define Menu_3x 8
+#define Menu_41 9
+#define Menu_42 10
+#define Menu_43 11
+#define Menu_44 12
+#define Menu_41c 13
+#define Menu_42c 14
+#define Menu_43c 15
+#define Menu_441 16
+#define Menu_442 17
+#define Menu_44c 18
+#define TrabajoEC_G 19 //Trabajo en curso - Golpes
+#define TrabajoEC_U 20 //Trabajo en curso - Unidades
+#define AgrOp_Maestro 21
+#define AgrOp_Nuevo 22
+#define AgrOp_Nombre 23
+#define Err_TagExiste 24
+#define Err_NMaestro 25
+
+#define b_Arriba 2 
+#define b_Abajo 8
+#define b_Derecha 6
+#define b_Izquierda 4
+#define b_Enter 12
+#define b_Salir 10
+#define b_A 13
+#define b_B 14 
+#define b_C 15
+#define b_D 16
+
 
 //-----------------------
 int fila =0;
 int col =0;
-int f_boton_pres =0; // flag boton presionado
 int ms_ar=30; //milisegundos anti-rebote
 //-----------------------
 
-int cont_unidades=0;
+struct Operario{
+	int master;
+	char *nombre;
+	char *id;
+	long golpes;
+	long unidades;
+	int productividad;
+} operarios[20];
+
+long cont_unidades=0;
+long cont_golpes=0;
+char *str_golpes;
+char *str_unidades;
+char *str_productividad;
 int f_unidades=0;
-int flag;
+int flag=0;
+int evento=0;
+int boton=0;
+
+int f_boton=0; // flag boton presionado
+int f_sensor=0;
+int f_tarjeta=0;
+int instancia=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -88,7 +131,7 @@ static void MX_USART6_UART_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void delayus_block(int n);
-void display_escribir(int instancia);
+void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
 
 //-	Seccion teclado	----------------------
@@ -134,55 +177,318 @@ int main(void){
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
 	
-//-	Seccion teclado	----------------------	
+	//-	Seccion teclado	----------------------	
 	HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET); //Prende E8, 9, 10 y 11 al mismo tiempo.
-//----------------------------------------
+	//----------------------------------------
 	
 	LCD_ini();
 	HAL_Delay(3);
-	LCD_SetPos(0,0);
-	HAL_Delay(3);
 	LCD_Clear();
+	HAL_Delay(3);
+	LCD_SetPos(0,0);
 	HAL_Delay(3);
 	LCD_CursorOff();
 	HAL_Delay(3);	
 	
-	display_escribir(Inicio);
-  /* USER CODE END 2 */
-
+	display_escribir("INICIO DE","LA MAQUINA");
+  instancia= Inicio;
+	/* USER CODE END 2 */
+	
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-		//-------	Seccion teclado -----------
-//		if(!ms_ar&&f_boton_pres){
-		if(f_boton_pres){
-		if(!(ms_ar)&&f_boton_pres){
-			f_boton_pres=0;
-			get_boton();
-			if(!col) display_tecla();
+  while (1)  {
+		
+		if(f_boton){
+			f_boton=0;
+			switch(boton){
+				case b_Derecha:
+					switch(instancia){
+						case Inicio:
+							instancia=Menu_1;
+							display_escribir("1.OPERARIOS", "  ID TARJETA");
+							break;
+						
+						case Menu_1:
+							instancia=Menu_2;
+							display_escribir("2.TOTALES", "");
+							break;
+					
+						case Menu_2:
+							instancia=Menu_3;
+							display_escribir("3.PRODUCTIVIDAD", "");
+							break;
+					
+						case Menu_3:
+							instancia=Menu_4;
+							display_escribir("4.CONFIGURACION", "");
+							break;
+					
+						case Menu_4:
+							instancia=Inicio;
+							display_escribir("0.INICIO", "");
+							break;
+					
+						case Menu_21:
+							instancia=Menu_22;
+							sprintf(str_unidades, "%ld", cont_unidades);
+							display_escribir("2.1. TOT UNIDADES",str_unidades);
+							break;
+					
+						case Menu_22:
+							instancia=Menu_21;
+							sprintf(str_golpes, "%ld", cont_golpes);
+							display_escribir("2.1. TOT GOLPES",str_golpes);
+							break;
+						
+						case Menu_41:
+							instancia=Menu_42;
+							display_escribir("4.2.RESET","    TOTALES");
+							break;
+					
+						case Menu_42:
+							instancia=Menu_43;
+							display_escribir("4.3.RESET","    MASTER ID");
+							break;
+						
+						case Menu_43:
+							instancia=Menu_44;
+							display_escribir("4.4.ALTA","    OPERARIO");
+							break;
+					
+						case Menu_44:
+							instancia=Menu_41;
+							display_escribir("4.1.RESET","    OPERARIOS");
+							break;
+					}
+					break; //Sale de switch(boton) 
+									
+				case b_Izquierda:
+					switch(instancia){
+						case Inicio:
+							instancia=Menu_4;
+							display_escribir("4.CONFIGURACION", "");
+							break;
+											
+						case Menu_1:
+							instancia=Inicio;
+							display_escribir("0.INICIO", "");
+							break;
+					
+						case Menu_2:
+							instancia=Menu_1;
+							display_escribir("1.OPERARIOS", "  ID TARJETA");
+							break;
+					
+						case Menu_3:
+							instancia=Menu_2;
+							display_escribir("2.TOTALES", "");
+							break;
+					
+						case Menu_4:
+							instancia=Menu_3;
+							display_escribir("3.PRODUCTIVIDAD", "");
+							break;
+						
+						case Menu_21:
+							instancia=Menu_22;
+							sprintf(str_unidades, "%ld", cont_unidades);
+							display_escribir("2.1. TOT UNIDADES",str_unidades);
+							break;
+					
+						case Menu_22:
+							instancia=Menu_21;
+							sprintf(str_golpes, "%ld", cont_golpes);
+							display_escribir("2.1. TOT GOLPES",str_golpes);
+							break;
+						
+						case Menu_41:
+							instancia=Menu_44;
+							display_escribir("4.4.ALTA","    OPERARIO");
+							break;
+					
+						case Menu_42:
+							instancia=Menu_41;
+							display_escribir("4.1.RESET","    OPERARIOS");
+							break;
+						
+						case Menu_43:
+							instancia=Menu_42;
+							display_escribir("4.2.RESET","    TOTALES");
+							break;
+					
+						case Menu_44:
+							instancia=Menu_43;
+							display_escribir("4.3.RESET","    MASTER ID");
+							break;
+					}
+					break; //Sale de switch(boton)
+					
+				case b_Abajo:
+					switch(instancia){
+						case Inicio:
+							break;
+						
+						case Menu_1:
+							instancia=Menu_1x;
+							display_escribir(operarios[0].nombre, operarios[0].id);
+							break;
+					
+						case Menu_2:
+							instancia=Menu_21;
+							sprintf(str_golpes, "%ld", cont_golpes);
+							display_escribir("2.1. TOT GOLPES",str_golpes);
+							break;
+					
+						case Menu_3:
+							instancia=Menu_3x;
+							sprintf(str_productividad, "%d %%",operarios[0].productividad); 
+							display_escribir(operarios[0].nombre, str_productividad);
+							break;
+						
+						case Menu_4:
+							instancia=Menu_41;
+							display_escribir("4.1.RESET","    OPERARIOS");
+							break;
+												
+					}
+					break; //Sale de switch(boton)
+				
+				case b_Arriba:
+					switch(instancia){
+						case Menu_1x:
+							instancia=Menu_1;
+							display_escribir("1.OPERARIOS", "  ID TARJETA");
+							break;
+						
+						case Menu_21:
+							display_escribir("2.TOTALES", "");
+							break;
+					
+						case Menu_22:
+							display_escribir("2.TOTALES", "");
+							break;
+					
+						case Menu_3x:
+							display_escribir("3.PRODUCTIVIDAD", "");
+							break;
+						
+						case Menu_41:
+							instancia=Menu_4;
+							display_escribir("4.CONFIGURACION", "");
+							break;
+						
+						case Menu_42:
+							instancia=Menu_4;
+							display_escribir("4.CONFIGURACION", "");
+							break;
+						
+						case Menu_43:
+							instancia=Menu_4;
+							display_escribir("4.CONFIGURACION", "");
+							break;
+						
+						case Menu_44:
+							instancia=Menu_4;
+							display_escribir("4.CONFIGURACION", "");
+							break;
+							
+					}		
+					break; //Sale de switch(boton)
 			
-			HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET);
+				case b_Enter:
+					switch(instancia){
+						case Inicio:
+							break;
+						
+						case Menu_1:
+							instancia=Menu_1x;
+							display_escribir(operarios[0].nombre, operarios[0].id);
+							break;
+					
+						case Menu_2:
+							instancia=Menu_21;
+							sprintf(str_golpes, "%ld", cont_golpes);
+							display_escribir("2.1. TOT GOLPES",str_golpes);
+							break;
+					
+						case Menu_3:
+							instancia=Menu_3x;
+							sprintf(str_productividad, "%d %%",operarios[0].productividad); 
+							display_escribir(operarios[0].nombre, str_productividad);
+							break;
+						
+						case Menu_4:
+							instancia=Menu_41;
+							display_escribir("4.1.RESET","    OPERARIOS");
+							break;
+						
+						case Menu_41:
+							instancia=Menu_41c;
+							display_escribir("PARA CONFIRMAR", "PASE TAG MAESTRO");
+							break;
+						
+						case Menu_42:
+							instancia=Menu_42c;
+							display_escribir("PARA CONFIRMAR", "PASE TAG MAESTRO");
+							break;
+						
+						case Menu_43:
+							instancia=Menu_43c;
+							display_escribir("PARA CONFIRMAR", "PASE TAG MAESTRO");
+							break;
+						
+						case Menu_44:
+							instancia=Menu_441;
+							display_escribir("PARA EMPEZAR", "PASE TAG MAESTRO");
+							break;
+						
+						case Menu_442:
+							instancia=Menu_44c;
+							display_escribir("QUE KILOMBO","");
+												
+					}
+							
+			}  //switch(boton)
+		}	//rutina boton
+		
+		if(f_sensor){
 			
 		}
-	//---------------------------------------
-	}	
-//		if(!ms_ar&&f_unidades){
+		
+		if(f_tarjeta){
+			
+		}
+		
+		
+		/* Esto son los antirrebotes, lo tengo que analizar a lo ultimo
+		//-------	Seccion teclado -----------
+		if(!ms_ar&&f_boton_pres){
+			if(f_boton_pres){
+				if(!(ms_ar)&&f_boton_pres){
+					f_boton_pres=0;
+					get_boton();
+					if(!col) display_tecla();
+					HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET);
+				}
+			}
+		}	
+		//---------------------------------------
+		//		if(!ms_ar&&f_unidades){
 		if(f_unidades){
 		if(!(ms_ar)&&f_unidades){
 			f_unidades=0;
 			cont_unidades++;
 			display_unidades();
 		}
+		*/
+		
   /* USER CODE END WHILE */
-
+	
   /* USER CODE BEGIN 3 */
-
-  }
+	
+  } // End while(1)
   /* USER CODE END 3 */
-
-}
-}
+} // End Main()
 
 /**
   * @brief System Clock Configuration
@@ -277,9 +583,9 @@ static void MX_TIM4_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 0;
+  htim4.Init.Prescaler = 1;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 0;
+  htim4.Init.Period = 15;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
   {
@@ -457,59 +763,35 @@ void delayus_block(int n){
 	}
 }
 
-void display_escribir(int instancia){
-	char linea1[16];
-	char linea2[16];
-	
-	switch(instancia){
-		case 0: sprintf(linea1,"0.INICIO");
-						sprintf(linea2,"");
-			break;
-		case 1: sprintf(linea1,"1.OPERARIO");
-						sprintf(linea2,"  ID TAG");
-			break;
-		case 2: sprintf(linea1,"2.TOTALES");
-						sprintf(linea2,"");
-			break;
-		case 3: sprintf(linea1,"3.PRODUCTIVIDAD");
-						sprintf(linea2,"");
-			break;
-		case 4: sprintf(linea1,"1.1.ROBERTO");
-						sprintf(linea2,"123456789ABCDEF0");
-			break;
-		case 5: sprintf(linea1,"2.1.TOT GOLPES");
-						sprintf(linea2,"125643");
-			break;
-		case 6: sprintf(linea1,"3.1.ROBERTO");
-						sprintf(linea2,"     75%%");
-			break;
-		case 7: sprintf(linea1,"TRABAJO EN CURSO");
-						sprintf(linea2,"GOLPES: 1564");
-			break;
-		case 8: sprintf(linea1,"TRABAJO EN CURSO");
-						sprintf(linea2,"UNIDADES: 1532");
-			break;
-		case 9: sprintf(linea1,"AGREGAR OPERARIO");
-						sprintf(linea2,"PASE TAG MAESTRO");
-			break;
-		case 10:sprintf(linea1,"AGREGAR OPERARIO");
-						sprintf(linea2,"PASE TAG NUEVO");
-			break;
-		case 11:sprintf(linea1,"AGREGAR OPERARIO");
-						sprintf(linea2,"NOMBRE: AAAAAAAA");
-			break;
-		case 12:sprintf(linea1,"AGREGAR OPERARIO");
-						sprintf(linea2,"ERROR TAG EXISTE");
-			break;
-		case 13:sprintf(linea1,"AGREGAR OPERARIO");
-						sprintf(linea2,"ERROR NO MAESTRO");
-			break;
+void display_escribir(char* linea1, char* linea2){
+	int i;
+	char l1[17];
+	char l2[17];
+
+	//Inicialización de l1 y l2. Acá lleno 16 caracteres de espacios.
+	for (i = 0; i < 16; i++) {
+		sprintf(&l1[i], " ");
+		sprintf(&l2[i], " ");
+	}
+	//Relleno de l1. Acá lleno l1 con los caracteres que haya escrito como primer parámetro y dejo el resto como estaba (espacios).
+	i = 0;
+	while(linea1[i]){						//Acá pregunto: "Si el caracter i de linea1 es un caracter..." En lugar de un End Of String.
+			l1[i] = linea1[i];
+			i++;
 		}
+	//Relleno de l2. Acá lleno l2 con los caracteres que haya escrito como segundo parámetro y dejo el resto como estaba (espacios).
+	i = 0;
+	while (linea2[i]) {						//Acá pregunto: "Si el caracter i de linea2 es un caracter..." En lugar de un End Of String.
+			l2[i] = linea2[i];
+			i++;
+		}
+	
 	LCD_Clear();
 	LCD_SetPos(0,0);
-	LCD_String(linea1);
+	LCD_String(l1);
 	LCD_SetPos(0,1);
-	LCD_String(linea2);
+	LCD_String(l2);
+
 }
 
 //------------ Seccion teclado --------------------
@@ -520,12 +802,12 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 		ms_ar=30;
 	} else {
 	fila=GPIO_Pin;
-	f_boton_pres=1;
+	f_boton=1;
 	}
 }
 
 void HAL_SYSTICK_Callback(void){
-	if (f_boton_pres==1||f_unidades) ms_ar--;
+	if (f_boton==1||f_unidades) ms_ar--;
 }
 
 void get_boton(void){

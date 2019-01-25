@@ -63,17 +63,8 @@ void LCD_WriteData(uint8_t dt)
         if(((dt >> 3)&0x01)==1) {display_d(7,1);} else {display_d(7,0);}
 				if(((dt >> 2)&0x01)==1) {display_d(6,1);} else {display_d(6,0);}
 				if(((dt >> 1)&0x01)==1) {display_d(5,1);} else {display_d(5,0);}
-				if((dt&0x01)==1) 				{display_d(4,1);} else {display_d(4,0);}
+				if(((dt >> 0)&0x01)==1) {display_d(4,1);} else {display_d(4,0);}
 }
-//---------------------------------------------------------------
-void delay(void)
-	{
-		uint16_t i;	
-		for(i=0;i<16000;i++)
-		{
-		}
-	}
-	
 
 //---------------------------------------------------------------
 
@@ -171,7 +162,7 @@ void LCD_SendChar(char ch)
 
 {
         LCD_Data((uint8_t) ch);
-        delay();
+        HAL_Delay(2); //le puse yo los 2 ms, capaz se queda corto
 }
 
  //////////////////////////////////////////////////////////////////////////
