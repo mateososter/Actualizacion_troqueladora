@@ -198,3 +198,8 @@ void LCD_CursorOff(void){
 	LCD_Command(0x0C);
   HAL_Delay(2);
 }
+
+void LCD_CursorOn(void){
+	LCD_Command(0x0F);
+  HAL_Delay(2);
+}

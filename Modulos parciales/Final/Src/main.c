@@ -69,31 +69,34 @@ UART_HandleTypeDef huart6;
 #define Menu_43c 15
 #define Menu_441 16
 #define Menu_442 17
-#define Menu_44c 18
-#define TrabajoEC_G 19 //Trabajo en curso - Golpes
-#define TrabajoEC_U 20 //Trabajo en curso - Unidades
-#define AgrOp_Maestro 21
-#define AgrOp_Nuevo 22
-#define AgrOp_Nombre 23
-#define Err_TagExiste 24
-#define Err_NMaestro 25
+#define Menu_443 18
+#define Menu_44c 19
+#define TrabajoEC_G 20 //Trabajo en curso - Golpes
+#define TrabajoEC_U 21 //Trabajo en curso - Unidades
+#define AgrOp_Maestro 22
+#define AgrOp_Nuevo 23
+#define AgrOp_Nombre 24
+#define Err_TagExiste 25
+#define Err_NMaestro 26
 
 #define b_Arriba 2 
 #define b_Abajo 8
 #define b_Derecha 6
 #define b_Izquierda 4
-#define b_Enter 12
+#define b_Enter 11
 #define b_Salir 10
-#define b_A 13
-#define b_B 14 
-#define b_C 15
-#define b_D 16
+#define b_A 12
+#define b_B 13 
+#define b_C 14
+#define b_D 15
 
 
 //-----------------------
 int fila =0;
 int col =0;
 int ms_ar=30; //milisegundos anti-rebote
+
+int boton=0;
 //-----------------------
 
 struct Operario{
@@ -113,7 +116,6 @@ char *str_productividad;
 int f_unidades=0;
 int flag=0;
 int evento=0;
-int boton=0;
 
 int f_boton=0; // flag boton presionado
 int f_sensor=0;
@@ -137,6 +139,7 @@ void display_unidades(void);
 //-	Seccion teclado	----------------------
 void get_boton(void);
 void display_tecla(void);
+void introducir_nombre(void);
 
 /* USER CODE END PFP */
 
@@ -361,14 +364,17 @@ int main(void){
 							break;
 						
 						case Menu_21:
+							instancia=Menu_2;
 							display_escribir("2.TOTALES", "");
 							break;
 					
 						case Menu_22:
+							instancia=Menu_2;
 							display_escribir("2.TOTALES", "");
 							break;
 					
 						case Menu_3x:
+							instancia=Menu_3;
 							display_escribir("3.PRODUCTIVIDAD", "");
 							break;
 						
@@ -439,14 +445,19 @@ int main(void){
 						
 						case Menu_44:
 							instancia=Menu_441;
-							display_escribir("PARA EMPEZAR", "PASE TAG MAESTRO");
+							display_escribir("AGREGAR OPERARIO", "PASE TAG MAESTRO");
 							break;
 						
-						case Menu_442:
+						case Menu_443:
 							instancia=Menu_44c;
-							display_escribir("QUE KILOMBO","");
+							display_escribir("AGREGAR OPERARIO","  CORRECTO");
 												
 					}
+					
+				case b_Salir: //Acá tengo que reinicializar todos los flags que levante en el desarrollo
+					instancia=Inicio;
+					display_escribir("0.INICIO", "");
+					break; //Sale de switch(boton)
 							
 			}  //switch(boton)
 		}	//rutina boton
@@ -825,67 +836,146 @@ void get_boton(void){
 		}else col=1;
 	} else col=0;
 	
-	char linea1[16];
-	char linea2[16];
+//	char linea1[16];
+//	char linea2[16];
 	
 	switch (fila){
 		case 0x0100:
 			switch(col){
-				case 1: sprintf(linea1,"1    ");
+				case 1:
+//			sprintf(linea1,"1    ");
+				boton = 1; 
 				break;
-				case 2:	sprintf(linea1,"2    ");
+				case 2:
+//			sprintf(linea1,"2    ");
+				boton = 2;
 				break;
-				case 3: sprintf(linea1,"3    ");
+				case 3:
+//			sprintf(linea1,"3    ");
+				boton = 3;
 				break;
-				case 4: sprintf(linea1,"A    ");
+				case 4:
+//			sprintf(linea1,"A    ");
+				boton = b_A;
 				break;
 			}
 		break;	
 		case 0x0200:
 			switch(col){
-				case 1: sprintf(linea1,"4    ");
+				case 1:
+//			sprintf(linea1,"4    ");
+				boton = 4;
 				break;
-				case 2:	sprintf(linea1,"5    ");
+				case 2:
+//			sprintf(linea1,"5    ");
+				boton = 5;
 				break;
-				case 3: sprintf(linea1,"6    ");
+				case 3:
+//			sprintf(linea1,"6    ");
+				boton = 6;
 				break;
-				case 4: sprintf(linea1,"B    ");
+				case 4:
+//			sprintf(linea1,"B    ");
+				boton = b_B;
 				break;
 			}
 		break;
 		case 0x0400:
 			switch(col){
-				case 1: sprintf(linea1,"7    ");
+				case 1:
+//			sprintf(linea1,"7    ");
+				boton = 7;
 				break;
-				case 2:	sprintf(linea1,"8    ");
+				case 2:
+//			sprintf(linea1,"8    ");
+				boton = 8;
 				break;
-				case 3: sprintf(linea1,"9    ");
+				case 3:
+//			sprintf(linea1,"9    ");
+				boton = 9;
 				break;
-				case 4: sprintf(linea1,"C    ");
+				case 4:
+//			sprintf(linea1,"C    ");
+				boton = b_C;
 				break;
 			}
 		break;		
 		case 0x0800:			
 			switch(col){
-				case 1: sprintf(linea1,"*    ");
+				case 1:
+//			sprintf(linea1,"*    ");
+				boton = b_Salir;
 				break;
-				case 2:	sprintf(linea1,"0    ");
+				case 2:
+//			sprintf(linea1,"0    ");
+				boton = 0;
 				break;
-				case 3: sprintf(linea1,"#    ");
+				case 3:
+//			sprintf(linea1,"#    ");
+				boton = b_Enter;
 				break;
-				case 4: sprintf(linea1,"D    ");
+				case 4:
+//			sprintf(linea1,"D    ");
+				boton = b_D;
 				break;
 			}
 		break;
 	}
 	col=0;
+	f_boton=1;
 	
-	sprintf(linea2,"                ");
-	LCD_Clear();
-	LCD_SetPos(0,0);
-	LCD_String(linea1);
-	LCD_SetPos(0,1);
-	LCD_String(linea2);
+//	sprintf(linea2,"                ");
+//	LCD_Clear();
+//	LCD_SetPos(0,0);
+//	LCD_String(linea1);
+//	LCD_SetPos(0,1);
+//	LCD_String(linea2);
+}
+
+void introducir_texto(void){
+	char nombre[9];
+	int i = 0;
+	for (i = 0; i < 8; i++) {
+		sprintf(&nombre[i], "A");
+	}
+	int boton=0;
+	i = 0;
+	display_escribir("AGREGAR OPERARIO", "NOMBRE: AAAAAAAA");
+	LCD_CursorOn();
+	LCD_SetPos(8+i,1); //Porqe el "AAAAAAAA" arranca en la columna 9 (0-index) y la fila 2 (0-index)
+	while (boton != b_Enter)
+		{
+				while(!f_boton) {};
+				f_boton=0;
+				switch (boton)
+				{
+				case b_Arriba:
+					if (nombre[i] >= 65 && nombre[i] < 90) nombre[i]++;
+					else if (nombre[i] == 32) nombre[i] = 65;
+					else nombre[i] = 32;
+					LCD_SendChar(nombre[i]);
+					break;
+
+				case b_Abajo:
+					if (nombre[i] > 65 && nombre[i] <= 90) nombre[i]--;
+					else if (nombre[i] == 32) nombre[i] = 90;
+					else nombre[i] = 32;
+					LCD_SendChar(nombre[i]);
+					break;
+
+				case b_Izquierda:
+					if (i) i--;
+					else i = 7;
+					LCD_SetPos(8+i,1);
+					break;
+
+				case b_Derecha:
+					if (i!=7) i++;
+					else i = 0;
+					LCD_SetPos(8+i,1);
+					break;
+				}
+		}
 }
 
 void display_tecla(void){
@@ -897,9 +987,9 @@ void display_tecla(void){
 void display_unidades(void){
 	char linea1[16];
 	char linea2[16];
-	sprintf(linea1,"UNIDADES");
-	sprintf(linea2,"%d",cont_unidades);
-	
+	sprintf(str_unidades, "%ld", cont_unidades);
+	display_escribir("2.1. TOT UNIDADES",str_unidades);
+							
 	LCD_Clear();
 	LCD_SetPos(0,0);
 	LCD_String(linea1);

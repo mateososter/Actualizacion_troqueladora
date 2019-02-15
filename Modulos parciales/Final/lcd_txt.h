@@ -38,5 +38,6 @@ void LCD_Clear(void);
 void LCD_String(char* st);
 void LCD_SetPos(uint8_t x, uint8_t y);
 void LCD_CursorOff(void);
+void LCD_CursorOn(void);
 	
 #endif /* __LCD_H__ */
