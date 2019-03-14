@@ -97,6 +97,7 @@ int col =0;
 int ms_ar=30; //milisegundos anti-rebote
 
 int boton=0;
+int operario_activo=0;
 //-----------------------
 
 struct Operario{
@@ -461,11 +462,25 @@ int main(void){
 							
 			}  //switch(boton)
 		}	//rutina boton
-		
+				
 		if(f_sensor){
-			
+			if(f_unidades){
+				cont_unidades++;
+				sprintf(str_unidades, "%ld", cont_unidades);
+				display_escribir("ACTUAL: UNIDADES",str_unidades);
+				if(operario_activo){
+					operarios[operario_activo].unidades++;
+				}
+			}else{
+				cont_golpes++;
+				sprintf(str_golpes, "%ld", cont_golpes);
+				display_escribir("ACTUAL: GOLPES",str_golpes);
+				if(operario_activo){
+					operarios[operario_activo].golpes++;
+				}
+			}
 		}
-		
+			
 		if(f_tarjeta){
 			
 		}
@@ -807,11 +822,17 @@ void display_escribir(char* linea1, char* linea2){
 
 //------------ Seccion teclado --------------------
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
-	if(GPIO_Pin==GPIO_PIN_7){
+	if(GPIO_Pin==Sensor_golpes_Pin){
 		HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
+		f_sensor=1;
+		f_unidades=0;
+	
+	}else if(GPIO_Pin==Sensor_unidades_Pin){
+		HAL_GPIO_TogglePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin);
+		f_sensor=1;
 		f_unidades=1;
-		ms_ar=30;
-	} else {
+		
+	}else {
 	fila=GPIO_Pin;
 	f_boton=1;
 	}
