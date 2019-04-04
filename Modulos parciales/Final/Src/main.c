@@ -47,6 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
+
 UART_HandleTypeDef huart6;
 
 /* USER CODE BEGIN PV */
@@ -153,7 +154,8 @@ void introducir_nombre(void);
   *
   * @retval None
   */
-int main(void){
+int main(void)
+{
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
@@ -182,7 +184,11 @@ int main(void){
   /* USER CODE BEGIN 2 */
 	
 	//-	Seccion teclado	----------------------	
-	HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET); //Prende E8, 9, 10 y 11 al mismo tiempo.
+	//Prende las columnas para que las puedan detectar las filas.
+	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
 	//----------------------------------------
 	
 	LCD_ini();
@@ -196,13 +202,15 @@ int main(void){
 	
 	display_escribir("INICIO DE","LA MAQUINA");
   instancia= Inicio;
-	/* USER CODE END 2 */
-	
+  /* USER CODE END 2 */
+
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)  {
 		
 		if(f_boton){
+			get_boton();
+			HAL_GPIO_TogglePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin);
 			f_boton=0;
 			switch(boton){
 				case b_Derecha:
@@ -461,10 +469,18 @@ int main(void){
 					break; //Sale de switch(boton)
 							
 			}  //switch(boton)
+			
+			//Prende las columnas para que las puedan detectar las filas.
+			HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
+			
 		}	//rutina boton
 				
 		if(f_sensor){
 			if(f_unidades){
+				HAL_GPIO_TogglePin(Led_Verde_GPIO_Port, Led_Verde_Pin);
 				cont_unidades++;
 				sprintf(str_unidades, "%ld", cont_unidades);
 				display_escribir("ACTUAL: UNIDADES",str_unidades);
@@ -472,6 +488,7 @@ int main(void){
 					operarios[operario_activo].unidades++;
 				}
 			}else{
+				HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
 				cont_golpes++;
 				sprintf(str_golpes, "%ld", cont_golpes);
 				display_escribir("ACTUAL: GOLPES",str_golpes);
@@ -479,6 +496,7 @@ int main(void){
 					operarios[operario_activo].golpes++;
 				}
 			}
+			f_sensor=0;
 		}
 			
 		if(f_tarjeta){
@@ -509,12 +527,13 @@ int main(void){
 		*/
 		
   /* USER CODE END WHILE */
-	
+
   /* USER CODE BEGIN 3 */
 	
   } // End while(1)
   /* USER CODE END 3 */
-} // End Main()
+
+}
 
 /**
   * @brief System Clock Configuration
@@ -609,9 +628,9 @@ static void MX_TIM4_Init(void)
   TIM_MasterConfigTypeDef sMasterConfig;
 
   htim4.Instance = TIM4;
-  htim4.Init.Prescaler = 1;
+  htim4.Init.Prescaler = 0;
   htim4.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim4.Init.Period = 15;
+  htim4.Init.Period = 16;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
   {
@@ -773,11 +792,11 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	HAL_TIM_Base_Stop_IT(&htim4);
 	flag=1;
-	HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+	//HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 }
 
 void delayus_block(int n){
-	if (n !=0) {
+	if (n) {
 		flag = 0;
 		htim4.Init.Period = (16*n);
 		if (HAL_TIM_Base_Init(&htim4) != HAL_OK)
@@ -822,13 +841,12 @@ void display_escribir(char* linea1, char* linea2){
 
 //------------ Seccion teclado --------------------
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
+	HAL_GPIO_TogglePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin);
 	if(GPIO_Pin==Sensor_golpes_Pin){
-		HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
 		f_sensor=1;
 		f_unidades=0;
 	
 	}else if(GPIO_Pin==Sensor_unidades_Pin){
-		HAL_GPIO_TogglePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin);
 		f_sensor=1;
 		f_unidades=1;
 		
@@ -839,17 +857,17 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 }
 
 void HAL_SYSTICK_Callback(void){
-	if (f_boton==1||f_unidades) ms_ar--;
+	//if (f_boton==1||f_unidades) ms_ar--; 
 }
 
 void get_boton(void){
 	
 	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
-		HAL_GPIO_WritePin(GPIOE,GPIO_PIN_8,GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port,Teclado_C1_Pin,GPIO_PIN_RESET);//Apago columna 1
 		if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
-			HAL_GPIO_WritePin(GPIOE,GPIO_PIN_9,GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(Teclado_C2_GPIO_Port,Teclado_C2_Pin,GPIO_PIN_RESET);//Apago columna 2
 			if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
-				HAL_GPIO_WritePin(GPIOE,GPIO_PIN_10,GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(Teclado_C3_GPIO_Port,Teclado_C3_Pin,GPIO_PIN_RESET);//Apago columna 3
 				if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
 					col=4;
 				}else col=3;
@@ -943,14 +961,6 @@ void get_boton(void){
 		break;
 	}
 	col=0;
-	f_boton=1;
-	
-//	sprintf(linea2,"                ");
-//	LCD_Clear();
-//	LCD_SetPos(0,0);
-//	LCD_String(linea1);
-//	LCD_SetPos(0,1);
-//	LCD_String(linea2);
 }
 
 void introducir_texto(void){
