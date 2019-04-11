@@ -103,8 +103,8 @@ int operario_activo=0;
 
 struct Operario{
 	int master;
-	char *nombre;
-	char *id;
+	char nombre[9];
+	char id[17];
 	long golpes;
 	long unidades;
 	int productividad;
@@ -112,9 +112,9 @@ struct Operario{
 
 long cont_unidades=0;
 long cont_golpes=0;
-char *str_golpes;
-char *str_unidades;
-char *str_productividad;
+char str_golpes[17];
+char str_unidades[17];
+char str_productividad[17];
 int f_unidades=0;
 int flag=0;
 int evento=0;
@@ -209,7 +209,7 @@ int main(void)
   while (1)  {
 		
 		if(f_boton){
-			get_boton();
+			//get_boton();
 			HAL_GPIO_TogglePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin);
 			f_boton=0;
 			switch(boton){
@@ -792,7 +792,6 @@ static void MX_GPIO_Init(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	HAL_TIM_Base_Stop_IT(&htim4);
 	flag=1;
-	//HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
 }
 
 void delayus_block(int n){
@@ -852,6 +851,7 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 		
 	}else {
 	fila=GPIO_Pin;
+	get_boton();
 	f_boton=1;
 	}
 }
