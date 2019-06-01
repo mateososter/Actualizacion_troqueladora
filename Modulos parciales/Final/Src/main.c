@@ -862,6 +862,33 @@ void HAL_SYSTICK_Callback(void){
 
 void get_boton(void){
 	
+	//Apago todo
+	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
+	//Prendo la Columna 1
+	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
+	//Veo si se activo la entrada
+	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=1;
+	//Apago la 1 y prendo la 2
+	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
+	//Veo si se activo la entrada
+	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=2;
+	//Apago la 2 y prendo la 3
+	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
+	//Veo si se activo la entrada
+	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=3;
+	//Apago la 3 y prendo la 4
+	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
+	//Veo si se activo la entrada
+	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=4;
+	
+	/* Este es el metodo original by YO, pero tiene problemas de selectividad de tecla. Asi que voy a probar otro.
+	
 	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
 		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port,Teclado_C1_Pin,GPIO_PIN_RESET);//Apago columna 1
 		if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
@@ -874,7 +901,7 @@ void get_boton(void){
 			}else col=2;
 		}else col=1;
 	} else col=0;
-	
+	*/
 //	char linea1[16];
 //	char linea2[16];
 	
@@ -961,6 +988,11 @@ void get_boton(void){
 		break;
 	}
 	col=0;
+	
+	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
 }
 
 void introducir_texto(void){
