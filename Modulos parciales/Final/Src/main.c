@@ -80,25 +80,25 @@ UART_HandleTypeDef huart6;
 #define Err_TagExiste 25
 #define Err_NMaestro 26
 
-#define b_Arriba 2 
-#define b_Abajo 8
+#define b_Arriba 1 
+#define b_Abajo 9
 #define b_Derecha 6
 #define b_Izquierda 4
-#define b_Enter 11
-#define b_Salir 10
-#define b_A 12
-#define b_B 13 
-#define b_C 14
+#define b_Enter 14
+#define b_Salir 12
+#define b_A 3
+#define b_B 7 
+#define b_C 11
 #define b_D 15
 
 
 //-----------------------
-int fila =0;
-int col =0;
 int ms_ar=30; //milisegundos anti-rebote
-
+int tecla[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int boton=0;
 int operario_activo=0;
+int i;
+uint8_t rxbuffer[16];
 //-----------------------
 
 struct Operario{
@@ -137,10 +137,6 @@ static void MX_USART6_UART_Init(void);
 void delayus_block(int n);
 void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
-
-//-	Seccion teclado	----------------------
-void get_boton(void);
-void display_tecla(void);
 void introducir_nombre(void);
 
 /* USER CODE END PFP */
@@ -182,15 +178,7 @@ int main(void)
   MX_TIM3_Init();
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-	
-	//-	Seccion teclado	----------------------	
-	//Prende las columnas para que las puedan detectar las filas.
-	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
-	//----------------------------------------
-	
+		
 	LCD_ini();
 	HAL_Delay(3);
 	LCD_Clear();
@@ -200,18 +188,62 @@ int main(void)
 	LCD_CursorOff();
 	HAL_Delay(3);	
 	
+	//TECLADO - Apago todo
+	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
+		
 	display_escribir("INICIO DE","LA MAQUINA");
   instancia= Inicio;
+	HAL_UART_Receive_IT(&huart6,rxbuffer,16);
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)  {
+	
+		//Encuesta teclado
+		//Prendo la Columna 1, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
+		tecla[0]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[4]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[8]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[12]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
+		tecla[1]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[5]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[9]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[13]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 3, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
+		tecla[2]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[6]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[10]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[14]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
+		tecla[3]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[7]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[11]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[15]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
+		
+		//Veo si alguna tecla fue presionada
+		f_boton=0;
+		i=0;
+		while(!f_boton && i<16){
+			f_boton=tecla[i];
+			boton=i;
+			i++;
+		}
 		
 		if(f_boton){
-			//get_boton();
-			HAL_GPIO_TogglePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin);
-			f_boton=0;
 			switch(boton){
 				case b_Derecha:
 					switch(instancia){
@@ -460,8 +492,9 @@ int main(void)
 						case Menu_443:
 							instancia=Menu_44c;
 							display_escribir("AGREGAR OPERARIO","  CORRECTO");
-												
+							break;					
 					}
+					break; //Sale de switch(boton)
 					
 				case b_Salir: //Acá tengo que reinicializar todos los flags que levante en el desarrollo
 					instancia=Inicio;
@@ -500,7 +533,7 @@ int main(void)
 		}
 			
 		if(f_tarjeta){
-			
+			HAL_GPIO_TogglePin(Led_Rojo_GPIO_Port, Led_Rojo_Pin);
 		}
 		
 		
@@ -706,13 +739,11 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOD, Led_Verde_Pin|Led_Naranja_Pin|Led_Rojo_Pin|Led_Azul_Pin 
                           |Display_D6_Pin|Display_D5_Pin|Display_D4_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : Sensor_unidades_Pin Teclado_F4_Pin Teclado_F3_Pin Teclado_F2_Pin 
-                           Teclado_F1_Pin */
-  GPIO_InitStruct.Pin = Sensor_unidades_Pin|Teclado_F4_Pin|Teclado_F3_Pin|Teclado_F2_Pin 
-                          |Teclado_F1_Pin;
+  /*Configure GPIO pin : Sensor_unidades_Pin */
+  GPIO_InitStruct.Pin = Sensor_unidades_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+  HAL_GPIO_Init(Sensor_unidades_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Teclado_C4_Pin */
   GPIO_InitStruct.Pin = Teclado_C4_Pin;
@@ -748,6 +779,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(Teclado_C1_GPIO_Port, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : Teclado_F4_Pin Teclado_F3_Pin Teclado_F2_Pin Teclado_F1_Pin */
+  GPIO_InitStruct.Pin = Teclado_F4_Pin|Teclado_F3_Pin|Teclado_F2_Pin|Teclado_F1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+
   /*Configure GPIO pins : Led_Verde_Pin Led_Naranja_Pin Led_Rojo_Pin Led_Azul_Pin */
   GPIO_InitStruct.Pin = Led_Verde_Pin|Led_Naranja_Pin|Led_Rojo_Pin|Led_Azul_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -782,9 +819,6 @@ static void MX_GPIO_Init(void)
 
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 
@@ -838,7 +872,7 @@ void display_escribir(char* linea1, char* linea2){
 
 }
 
-//------------ Seccion teclado --------------------
+
 void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 	HAL_GPIO_TogglePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin);
 	if(GPIO_Pin==Sensor_golpes_Pin){
@@ -849,151 +883,17 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 		f_sensor=1;
 		f_unidades=1;
 		
-	}else {
-	fila=GPIO_Pin;
-	get_boton();
-	f_boton=1;
 	}
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart){
+	f_tarjeta=1;
 }
 
 void HAL_SYSTICK_Callback(void){
 	//if (f_boton==1||f_unidades) ms_ar--; 
 }
 
-void get_boton(void){
-	
-	//Apago todo
-	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
-	//Prendo la Columna 1
-	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
-	//Veo si se activo la entrada
-	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=1;
-	//Apago la 1 y prendo la 2
-	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
-	//Veo si se activo la entrada
-	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=2;
-	//Apago la 2 y prendo la 3
-	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
-	//Veo si se activo la entrada
-	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=3;
-	//Apago la 3 y prendo la 4
-	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
-	//Veo si se activo la entrada
-	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET) col=4;
-	
-	/* Este es el metodo original by YO, pero tiene problemas de selectividad de tecla. Asi que voy a probar otro.
-	
-	if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
-		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port,Teclado_C1_Pin,GPIO_PIN_RESET);//Apago columna 1
-		if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
-			HAL_GPIO_WritePin(Teclado_C2_GPIO_Port,Teclado_C2_Pin,GPIO_PIN_RESET);//Apago columna 2
-			if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
-				HAL_GPIO_WritePin(Teclado_C3_GPIO_Port,Teclado_C3_Pin,GPIO_PIN_RESET);//Apago columna 3
-				if (HAL_GPIO_ReadPin(GPIOE,fila)==GPIO_PIN_SET){
-					col=4;
-				}else col=3;
-			}else col=2;
-		}else col=1;
-	} else col=0;
-	*/
-//	char linea1[16];
-//	char linea2[16];
-	
-	switch (fila){
-		case 0x0100:
-			switch(col){
-				case 1:
-//			sprintf(linea1,"1    ");
-				boton = 1; 
-				break;
-				case 2:
-//			sprintf(linea1,"2    ");
-				boton = 2;
-				break;
-				case 3:
-//			sprintf(linea1,"3    ");
-				boton = 3;
-				break;
-				case 4:
-//			sprintf(linea1,"A    ");
-				boton = b_A;
-				break;
-			}
-		break;	
-		case 0x0200:
-			switch(col){
-				case 1:
-//			sprintf(linea1,"4    ");
-				boton = 4;
-				break;
-				case 2:
-//			sprintf(linea1,"5    ");
-				boton = 5;
-				break;
-				case 3:
-//			sprintf(linea1,"6    ");
-				boton = 6;
-				break;
-				case 4:
-//			sprintf(linea1,"B    ");
-				boton = b_B;
-				break;
-			}
-		break;
-		case 0x0400:
-			switch(col){
-				case 1:
-//			sprintf(linea1,"7    ");
-				boton = 7;
-				break;
-				case 2:
-//			sprintf(linea1,"8    ");
-				boton = 8;
-				break;
-				case 3:
-//			sprintf(linea1,"9    ");
-				boton = 9;
-				break;
-				case 4:
-//			sprintf(linea1,"C    ");
-				boton = b_C;
-				break;
-			}
-		break;		
-		case 0x0800:			
-			switch(col){
-				case 1:
-//			sprintf(linea1,"*    ");
-				boton = b_Salir;
-				break;
-				case 2:
-//			sprintf(linea1,"0    ");
-				boton = 0;
-				break;
-				case 3:
-//			sprintf(linea1,"#    ");
-				boton = b_Enter;
-				break;
-				case 4:
-//			sprintf(linea1,"D    ");
-				boton = b_D;
-				break;
-			}
-		break;
-	}
-	col=0;
-	
-	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
-	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
-}
 
 void introducir_texto(void){
 	char nombre[9];
@@ -1039,10 +939,6 @@ void introducir_texto(void){
 					break;
 				}
 		}
-}
-
-void display_tecla(void){
-	
 }
 
 //-------------------------------------------------

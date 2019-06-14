@@ -65,16 +65,12 @@
 #define Teclado_C1_GPIO_Port GPIOE
 #define Teclado_F4_Pin GPIO_PIN_9
 #define Teclado_F4_GPIO_Port GPIOE
-#define Teclado_F4_EXTI_IRQn EXTI9_5_IRQn
 #define Teclado_F3_Pin GPIO_PIN_11
 #define Teclado_F3_GPIO_Port GPIOE
-#define Teclado_F3_EXTI_IRQn EXTI15_10_IRQn
 #define Teclado_F2_Pin GPIO_PIN_13
 #define Teclado_F2_GPIO_Port GPIOE
-#define Teclado_F2_EXTI_IRQn EXTI15_10_IRQn
 #define Teclado_F1_Pin GPIO_PIN_15
 #define Teclado_F1_GPIO_Port GPIOE
-#define Teclado_F1_EXTI_IRQn EXTI15_10_IRQn
 #define Led_Verde_Pin GPIO_PIN_12
 #define Led_Verde_GPIO_Port GPIOD
 #define Led_Naranja_Pin GPIO_PIN_13
