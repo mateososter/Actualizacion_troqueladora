@@ -54,6 +54,14 @@
 #define Sensor_unidades_EXTI_IRQn EXTI9_5_IRQn
 #define Teclado_C4_Pin GPIO_PIN_1
 #define Teclado_C4_GPIO_Port GPIOA
+#define RFID_SDA_Pin GPIO_PIN_4
+#define RFID_SDA_GPIO_Port GPIOA
+#define RFID_SCK_Pin GPIO_PIN_5
+#define RFID_SCK_GPIO_Port GPIOA
+#define RFID_MISO_Pin GPIO_PIN_6
+#define RFID_MISO_GPIO_Port GPIOA
+#define RFID_MOSI_Pin GPIO_PIN_7
+#define RFID_MOSI_GPIO_Port GPIOA
 #define Sensor_golpes_Pin GPIO_PIN_4
 #define Sensor_golpes_GPIO_Port GPIOC
 #define Sensor_golpes_EXTI_IRQn EXTI4_IRQn

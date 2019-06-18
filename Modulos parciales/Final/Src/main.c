@@ -42,9 +42,12 @@
 
 /* USER CODE BEGIN Includes */
 #include "lcd_txt.h"
+#include "tm_stm32f4_mfrc522.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
+SPI_HandleTypeDef hspi1;
+
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
@@ -131,6 +134,7 @@ static void MX_GPIO_Init(void);
 static void MX_TIM4_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_USART6_UART_Init(void);
+static void MX_SPI1_Init(void);
 
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
@@ -177,6 +181,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM3_Init();
   MX_USART6_UART_Init();
+  MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 		
 	LCD_ini();
@@ -621,6 +626,30 @@ void SystemClock_Config(void)
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
+/* SPI1 init function */
+static void MX_SPI1_Init(void)
+{
+
+  /* SPI1 parameter configuration*/
+  hspi1.Instance = SPI1;
+  hspi1.Init.Mode = SPI_MODE_MASTER;
+  hspi1.Init.Direction = SPI_DIRECTION_2LINES;
+  hspi1.Init.DataSize = SPI_DATASIZE_8BIT;
+  hspi1.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi1.Init.NSS = SPI_NSS_SOFT;
+  hspi1.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
+  hspi1.Init.FirstBit = SPI_FIRSTBIT_MSB;
+  hspi1.Init.TIMode = SPI_TIMODE_DISABLE;
+  hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
+  hspi1.Init.CRCPolynomial = 10;
+  if (HAL_SPI_Init(&hspi1) != HAL_OK)
+  {
+    _Error_Handler(__FILE__, __LINE__);
+  }
+
+}
+
 /* TIM3 init function */
 static void MX_TIM3_Init(void)
 {
@@ -724,7 +753,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, Teclado_C4_Pin|RFID_SDA_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, Teclado_C3_Pin|Display_D7_Pin, GPIO_PIN_RESET);
@@ -745,12 +774,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(Sensor_unidades_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : Teclado_C4_Pin */
-  GPIO_InitStruct.Pin = Teclado_C4_Pin;
+  /*Configure GPIO pins : Teclado_C4_Pin RFID_SDA_Pin */
+  GPIO_InitStruct.Pin = Teclado_C4_Pin|RFID_SDA_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(Teclado_C4_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Sensor_golpes_Pin */
   GPIO_InitStruct.Pin = Sensor_golpes_Pin;
@@ -894,7 +923,22 @@ void HAL_SYSTICK_Callback(void){
 	//if (f_boton==1||f_unidades) ms_ar--; 
 }
 
+void rfid_init(void){
+	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_SET);
+	
+}
 
+void rfid_sub_WriteRegister(uint8_t address, uint8_t value){
+	//CS low
+	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_RESET);
+	//Send address
+	HAL_SPI_Transmit(&hspi1,&
+	TM_SPI_Send(MFRC522_SPI, (addr << 1) & 0x7E);
+	//Send data	
+	TM_SPI_Send(MFRC522_SPI, val);
+	//CS high
+	MFRC522_CS_HIGH;
+}
 void introducir_texto(void){
 	char nombre[9];
 	int i = 0;
