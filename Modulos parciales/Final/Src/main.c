@@ -301,6 +301,8 @@ int main(void)
 	LCD_CursorOff();
 	HAL_Delay(3);	
 	
+	rfid_init();
+	
 	//TECLADO - Apago todo
 	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
@@ -645,6 +647,7 @@ int main(void)
 			f_sensor=0;
 		}
 			
+		rfid_Check(cardid);
 		if(f_tarjeta){
 			HAL_GPIO_TogglePin(Led_Rojo_GPIO_Port, Led_Rojo_Pin);
 		}
@@ -980,9 +983,6 @@ void HAL_GPIO_EXTI_Callback (uint16_t GPIO_Pin){
 	}
 }
 
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef* huart){
-	f_tarjeta=1;
-}
 
 void HAL_SYSTICK_Callback(void){
 	//if (f_boton==1||f_unidades) ms_ar--; 
@@ -1009,6 +1009,7 @@ void rfid_init(void){
 	//Hace un reset por software del micro del RFID
 	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, PCD_RESETPHASE);
 	//Configuracion inicial
+	HAL_Delay(1);
 	rfid_sub_WriteRegister(MFRC522_REG_T_MODE, 0x8D);
 	rfid_sub_WriteRegister(MFRC522_REG_T_PRESCALER, 0x3E);
 	rfid_sub_WriteRegister(MFRC522_REG_T_RELOAD_L, 30);           
@@ -1021,7 +1022,7 @@ void rfid_init(void){
 }
 
 int rfid_Check(uint8_t* id) {
-	int estado;
+	int estado=MI_ERR;
 	uint16_t backBits;
 	//Find cards, return card type
 	//status = TM_MFRC522_Request(PICC_REQIDL, id);	
