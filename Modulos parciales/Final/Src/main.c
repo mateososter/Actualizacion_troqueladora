@@ -42,7 +42,6 @@
 
 /* USER CODE BEGIN Includes */
 #include "lcd_txt.h"
-#include "tm_stm32f4_mfrc522.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -189,6 +188,9 @@ UART_HandleTypeDef huart6;
 #define b_C 11
 #define b_D 15
 
+#define MI_ERR 2
+#define MI_OK 0
+#define MI_NOTAGERR 1
 
 //-----------------------
 int ms_ar=30; //milisegundos anti-rebote
@@ -239,6 +241,15 @@ void delayus_block(int n);
 void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
 void introducir_nombre(void);
+void rfid_init(void);
+int rfid_Check(uint8_t* id);
+int rfid_sub_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t* backData, uint16_t* backLen);
+int rfid_sub_Anticoll(uint8_t* id);
+void rfid_sub_Halt(void);
+void rfid_sub_CalculateCRC(uint8_t*  pIndata, uint8_t len, uint8_t* pOutData);
+void rfid_sub_WriteRegister(uint8_t address, uint8_t value);
+void rfid_sub_ReadRegister(uint8_t address);
+void rfid_sub_AntennaOn(void);
 
 /* USER CODE END PFP */
 
@@ -1009,37 +1020,199 @@ void rfid_init(void){
 	rfid_sub_AntennaOn();
 }
 
-void rfid_Check(uint8_t* id) {
+int rfid_Check(uint8_t* id) {
 	int estado;
 	uint16_t backBits;
 	//Find cards, return card type
 	//status = TM_MFRC522_Request(PICC_REQIDL, id);	
-	TM_MFRC522_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x07);
+	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x07);
 	txbuffer[0]=PICC_REQIDL;
-	estado = rfid_sub_ToCard(PCD_TRANSCEIVE, txbuffer, 1, rxbuffer, &backBits)
+	estado = rfid_sub_ToCard(PCD_TRANSCEIVE, txbuffer, 1, rxbuffer, &backBits);
 	
-	if (status == MI_OK) {
+	if (estado == MI_OK) {
 		//Card detected
 		//Anti-collision, return card serial number 4 bytes
-		status = TM_MFRC522_Anticoll(id);	
+		estado = rfid_sub_Anticoll(id);	
 	}
-	TM_MFRC522_Halt();			//Command card into hibernation 
+	rfid_sub_Halt();			//Command card into hibernation 
 
 	
+	return estado;
+}
+
+int rfid_sub_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t* backData, uint16_t* backLen){
+	int status = MI_ERR;
+	uint8_t irqEn = 0x00;
+	uint8_t waitIRq = 0x00;
+	uint8_t lastBits;
+	uint8_t n;
+	uint16_t i;
+
+	switch (command) {
+		case PCD_AUTHENT: {
+			irqEn = 0x12;
+			waitIRq = 0x10;
+			break;
+		}
+		case PCD_TRANSCEIVE: {
+			irqEn = 0x77;
+			waitIRq = 0x30;
+			break;
+		}
+		default:
+			break;
+	}
+
+	rfid_sub_WriteRegister(MFRC522_REG_COMM_IE_N, irqEn | 0x80);
+	rfid_sub_ReadRegister(MFRC522_REG_COMM_IRQ);
+	rfid_sub_WriteRegister(MFRC522_REG_COMM_IRQ, rxbuffer[1]&~(0x80));
+	rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
+	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL, rxbuffer[1]|(0x80));
+
+	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, PCD_IDLE);
+
+	//Writing data to the FIFO
+	for (i = 0; i < sendLen; i++) {   
+		rfid_sub_WriteRegister(MFRC522_REG_FIFO_DATA, sendData[i]);    
+	}
+
+	//Execute the command
+	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, command);
+	if (command == PCD_TRANSCEIVE) {    
+		//StartSend=1,transmission of data starts  
+		rfid_sub_ReadRegister(MFRC522_REG_BIT_FRAMING);
+		rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, rxbuffer[1]|(0x80));
+	}   
+
+	//Waiting to receive data to complete
+	i = 2000;	//i according to the clock frequency adjustment, the operator M1 card maximum waiting time 25ms???
+	do {
+		//CommIrqReg[7..0]
+		//Set1 TxIRq RxIRq IdleIRq HiAlerIRq LoAlertIRq ErrIRq TimerIRq
+		rfid_sub_ReadRegister(MFRC522_REG_COMM_IRQ);
+		n = rxbuffer[1];
+		i--;
+	} while ((i!=0) && !(n&0x01) && !(n&waitIRq));
+
+	//StartSend=0
+	rfid_sub_ReadRegister(MFRC522_REG_BIT_FRAMING);
+	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, rxbuffer[1]&~(0x80));
+	
+	if (i != 0)  {
+		rfid_sub_ReadRegister(MFRC522_REG_ERROR);
+		if (!(rxbuffer[1] & 0x1B)) {
+			status = MI_OK;
+			if (n & irqEn & 0x01) {   
+				status = MI_NOTAGERR;			
+			}
+
+			if (command == PCD_TRANSCEIVE) {
+				rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
+				n = rxbuffer[1];
+				rfid_sub_ReadRegister(MFRC522_REG_CONTROL) ;
+				lastBits = rxbuffer[1]& 0x07;
+				if (lastBits) {   
+					*backLen = (n - 1) * 8 + lastBits;   
+				} else {   
+					*backLen = n * 8;   
+				}
+
+				if (n == 0) {   
+					n = 1;    
+				}
+				if (n > 16) {   
+					n = 16;   
+				}
+
+				//Reading the received data in FIFO
+				for (i = 0; i < n; i++) {   
+					rfid_sub_ReadRegister(MFRC522_REG_FIFO_DATA);   
+					backData[i] = rxbuffer[1];
+				}
+			}
+		} else {   
+			status = MI_ERR;  
+		}
+	}
+
 	return status;
 }
 
-int rfid_sub_ToCard()
+int rfid_sub_Anticoll(uint8_t* id){
+	int status;
+	uint8_t i;
+	uint8_t serNumCheck = 0;
+	uint16_t unLen;
+	uint8_t serNum[4];
+
+	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x00);		//TxLastBists = BitFramingReg[2..0]
+
+	serNum[0] = PICC_ANTICOLL;
+	serNum[1] = 0x20;
+	status = rfid_sub_ToCard(PCD_TRANSCEIVE, serNum, 2, serNum, &unLen);
+
+	if (status == MI_OK) {
+		//Check card serial number
+		for (i = 0; i < 4; i++) {   
+			serNumCheck ^= serNum[i];
+		}
+		if (serNumCheck != serNum[i]) {   
+			status = MI_ERR;    
+		}
+	}
+	return status;
+} 
+
+void rfid_sub_Halt(void){
+	uint16_t unLen;
+	uint8_t buff[4]; 
+
+	buff[0] = PICC_HALT;
+	buff[1] = 0;
+	rfid_sub_CalculateCRC(buff, 2, &buff[2]);
+
+	rfid_sub_ToCard(PCD_TRANSCEIVE, buff, 4, buff, &unLen);
+}
+void rfid_sub_CalculateCRC(uint8_t*  pIndata, uint8_t len, uint8_t* pOutData) {
+	uint8_t i, n;
+
+	//CRCIrq = 0
+	rfid_sub_ReadRegister(MFRC522_REG_DIV_IRQ);
+	rfid_sub_WriteRegister(MFRC522_REG_DIV_IRQ,rxbuffer[1]&~(0x04));
+	//Clear the FIFO pointer
+	rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
+	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL,rxbuffer[1]|(0x80));
+
+	//Writing data to the FIFO	
+	for (i = 0; i < len; i++) {   
+		rfid_sub_WriteRegister(MFRC522_REG_FIFO_DATA, *(pIndata+i));   
+	}
+	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, PCD_CALCCRC);
+
+	//Wait CRC calculation is complete
+	i = 0xFF;
+	do {
+		rfid_sub_ReadRegister(MFRC522_REG_DIV_IRQ);
+		n = rxbuffer[1];
+		i--;
+	} while ((i!=0) && !(n&0x04));			//CRCIrq = 1
+
+	//Read CRC calculation result
+	rfid_sub_ReadRegister(MFRC522_REG_CRC_RESULT_L);
+	pOutData[0] = rxbuffer[1];
+	rfid_sub_ReadRegister(MFRC522_REG_CRC_RESULT_M);
+	pOutData[1] = rxbuffer[1];
+}
 
 void rfid_sub_WriteRegister(uint8_t address, uint8_t value){// donde address es la direccion del registro que quiero escribir.
 	//CS low
 	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_RESET);
 	//Send address
 	txbuffer[0]=(address << 1) & 0x7E;
-	HAL_SPI_Transmit(&hspi1,&txbuffer,1,10);
+	HAL_SPI_Transmit(&hspi1,txbuffer,1,10);
 	//Send data	
 	txbuffer[0]=value;
-	HAL_SPI_Transmit(&hspi1,&txbuffer,1,10);
+	HAL_SPI_Transmit(&hspi1,txbuffer,1,10);
 	//CS high
 	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_SET);
 }
@@ -1048,8 +1221,8 @@ void rfid_sub_ReadRegister(uint8_t address){
 	//CS low
 	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_RESET);
 	
-	txbuffer[0]=(address << 1) & 0x7E | 0x80;
-	HAL_SPI_TransmitReceive(&hspi1,&txbuffer,&rxbuffer,2,10);
+	txbuffer[0]=((address << 1) & 0x7E) | 0x80;
+	HAL_SPI_TransmitReceive(&hspi1,txbuffer,rxbuffer,2,10);
 	
 	//CS high
 	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_SET);
@@ -1059,8 +1232,7 @@ void rfid_sub_AntennaOn(void){
 	rfid_sub_ReadRegister(MFRC522_REG_TX_CONTROL);
 	
 	if (!(rxbuffer[1] & 0x03)) {
-		txbuffer[0]=rxbuffer[1] & 0x03;
-		HAL_SPI_Transmit(&hspi1,&txbuffer,1,10);
+		rfid_sub_WriteRegister(MFRC522_REG_TX_CONTROL,rxbuffer[1] | 0x03);
 	}
 }
 

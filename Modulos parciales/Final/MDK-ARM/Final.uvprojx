@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F411xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\..\Final</IncludePath>
+              <IncludePath>../Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc; ../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy; ../Drivers/CMSIS/Device/ST/STM32F4xx/Include; ../Drivers/CMSIS/Include; ..\..\Final</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -466,6 +466,11 @@
               <FileType>1</FileType>
               <FilePath>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f4xx_hal_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -505,26 +510,6 @@
               <FileName>lcd_txt.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\lcd_txt.h</FilePath>
-            </File>
-            <File>
-              <FileName>tm_stm32f4_mfrc522.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\tm_stm32f4_mfrc522.c</FilePath>
-            </File>
-            <File>
-              <FileName>tm_stm32f4_mfrc522.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\tm_stm32f4_mfrc522.h</FilePath>
-            </File>
-            <File>
-              <FileName>tm_stm32f4_spi.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\tm_stm32f4_spi.h</FilePath>
-            </File>
-            <File>
-              <FileName>tm_stm32f4_spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\tm_stm32f4_spi.c</FilePath>
             </File>
           </Files>
         </Group>
