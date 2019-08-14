@@ -337,7 +337,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F411xE</Define>
               <Undefine></Undefine>
-              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include</IncludePath>
+              <IncludePath>../Inc;../Drivers/STM32F4xx_HAL_Driver/Inc;../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy;../Drivers/CMSIS/Device/ST/STM32F4xx/Include;../Drivers/CMSIS/Include;..\Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -495,6 +495,16 @@
               <FileName>stm32f4xx_hal_msp.c</FileName>
               <FileType>1</FileType>
               <FilePath>../Src/stm32f4xx_hal_msp.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_mfrc522.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Inc\tm_stm32f4_mfrc522.c</FilePath>
+            </File>
+            <File>
+              <FileName>tm_stm32f4_mfrc522.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\Inc\tm_stm32f4_mfrc522.h</FilePath>
             </File>
           </Files>
         </Group>

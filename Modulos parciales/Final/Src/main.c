@@ -42,6 +42,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "lcd_txt.h"
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -198,6 +199,7 @@ int tecla[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int boton=0;
 int operario_activo=0;
 int i;
+uint8_t leido;
 uint8_t rxbuffer[16];
 uint8_t txbuffer[16];
 uint8_t cardid[4];
@@ -232,7 +234,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_TIM4_Init(void);
 static void MX_TIM3_Init(void);
-static void MX_USART6_UART_Init(void);
+//static void MX_USART6_UART_Init(void);
 static void MX_SPI1_Init(void);
 
 /* USER CODE BEGIN PFP */
@@ -288,7 +290,7 @@ int main(void)
   MX_GPIO_Init();
   MX_TIM4_Init();
   MX_TIM3_Init();
-  MX_USART6_UART_Init();
+  //MX_USART6_UART_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 		
@@ -311,7 +313,7 @@ int main(void)
 		
 	display_escribir("INICIO DE","LA MAQUINA");
   instancia= Inicio;
-	HAL_UART_Receive_IT(&huart6,rxbuffer,16);
+	//HAL_UART_Receive_IT(&huart6,rxbuffer,16);
 	
   /* USER CODE END 2 */
 
@@ -618,12 +620,6 @@ int main(void)
 							
 			}  //switch(boton)
 			
-			//Prende las columnas para que las puedan detectar las filas.
-			HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
-			
 		}	//rutina boton
 				
 		if(f_sensor){
@@ -648,7 +644,7 @@ int main(void)
 		}
 			
 		rfid_Check(cardid);
-		if(f_tarjeta){
+		if(cardid[0]){
 			HAL_GPIO_TogglePin(Led_Rojo_GPIO_Port, Led_Rojo_Pin);
 		}
 		
@@ -826,23 +822,23 @@ static void MX_TIM4_Init(void)
 }
 
 /* USART6 init function */
-static void MX_USART6_UART_Init(void)
-{
+//static void MX_USART6_UART_Init(void)
+//{
 
-  huart6.Instance = USART6;
-  huart6.Init.BaudRate = 9600;
-  huart6.Init.WordLength = UART_WORDLENGTH_8B;
-  huart6.Init.StopBits = UART_STOPBITS_1;
-  huart6.Init.Parity = UART_PARITY_NONE;
-  huart6.Init.Mode = UART_MODE_RX;
-  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart6) != HAL_OK)
-  {
-    _Error_Handler(__FILE__, __LINE__);
-  }
+//  huart6.Instance = USART6;
+//  huart6.Init.BaudRate = 9600;
+//  huart6.Init.WordLength = UART_WORDLENGTH_8B;
+//  huart6.Init.StopBits = UART_STOPBITS_1;
+//  huart6.Init.Parity = UART_PARITY_NONE;
+//  huart6.Init.Mode = UART_MODE_RX;
+//  huart6.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+//  huart6.Init.OverSampling = UART_OVERSAMPLING_16;
+//  if (HAL_UART_Init(&huart6) != HAL_OK)
+//  {
+//    _Error_Handler(__FILE__, __LINE__);
+//  }
 
-}
+//}
 
 /** Configure pins as 
         * Analog 
@@ -1066,9 +1062,11 @@ int rfid_sub_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t
 
 	rfid_sub_WriteRegister(MFRC522_REG_COMM_IE_N, irqEn | 0x80);
 	rfid_sub_ReadRegister(MFRC522_REG_COMM_IRQ);
-	rfid_sub_WriteRegister(MFRC522_REG_COMM_IRQ, rxbuffer[1]&~(0x80));
+	leido=rxbuffer[1];
+	rfid_sub_WriteRegister(MFRC522_REG_COMM_IRQ, leido&~(0x80));
 	rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
-	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL, rxbuffer[1]|(0x80));
+	leido=rxbuffer[1];
+	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL, leido|(0x80));
 
 	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, PCD_IDLE);
 
@@ -1082,7 +1080,8 @@ int rfid_sub_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t
 	if (command == PCD_TRANSCEIVE) {    
 		//StartSend=1,transmission of data starts  
 		rfid_sub_ReadRegister(MFRC522_REG_BIT_FRAMING);
-		rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, rxbuffer[1]|(0x80));
+		leido=rxbuffer[1];
+		rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, leido|(0x80));
 	}   
 
 	//Waiting to receive data to complete
@@ -1097,7 +1096,8 @@ int rfid_sub_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t
 
 	//StartSend=0
 	rfid_sub_ReadRegister(MFRC522_REG_BIT_FRAMING);
-	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, rxbuffer[1]&~(0x80));
+	leido=rxbuffer[1];
+	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, leido&~(0x80));
 	
 	if (i != 0)  {
 		rfid_sub_ReadRegister(MFRC522_REG_ERROR);
@@ -1179,10 +1179,12 @@ void rfid_sub_CalculateCRC(uint8_t*  pIndata, uint8_t len, uint8_t* pOutData) {
 
 	//CRCIrq = 0
 	rfid_sub_ReadRegister(MFRC522_REG_DIV_IRQ);
-	rfid_sub_WriteRegister(MFRC522_REG_DIV_IRQ,rxbuffer[1]&~(0x04));
+	leido=rxbuffer[1];
+	rfid_sub_WriteRegister(MFRC522_REG_DIV_IRQ,leido&~(0x04));
 	//Clear the FIFO pointer
 	rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
-	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL,rxbuffer[1]|(0x80));
+	leido=rxbuffer[1];
+	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL,leido|(0x80));
 
 	//Writing data to the FIFO	
 	for (i = 0; i < len; i++) {   
@@ -1233,7 +1235,8 @@ void rfid_sub_AntennaOn(void){
 	rfid_sub_ReadRegister(MFRC522_REG_TX_CONTROL);
 	
 	if (!(rxbuffer[1] & 0x03)) {
-		rfid_sub_WriteRegister(MFRC522_REG_TX_CONTROL,rxbuffer[1] | 0x03);
+		leido=rxbuffer[1];
+		rfid_sub_WriteRegister(MFRC522_REG_TX_CONTROL,leido | 0x03);
 	}
 }
 
