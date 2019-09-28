@@ -87,10 +87,6 @@
 #define Led_Rojo_GPIO_Port GPIOD
 #define Led_Azul_Pin GPIO_PIN_15
 #define Led_Azul_GPIO_Port GPIOD
-#define Rx_LectorRFID_Pin GPIO_PIN_6
-#define Rx_LectorRFID_GPIO_Port GPIOC
-#define Tx_LectorRFID_Pin GPIO_PIN_7
-#define Tx_LectorRFID_GPIO_Port GPIOC
 #define Display_D7_Pin GPIO_PIN_11
 #define Display_D7_GPIO_Port GPIOC
 #define Display_D6_Pin GPIO_PIN_0

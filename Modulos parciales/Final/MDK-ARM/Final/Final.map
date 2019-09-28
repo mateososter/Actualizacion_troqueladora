@@ -19,7 +19,6 @@ Section Cross References
     startup_stm32f411xe.o(RESET) refers to stm32f4xx_it.o(i.EXTI9_5_IRQHandler) for EXTI9_5_IRQHandler
     startup_stm32f411xe.o(RESET) refers to stm32f4xx_it.o(i.TIM3_IRQHandler) for TIM3_IRQHandler
     startup_stm32f411xe.o(RESET) refers to stm32f4xx_it.o(i.TIM4_IRQHandler) for TIM4_IRQHandler
-    startup_stm32f411xe.o(RESET) refers to stm32f4xx_it.o(i.USART6_IRQHandler) for USART6_IRQHandler
     startup_stm32f411xe.o(.text) refers to system_stm32f4xx.o(i.SystemInit) for SystemInit
     startup_stm32f411xe.o(.text) refers to entry.o(.ARM.Collect$$$$00000000) for __main
     stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority) refers to stm32f4xx_hal_cortex.o(i.NVIC_SetPriority) for NVIC_SetPriority
@@ -160,66 +159,6 @@ Section Cross References
     stm32f4xx_hal_rcc_ex.o(i.HAL_RCC_DeInit) refers to stm32f4xx_hal.o(i.HAL_GetTick) for HAL_GetTick
     stm32f4xx_hal_rcc_ex.o(i.HAL_RCC_DeInit) refers to stm32f4xx_hal.o(i.HAL_InitTick) for HAL_InitTick
     stm32f4xx_hal_rcc_ex.o(i.HAL_RCC_DeInit) refers to system_stm32f4xx.o(.data) for SystemCoreClock
-    stm32f4xx_hal_uart.o(i.HAL_HalfDuplex_Init) refers to stm32f4xx_hal_msp.o(i.HAL_UART_MspInit) for HAL_UART_MspInit
-    stm32f4xx_hal_uart.o(i.HAL_HalfDuplex_Init) refers to stm32f4xx_hal_uart.o(i.UART_SetConfig) for UART_SetConfig
-    stm32f4xx_hal_uart.o(i.HAL_LIN_Init) refers to stm32f4xx_hal_msp.o(i.HAL_UART_MspInit) for HAL_UART_MspInit
-    stm32f4xx_hal_uart.o(i.HAL_LIN_Init) refers to stm32f4xx_hal_uart.o(i.UART_SetConfig) for UART_SetConfig
-    stm32f4xx_hal_uart.o(i.HAL_MultiProcessor_Init) refers to stm32f4xx_hal_msp.o(i.HAL_UART_MspInit) for HAL_UART_MspInit
-    stm32f4xx_hal_uart.o(i.HAL_MultiProcessor_Init) refers to stm32f4xx_hal_uart.o(i.UART_SetConfig) for UART_SetConfig
-    stm32f4xx_hal_uart.o(i.HAL_UART_Abort) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort) for HAL_DMA_Abort
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceive) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort) for HAL_DMA_Abort
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceive_IT) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT) for HAL_DMA_Abort_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceive_IT) refers to stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceiveCpltCallback) for HAL_UART_AbortReceiveCpltCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceive_IT) refers to stm32f4xx_hal_uart.o(i.UART_DMARxOnlyAbortCallback) for UART_DMARxOnlyAbortCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmit) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort) for HAL_DMA_Abort
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmit_IT) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT) for HAL_DMA_Abort_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmit_IT) refers to stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmitCpltCallback) for HAL_UART_AbortTransmitCpltCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmit_IT) refers to stm32f4xx_hal_uart.o(i.UART_DMATxOnlyAbortCallback) for UART_DMATxOnlyAbortCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_Abort_IT) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT) for HAL_DMA_Abort_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_Abort_IT) refers to stm32f4xx_hal_uart.o(i.HAL_UART_AbortCpltCallback) for HAL_UART_AbortCpltCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_Abort_IT) refers to stm32f4xx_hal_uart.o(i.UART_DMATxAbortCallback) for UART_DMATxAbortCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_Abort_IT) refers to stm32f4xx_hal_uart.o(i.UART_DMARxAbortCallback) for UART_DMARxAbortCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_DMAStop) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort) for HAL_DMA_Abort
-    stm32f4xx_hal_uart.o(i.HAL_UART_DMAStop) refers to stm32f4xx_hal_uart.o(i.UART_EndTxTransfer) for UART_EndTxTransfer
-    stm32f4xx_hal_uart.o(i.HAL_UART_DMAStop) refers to stm32f4xx_hal_uart.o(i.UART_EndRxTransfer) for UART_EndRxTransfer
-    stm32f4xx_hal_uart.o(i.HAL_UART_DeInit) refers to stm32f4xx_hal_msp.o(i.HAL_UART_MspDeInit) for HAL_UART_MspDeInit
-    stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) refers to stm32f4xx_hal_uart.o(i.UART_Receive_IT) for UART_Receive_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) refers to stm32f4xx_hal_uart.o(i.UART_EndRxTransfer) for UART_EndRxTransfer
-    stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT) for HAL_DMA_Abort_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) refers to stm32f4xx_hal_uart.o(i.HAL_UART_ErrorCallback) for HAL_UART_ErrorCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) refers to stm32f4xx_hal_uart.o(i.UART_Transmit_IT) for UART_Transmit_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) refers to stm32f4xx_hal_uart.o(i.HAL_UART_TxCpltCallback) for HAL_UART_TxCpltCallback
-    stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) refers to stm32f4xx_hal_uart.o(i.UART_DMAAbortOnError) for UART_DMAAbortOnError
-    stm32f4xx_hal_uart.o(i.HAL_UART_Init) refers to stm32f4xx_hal_msp.o(i.HAL_UART_MspInit) for HAL_UART_MspInit
-    stm32f4xx_hal_uart.o(i.HAL_UART_Init) refers to stm32f4xx_hal_uart.o(i.UART_SetConfig) for UART_SetConfig
-    stm32f4xx_hal_uart.o(i.HAL_UART_Receive) refers to stm32f4xx_hal.o(i.HAL_GetTick) for HAL_GetTick
-    stm32f4xx_hal_uart.o(i.HAL_UART_Receive) refers to stm32f4xx_hal_uart.o(i.UART_WaitOnFlagUntilTimeout) for UART_WaitOnFlagUntilTimeout
-    stm32f4xx_hal_uart.o(i.HAL_UART_Receive_DMA) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Start_IT) for HAL_DMA_Start_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_Receive_DMA) refers to stm32f4xx_hal_uart.o(i.UART_DMAReceiveCplt) for UART_DMAReceiveCplt
-    stm32f4xx_hal_uart.o(i.HAL_UART_Receive_DMA) refers to stm32f4xx_hal_uart.o(i.UART_DMARxHalfCplt) for UART_DMARxHalfCplt
-    stm32f4xx_hal_uart.o(i.HAL_UART_Receive_DMA) refers to stm32f4xx_hal_uart.o(i.UART_DMAError) for UART_DMAError
-    stm32f4xx_hal_uart.o(i.HAL_UART_Transmit) refers to stm32f4xx_hal.o(i.HAL_GetTick) for HAL_GetTick
-    stm32f4xx_hal_uart.o(i.HAL_UART_Transmit) refers to stm32f4xx_hal_uart.o(i.UART_WaitOnFlagUntilTimeout) for UART_WaitOnFlagUntilTimeout
-    stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_DMA) refers to stm32f4xx_hal_dma.o(i.HAL_DMA_Start_IT) for HAL_DMA_Start_IT
-    stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_DMA) refers to stm32f4xx_hal_uart.o(i.UART_DMATransmitCplt) for UART_DMATransmitCplt
-    stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_DMA) refers to stm32f4xx_hal_uart.o(i.UART_DMATxHalfCplt) for UART_DMATxHalfCplt
-    stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_DMA) refers to stm32f4xx_hal_uart.o(i.UART_DMAError) for UART_DMAError
-    stm32f4xx_hal_uart.o(i.UART_DMAAbortOnError) refers to stm32f4xx_hal_uart.o(i.HAL_UART_ErrorCallback) for HAL_UART_ErrorCallback
-    stm32f4xx_hal_uart.o(i.UART_DMAError) refers to stm32f4xx_hal_uart.o(i.UART_EndTxTransfer) for UART_EndTxTransfer
-    stm32f4xx_hal_uart.o(i.UART_DMAError) refers to stm32f4xx_hal_uart.o(i.UART_EndRxTransfer) for UART_EndRxTransfer
-    stm32f4xx_hal_uart.o(i.UART_DMAError) refers to stm32f4xx_hal_uart.o(i.HAL_UART_ErrorCallback) for HAL_UART_ErrorCallback
-    stm32f4xx_hal_uart.o(i.UART_DMAReceiveCplt) refers to stm32f4xx_hal_uart.o(i.HAL_UART_RxCpltCallback) for HAL_UART_RxCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_DMARxAbortCallback) refers to stm32f4xx_hal_uart.o(i.HAL_UART_AbortCpltCallback) for HAL_UART_AbortCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_DMARxHalfCplt) refers to stm32f4xx_hal_uart.o(i.HAL_UART_RxHalfCpltCallback) for HAL_UART_RxHalfCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_DMARxOnlyAbortCallback) refers to stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceiveCpltCallback) for HAL_UART_AbortReceiveCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_DMATransmitCplt) refers to stm32f4xx_hal_uart.o(i.HAL_UART_TxCpltCallback) for HAL_UART_TxCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_DMATxAbortCallback) refers to stm32f4xx_hal_uart.o(i.HAL_UART_AbortCpltCallback) for HAL_UART_AbortCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_DMATxHalfCplt) refers to stm32f4xx_hal_uart.o(i.HAL_UART_TxHalfCpltCallback) for HAL_UART_TxHalfCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_DMATxOnlyAbortCallback) refers to stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmitCpltCallback) for HAL_UART_AbortTransmitCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_Receive_IT) refers to stm32f4xx_hal_uart.o(i.HAL_UART_RxCpltCallback) for HAL_UART_RxCpltCallback
-    stm32f4xx_hal_uart.o(i.UART_SetConfig) refers to stm32f4xx_hal_rcc.o(i.HAL_RCC_GetPCLK2Freq) for HAL_RCC_GetPCLK2Freq
-    stm32f4xx_hal_uart.o(i.UART_SetConfig) refers to stm32f4xx_hal_rcc.o(i.HAL_RCC_GetPCLK1Freq) for HAL_RCC_GetPCLK1Freq
-    stm32f4xx_hal_uart.o(i.UART_WaitOnFlagUntilTimeout) refers to stm32f4xx_hal.o(i.HAL_GetTick) for HAL_GetTick
     stm32f4xx_hal_flash.o(i.FLASH_SetErrorCode) refers to stm32f4xx_hal_flash.o(.bss) for .bss
     stm32f4xx_hal_flash.o(i.FLASH_WaitForLastOperation) refers to stm32f4xx_hal.o(i.HAL_GetTick) for HAL_GetTick
     stm32f4xx_hal_flash.o(i.FLASH_WaitForLastOperation) refers to stm32f4xx_hal_flash.o(i.FLASH_SetErrorCode) for FLASH_SetErrorCode
@@ -422,11 +361,6 @@ Section Cross References
     stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspDeInit) refers to stm32f4xx_hal_cortex.o(i.HAL_NVIC_DisableIRQ) for HAL_NVIC_DisableIRQ
     stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspInit) refers to stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority) for HAL_NVIC_SetPriority
     stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspInit) refers to stm32f4xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ) for HAL_NVIC_EnableIRQ
-    stm32f4xx_hal_msp.o(i.HAL_UART_MspDeInit) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_DeInit) for HAL_GPIO_DeInit
-    stm32f4xx_hal_msp.o(i.HAL_UART_MspDeInit) refers to stm32f4xx_hal_cortex.o(i.HAL_NVIC_DisableIRQ) for HAL_NVIC_DisableIRQ
-    stm32f4xx_hal_msp.o(i.HAL_UART_MspInit) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init) for HAL_GPIO_Init
-    stm32f4xx_hal_msp.o(i.HAL_UART_MspInit) refers to stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority) for HAL_NVIC_SetPriority
-    stm32f4xx_hal_msp.o(i.HAL_UART_MspInit) refers to stm32f4xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ) for HAL_NVIC_EnableIRQ
     stm32f4xx_it.o(i.EXTI4_IRQHandler) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler) for HAL_GPIO_EXTI_IRQHandler
     stm32f4xx_it.o(i.EXTI9_5_IRQHandler) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler) for HAL_GPIO_EXTI_IRQHandler
     stm32f4xx_it.o(i.SysTick_Handler) refers to stm32f4xx_hal.o(i.HAL_IncTick) for HAL_IncTick
@@ -435,8 +369,6 @@ Section Cross References
     stm32f4xx_it.o(i.TIM3_IRQHandler) refers to main.o(.bss) for htim3
     stm32f4xx_it.o(i.TIM4_IRQHandler) refers to stm32f4xx_hal_tim.o(i.HAL_TIM_IRQHandler) for HAL_TIM_IRQHandler
     stm32f4xx_it.o(i.TIM4_IRQHandler) refers to main.o(.bss) for htim4
-    stm32f4xx_it.o(i.USART6_IRQHandler) refers to stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler) for HAL_UART_IRQHandler
-    stm32f4xx_it.o(i.USART6_IRQHandler) refers to main.o(.bss) for huart6
     main.o(i.HAL_GPIO_EXTI_Callback) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_TogglePin) for HAL_GPIO_TogglePin
     main.o(i.HAL_GPIO_EXTI_Callback) refers to main.o(.data) for .data
     main.o(i.HAL_TIM_PeriodElapsedCallback) refers to stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Stop_IT) for HAL_TIM_Base_Stop_IT
@@ -494,46 +426,15 @@ Section Cross References
     main.o(i.main) refers to lcd_txt.o(i.LCD_Clear) for LCD_Clear
     main.o(i.main) refers to lcd_txt.o(i.LCD_SetPos) for LCD_SetPos
     main.o(i.main) refers to lcd_txt.o(i.LCD_CursorOff) for LCD_CursorOff
-    main.o(i.main) refers to main.o(i.rfid_init) for rfid_init
     main.o(i.main) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
     main.o(i.main) refers to main.o(i.display_escribir) for display_escribir
     main.o(i.main) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
     main.o(i.main) refers to printf4.o(i.__0sprintf$4) for __2sprintf
     main.o(i.main) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_TogglePin) for HAL_GPIO_TogglePin
-    main.o(i.main) refers to main.o(i.rfid_Check) for rfid_Check
-    main.o(i.main) refers to main.o(.data) for .data
+    main.o(i.main) refers to rc522.o(i.MFRC522_Check) for MFRC522_Check
+    main.o(i.main) refers to rc522.o(i.MFRC522_Compare) for MFRC522_Compare
     main.o(i.main) refers to main.o(.bss) for .bss
-    main.o(i.rfid_Check) refers to main.o(i.rfid_sub_WriteRegister) for rfid_sub_WriteRegister
-    main.o(i.rfid_Check) refers to main.o(i.rfid_sub_ToCard) for rfid_sub_ToCard
-    main.o(i.rfid_Check) refers to main.o(i.rfid_sub_Anticoll) for rfid_sub_Anticoll
-    main.o(i.rfid_Check) refers to main.o(i.rfid_sub_Halt) for rfid_sub_Halt
-    main.o(i.rfid_Check) refers to main.o(.bss) for .bss
-    main.o(i.rfid_init) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    main.o(i.rfid_init) refers to main.o(i.rfid_sub_WriteRegister) for rfid_sub_WriteRegister
-    main.o(i.rfid_init) refers to stm32f4xx_hal.o(i.HAL_Delay) for HAL_Delay
-    main.o(i.rfid_init) refers to main.o(i.rfid_sub_AntennaOn) for rfid_sub_AntennaOn
-    main.o(i.rfid_sub_AntennaOn) refers to main.o(i.rfid_sub_ReadRegister) for rfid_sub_ReadRegister
-    main.o(i.rfid_sub_AntennaOn) refers to main.o(i.rfid_sub_WriteRegister) for rfid_sub_WriteRegister
-    main.o(i.rfid_sub_AntennaOn) refers to main.o(.bss) for .bss
-    main.o(i.rfid_sub_AntennaOn) refers to main.o(.data) for .data
-    main.o(i.rfid_sub_Anticoll) refers to main.o(i.rfid_sub_WriteRegister) for rfid_sub_WriteRegister
-    main.o(i.rfid_sub_Anticoll) refers to main.o(i.rfid_sub_ToCard) for rfid_sub_ToCard
-    main.o(i.rfid_sub_CalculateCRC) refers to main.o(i.rfid_sub_ReadRegister) for rfid_sub_ReadRegister
-    main.o(i.rfid_sub_CalculateCRC) refers to main.o(i.rfid_sub_WriteRegister) for rfid_sub_WriteRegister
-    main.o(i.rfid_sub_CalculateCRC) refers to main.o(.bss) for .bss
-    main.o(i.rfid_sub_CalculateCRC) refers to main.o(.data) for .data
-    main.o(i.rfid_sub_Halt) refers to main.o(i.rfid_sub_CalculateCRC) for rfid_sub_CalculateCRC
-    main.o(i.rfid_sub_Halt) refers to main.o(i.rfid_sub_ToCard) for rfid_sub_ToCard
-    main.o(i.rfid_sub_ReadRegister) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    main.o(i.rfid_sub_ReadRegister) refers to stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
-    main.o(i.rfid_sub_ReadRegister) refers to main.o(.bss) for .bss
-    main.o(i.rfid_sub_ToCard) refers to main.o(i.rfid_sub_WriteRegister) for rfid_sub_WriteRegister
-    main.o(i.rfid_sub_ToCard) refers to main.o(i.rfid_sub_ReadRegister) for rfid_sub_ReadRegister
-    main.o(i.rfid_sub_ToCard) refers to main.o(.bss) for .bss
-    main.o(i.rfid_sub_ToCard) refers to main.o(.data) for .data
-    main.o(i.rfid_sub_WriteRegister) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
-    main.o(i.rfid_sub_WriteRegister) refers to stm32f4xx_hal_spi.o(i.HAL_SPI_Transmit) for HAL_SPI_Transmit
-    main.o(i.rfid_sub_WriteRegister) refers to main.o(.bss) for .bss
+    main.o(i.main) refers to main.o(.data) for .data
     lcd_txt.o(i.LCD_Clear) refers to lcd_txt.o(i.LCD_Command) for LCD_Command
     lcd_txt.o(i.LCD_Clear) refers to stm32f4xx_hal.o(i.HAL_Delay) for HAL_Delay
     lcd_txt.o(i.LCD_Command) refers to lcd_txt.o(i.display_rs) for display_rs
@@ -564,6 +465,50 @@ Section Cross References
     lcd_txt.o(i.display_d) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
     lcd_txt.o(i.display_e) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
     lcd_txt.o(i.display_rs) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(i.MFRC522_AntennaOff) refers to rc522.o(i.MFRC522_ClearBitMask) for MFRC522_ClearBitMask
+    rc522.o(i.MFRC522_AntennaOn) refers to rc522.o(i.MFRC522_ReadRegister) for MFRC522_ReadRegister
+    rc522.o(i.MFRC522_AntennaOn) refers to rc522.o(i.MFRC522_SetBitMask) for MFRC522_SetBitMask
+    rc522.o(i.MFRC522_Anticoll) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_Anticoll) refers to rc522.o(i.MFRC522_ToCard) for MFRC522_ToCard
+    rc522.o(i.MFRC522_Auth) refers to rc522.o(i.MFRC522_ToCard) for MFRC522_ToCard
+    rc522.o(i.MFRC522_Auth) refers to rc522.o(i.MFRC522_ReadRegister) for MFRC522_ReadRegister
+    rc522.o(i.MFRC522_CalculateCRC) refers to rc522.o(i.MFRC522_ClearBitMask) for MFRC522_ClearBitMask
+    rc522.o(i.MFRC522_CalculateCRC) refers to rc522.o(i.MFRC522_SetBitMask) for MFRC522_SetBitMask
+    rc522.o(i.MFRC522_CalculateCRC) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_CalculateCRC) refers to rc522.o(i.MFRC522_ReadRegister) for MFRC522_ReadRegister
+    rc522.o(i.MFRC522_Check) refers to rc522.o(i.MFRC522_Request) for MFRC522_Request
+    rc522.o(i.MFRC522_Check) refers to rc522.o(i.MFRC522_Anticoll) for MFRC522_Anticoll
+    rc522.o(i.MFRC522_Check) refers to rc522.o(i.MFRC522_Halt) for MFRC522_Halt
+    rc522.o(i.MFRC522_ClearBitMask) refers to rc522.o(i.MFRC522_ReadRegister) for MFRC522_ReadRegister
+    rc522.o(i.MFRC522_ClearBitMask) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_Halt) refers to rc522.o(i.MFRC522_CalculateCRC) for MFRC522_CalculateCRC
+    rc522.o(i.MFRC522_Halt) refers to rc522.o(i.MFRC522_ToCard) for MFRC522_ToCard
+    rc522.o(i.MFRC522_Init) refers to rc522.o(i.MFRC522_Reset) for MFRC522_Reset
+    rc522.o(i.MFRC522_Init) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_Init) refers to rc522.o(i.MFRC522_AntennaOn) for MFRC522_AntennaOn
+    rc522.o(i.MFRC522_Read) refers to rc522.o(i.MFRC522_CalculateCRC) for MFRC522_CalculateCRC
+    rc522.o(i.MFRC522_Read) refers to rc522.o(i.MFRC522_ToCard) for MFRC522_ToCard
+    rc522.o(i.MFRC522_ReadRegister) refers to rc522.o(i.SPI1_ReadReg) for SPI1_ReadReg
+    rc522.o(i.MFRC522_Request) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_Request) refers to rc522.o(i.MFRC522_ToCard) for MFRC522_ToCard
+    rc522.o(i.MFRC522_Reset) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_SelectTag) refers to rc522.o(i.MFRC522_CalculateCRC) for MFRC522_CalculateCRC
+    rc522.o(i.MFRC522_SelectTag) refers to rc522.o(i.MFRC522_ToCard) for MFRC522_ToCard
+    rc522.o(i.MFRC522_SetBitMask) refers to rc522.o(i.MFRC522_ReadRegister) for MFRC522_ReadRegister
+    rc522.o(i.MFRC522_SetBitMask) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_ToCard) refers to rc522.o(i.MFRC522_WriteRegister) for MFRC522_WriteRegister
+    rc522.o(i.MFRC522_ToCard) refers to rc522.o(i.MFRC522_ClearBitMask) for MFRC522_ClearBitMask
+    rc522.o(i.MFRC522_ToCard) refers to rc522.o(i.MFRC522_SetBitMask) for MFRC522_SetBitMask
+    rc522.o(i.MFRC522_ToCard) refers to rc522.o(i.MFRC522_ReadRegister) for MFRC522_ReadRegister
+    rc522.o(i.MFRC522_Write) refers to rc522.o(i.MFRC522_CalculateCRC) for MFRC522_CalculateCRC
+    rc522.o(i.MFRC522_Write) refers to rc522.o(i.MFRC522_ToCard) for MFRC522_ToCard
+    rc522.o(i.MFRC522_WriteRegister) refers to rc522.o(i.SPI1_WriteReg) for SPI1_WriteReg
+    rc522.o(i.SPI1SendByte) refers to stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive) for HAL_SPI_TransmitReceive
+    rc522.o(i.SPI1SendByte) refers to main.o(.bss) for hspi1
+    rc522.o(i.SPI1_ReadReg) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(i.SPI1_ReadReg) refers to rc522.o(i.SPI1SendByte) for SPI1SendByte
+    rc522.o(i.SPI1_WriteReg) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    rc522.o(i.SPI1_WriteReg) refers to rc522.o(i.SPI1SendByte) for SPI1SendByte
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry10a.o(.ARM.Collect$$$$0000000D) for __rt_final_cpp
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry11a.o(.ARM.Collect$$$$0000000F) for __rt_final_exit
     entry.o(.ARM.Collect$$$$00000000) refers (Special) to entry7b.o(.ARM.Collect$$$$00000008) for _main_clock
@@ -1016,52 +961,6 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_hal_uart.o(.rev16_text), (4 bytes).
     Removing stm32f4xx_hal_uart.o(.revsh_text), (4 bytes).
     Removing stm32f4xx_hal_uart.o(.rrx_text), (6 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_HalfDuplex_EnableReceiver), (50 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_HalfDuplex_EnableTransmitter), (50 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_HalfDuplex_Init), (108 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_LIN_Init), (128 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_LIN_SendBreak), (46 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_MultiProcessor_EnterMuteMode), (46 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_MultiProcessor_ExitMuteMode), (46 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_MultiProcessor_Init), (142 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Abort), (104 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_AbortCpltCallback), (2 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceive), (68 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceiveCpltCallback), (2 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_AbortReceive_IT), (92 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmit), (58 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmitCpltCallback), (2 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_AbortTransmit_IT), (84 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Abort_IT), (172 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_DMAPause), (102 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_DMAResume), (94 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_DMAStop), (88 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_DeInit), (40 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_GetError), (4 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_GetState), (10 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Init), (98 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_MspDeInit), (2 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_MspInit), (2 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Receive), (184 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Receive_DMA), (152 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Receive_IT), (72 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_RxHalfCpltCallback), (2 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Transmit), (186 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_DMA), (128 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_Transmit_IT), (62 bytes).
-    Removing stm32f4xx_hal_uart.o(i.HAL_UART_TxHalfCpltCallback), (2 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMAError), (74 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMAReceiveCplt), (60 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMARxAbortCallback), (42 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMARxHalfCplt), (10 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMARxOnlyAbortCallback), (20 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMATransmitCplt), (46 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMATxAbortCallback), (42 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMATxHalfCplt), (10 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_DMATxOnlyAbortCallback), (20 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_EndTxTransfer), (18 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_SetConfig), (684 bytes).
-    Removing stm32f4xx_hal_uart.o(i.UART_WaitOnFlagUntilTimeout), (100 bytes).
     Removing stm32f4xx_hal_flash.o(.rev16_text), (4 bytes).
     Removing stm32f4xx_hal_flash.o(.revsh_text), (4 bytes).
     Removing stm32f4xx_hal_flash.o(.rrx_text), (6 bytes).
@@ -1140,6 +1039,7 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_hal_dma.o(i.DMA_CheckFifoParam), (84 bytes).
     Removing stm32f4xx_hal_dma.o(i.DMA_SetConfig), (40 bytes).
     Removing stm32f4xx_hal_dma.o(i.HAL_DMA_Abort), (142 bytes).
+    Removing stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT), (36 bytes).
     Removing stm32f4xx_hal_dma.o(i.HAL_DMA_DeInit), (86 bytes).
     Removing stm32f4xx_hal_dma.o(i.HAL_DMA_GetError), (4 bytes).
     Removing stm32f4xx_hal_dma.o(i.HAL_DMA_GetState), (6 bytes).
@@ -1202,6 +1102,7 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_hal_spi.o(i.HAL_SPI_Receive_IT), (164 bytes).
     Removing stm32f4xx_hal_spi.o(i.HAL_SPI_RxCpltCallback), (2 bytes).
     Removing stm32f4xx_hal_spi.o(i.HAL_SPI_RxHalfCpltCallback), (2 bytes).
+    Removing stm32f4xx_hal_spi.o(i.HAL_SPI_Transmit), (360 bytes).
     Removing stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive_DMA), (264 bytes).
     Removing stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive_IT), (164 bytes).
     Removing stm32f4xx_hal_spi.o(i.HAL_SPI_Transmit_DMA), (184 bytes).
@@ -1243,8 +1144,6 @@ Removing Unused input sections from the image.
     Removing stm32f4xx_hal_msp.o(.rrx_text), (6 bytes).
     Removing stm32f4xx_hal_msp.o(i.HAL_SPI_MspDeInit), (40 bytes).
     Removing stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspDeInit), (56 bytes).
-    Removing stm32f4xx_hal_msp.o(i.HAL_UART_MspDeInit), (52 bytes).
-    Removing stm32f4xx_hal_msp.o(i.HAL_UART_MspInit), (92 bytes).
     Removing stm32f4xx_it.o(.rev16_text), (4 bytes).
     Removing stm32f4xx_it.o(.revsh_text), (4 bytes).
     Removing stm32f4xx_it.o(.rrx_text), (6 bytes).
@@ -1254,14 +1153,30 @@ Removing Unused input sections from the image.
     Removing main.o(i._Error_Handler), (2 bytes).
     Removing main.o(i.display_unidades), (92 bytes).
     Removing main.o(i.introducir_texto), (228 bytes).
+    Removing main.o(.bss), (16 bytes).
+    Removing main.o(.bss), (16 bytes).
+    Removing main.o(.data), (4 bytes).
+    Removing main.o(.data), (5 bytes).
     Removing main.o(.data), (4 bytes).
     Removing main.o(.data), (4 bytes).
     Removing main.o(.data), (4 bytes).
+    Removing main.o(.data), (1 bytes).
     Removing lcd_txt.o(.rev16_text), (4 bytes).
     Removing lcd_txt.o(.revsh_text), (4 bytes).
     Removing lcd_txt.o(.rrx_text), (6 bytes).
     Removing lcd_txt.o(i.LCD_CursorOn), (18 bytes).
     Removing lcd_txt.o(i.LCD_SendChar), (16 bytes).
+    Removing rc522.o(.rev16_text), (4 bytes).
+    Removing rc522.o(.revsh_text), (4 bytes).
+    Removing rc522.o(.rrx_text), (6 bytes).
+    Removing rc522.o(i.MFRC522_AntennaOff), (8 bytes).
+    Removing rc522.o(i.MFRC522_AntennaOn), (26 bytes).
+    Removing rc522.o(i.MFRC522_Auth), (82 bytes).
+    Removing rc522.o(i.MFRC522_Init), (70 bytes).
+    Removing rc522.o(i.MFRC522_Read), (50 bytes).
+    Removing rc522.o(i.MFRC522_Reset), (8 bytes).
+    Removing rc522.o(i.MFRC522_SelectTag), (82 bytes).
+    Removing rc522.o(i.MFRC522_Write), (132 bytes).
     Removing dadd.o(.text), (334 bytes).
     Removing dmul.o(.text), (228 bytes).
     Removing ddiv.o(.text), (222 bytes).
@@ -1269,7 +1184,7 @@ Removing Unused input sections from the image.
     Removing cdrcmple.o(.text), (48 bytes).
     Removing depilogue.o(.text), (186 bytes).
 
-434 unused section(s) (total 28760 bytes) removed from the image.
+404 unused section(s) (total 25972 bytes) removed from the image.
 
 ==============================================================================
 
@@ -1299,35 +1214,35 @@ Image Symbol Table
     ../Src/main.c                            0x00000000   Number         0  main.o ABSOLUTE
     ../Src/stm32f4xx_hal_msp.c               0x00000000   Number         0  stm32f4xx_hal_msp.o ABSOLUTE
     ../Src/stm32f4xx_it.c                    0x00000000   Number         0  stm32f4xx_it.o ABSOLUTE
-    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
     ../clib/microlib/division.c              0x00000000   Number         0  uidiv.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/division.c              0x00000000   Number         0  uldiv.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
-    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry7a.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry5.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry8b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry2.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10a.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11b.o ABSOLUTE
     ../clib/microlib/init/entry.s            0x00000000   Number         0  entry11a.o ABSOLUTE
-    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry10b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9b.o ABSOLUTE
+    ../clib/microlib/init/entry.s            0x00000000   Number         0  entry9a.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llushr.o ABSOLUTE
     ../clib/microlib/longlong.c              0x00000000   Number         0  llsshr.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
+    ../clib/microlib/longlong.c              0x00000000   Number         0  llshl.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfb.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printfa.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf8.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf7.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf6.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf5.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf1.o ABSOLUTE
+    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf4.o ABSOLUTE
     ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf3.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf2.o ABSOLUTE
-    ../clib/microlib/printf/printf.c         0x00000000   Number         0  printf0.o ABSOLUTE
     ../clib/microlib/printf/stubs.s          0x00000000   Number         0  stubs.o ABSOLUTE
     ../clib/microlib/stdio/fputc.c           0x00000000   Number         0  fputc.o ABSOLUTE
     ../clib/microlib/stdio/semi.s            0x00000000   Number         0  semi.o ABSOLUTE
@@ -1360,7 +1275,9 @@ Image Symbol Table
     ..\Src\stm32f4xx_it.c                    0x00000000   Number         0  stm32f4xx_it.o ABSOLUTE
     ..\\Src\system_stm32f4xx.c               0x00000000   Number         0  system_stm32f4xx.o ABSOLUTE
     ..\\lcd_txt.c                            0x00000000   Number         0  lcd_txt.o ABSOLUTE
+    ..\\rc522.c                              0x00000000   Number         0  rc522.o ABSOLUTE
     ..\lcd_txt.c                             0x00000000   Number         0  lcd_txt.o ABSOLUTE
+    ..\rc522.c                               0x00000000   Number         0  rc522.o ABSOLUTE
     cdrcmple.s                               0x00000000   Number         0  cdrcmple.o ABSOLUTE
     dc.s                                     0x00000000   Number         0  dc.o ABSOLUTE
     handlers.s                               0x00000000   Number         0  handlers.o ABSOLUTE
@@ -1387,133 +1304,122 @@ Image Symbol Table
     i.DebugMon_Handler                       0x08000296   Section        0  stm32f4xx_it.o(i.DebugMon_Handler)
     i.EXTI4_IRQHandler                       0x08000298   Section        0  stm32f4xx_it.o(i.EXTI4_IRQHandler)
     i.EXTI9_5_IRQHandler                     0x0800029e   Section        0  stm32f4xx_it.o(i.EXTI9_5_IRQHandler)
-    i.HAL_DMA_Abort_IT                       0x080002a4   Section        0  stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT)
-    i.HAL_Delay                              0x080002c8   Section        0  stm32f4xx_hal.o(i.HAL_Delay)
-    i.HAL_GPIO_EXTI_Callback                 0x080002ec   Section        0  main.o(i.HAL_GPIO_EXTI_Callback)
-    i.HAL_GPIO_EXTI_IRQHandler               0x0800031c   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
-    i.HAL_GPIO_Init                          0x08000334   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
-    i.HAL_GPIO_ReadPin                       0x080004bc   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin)
-    i.HAL_GPIO_TogglePin                     0x080004c6   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_TogglePin)
-    i.HAL_GPIO_WritePin                      0x080004ce   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
-    i.HAL_GetTick                            0x080004d8   Section        0  stm32f4xx_hal.o(i.HAL_GetTick)
-    i.HAL_IncTick                            0x080004e4   Section        0  stm32f4xx_hal.o(i.HAL_IncTick)
-    i.HAL_Init                               0x080004f4   Section        0  stm32f4xx_hal.o(i.HAL_Init)
-    i.HAL_InitTick                           0x08000528   Section        0  stm32f4xx_hal.o(i.HAL_InitTick)
-    i.HAL_MspInit                            0x08000568   Section        0  stm32f4xx_hal_msp.o(i.HAL_MspInit)
-    i.HAL_NVIC_EnableIRQ                     0x080005c0   Section        0  stm32f4xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ)
-    i.HAL_NVIC_SetPriority                   0x080005d8   Section        0  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
-    i.HAL_NVIC_SetPriorityGrouping           0x08000618   Section        0  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriorityGrouping)
-    i.HAL_RCC_ClockConfig                    0x0800063c   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
-    i.HAL_RCC_GetHCLKFreq                    0x0800076c   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetHCLKFreq)
-    i.HAL_RCC_GetSysClockFreq                0x08000778   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
-    i.HAL_RCC_OscConfig                      0x080007dc   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_OscConfig)
-    i.HAL_SPI_Init                           0x08000af8   Section        0  stm32f4xx_hal_spi.o(i.HAL_SPI_Init)
-    i.HAL_SPI_MspInit                        0x08000b78   Section        0  stm32f4xx_hal_msp.o(i.HAL_SPI_MspInit)
-    i.HAL_SPI_Transmit                       0x08000bc4   Section        0  stm32f4xx_hal_spi.o(i.HAL_SPI_Transmit)
-    i.HAL_SPI_TransmitReceive                0x08000d2c   Section        0  stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive)
-    i.HAL_SYSTICK_CLKSourceConfig            0x08000f04   Section        0  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_CLKSourceConfig)
-    i.HAL_SYSTICK_Callback                   0x08000f1c   Section        0  main.o(i.HAL_SYSTICK_Callback)
-    i.HAL_SYSTICK_Config                     0x08000f1e   Section        0  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_Config)
-    i.HAL_SYSTICK_IRQHandler                 0x08000f46   Section        0  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_IRQHandler)
-    i.HAL_TIMEx_BreakCallback                0x08000f4e   Section        0  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_BreakCallback)
-    i.HAL_TIMEx_CommutationCallback          0x08000f50   Section        0  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_CommutationCallback)
-    i.HAL_TIMEx_MasterConfigSynchronization  0x08000f52   Section        0  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization)
-    i.HAL_TIM_Base_Init                      0x08000fa2   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Init)
-    i.HAL_TIM_Base_MspInit                   0x08000fd8   Section        0  stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspInit)
-    i.HAL_TIM_Base_Start_IT                  0x0800103c   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT)
-    i.HAL_TIM_Base_Stop_IT                   0x08001054   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Stop_IT)
-    i.HAL_TIM_ConfigClockSource              0x0800107e   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_ConfigClockSource)
-    i.HAL_TIM_IC_CaptureCallback             0x08001170   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback)
-    i.HAL_TIM_IRQHandler                     0x08001172   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_IRQHandler)
-    i.HAL_TIM_OC_DelayElapsedCallback        0x080012d8   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback)
-    i.HAL_TIM_PWM_PulseFinishedCallback      0x080012da   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback)
-    i.HAL_TIM_PeriodElapsedCallback          0x080012dc   Section        0  main.o(i.HAL_TIM_PeriodElapsedCallback)
-    i.HAL_TIM_TriggerCallback                0x080012f4   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_TriggerCallback)
-    i.HAL_UART_ErrorCallback                 0x080012f6   Section        0  stm32f4xx_hal_uart.o(i.HAL_UART_ErrorCallback)
-    i.HAL_UART_IRQHandler                    0x080012f8   Section        0  stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler)
-    i.HAL_UART_RxCpltCallback                0x08001408   Section        0  stm32f4xx_hal_uart.o(i.HAL_UART_RxCpltCallback)
-    i.HAL_UART_TxCpltCallback                0x0800140a   Section        0  stm32f4xx_hal_uart.o(i.HAL_UART_TxCpltCallback)
-    i.HardFault_Handler                      0x0800140c   Section        0  stm32f4xx_it.o(i.HardFault_Handler)
-    i.LCD_Clear                              0x0800140e   Section        0  lcd_txt.o(i.LCD_Clear)
-    i.LCD_Command                            0x08001420   Section        0  lcd_txt.o(i.LCD_Command)
-    i.LCD_CursorOff                          0x08001464   Section        0  lcd_txt.o(i.LCD_CursorOff)
-    i.LCD_Data                               0x08001476   Section        0  lcd_txt.o(i.LCD_Data)
-    i.LCD_SetPos                             0x080014b4   Section        0  lcd_txt.o(i.LCD_SetPos)
-    i.LCD_String                             0x080014ea   Section        0  lcd_txt.o(i.LCD_String)
-    i.LCD_WriteData                          0x08001508   Section        0  lcd_txt.o(i.LCD_WriteData)
-    i.LCD_ini                                0x08001550   Section        0  lcd_txt.o(i.LCD_ini)
-    i.MX_GPIO_Init                           0x080015fc   Section        0  main.o(i.MX_GPIO_Init)
-    MX_GPIO_Init                             0x080015fd   Thumb Code   400  main.o(i.MX_GPIO_Init)
-    i.MX_SPI1_Init                           0x080017a8   Section        0  main.o(i.MX_SPI1_Init)
-    MX_SPI1_Init                             0x080017a9   Thumb Code    54  main.o(i.MX_SPI1_Init)
-    i.MX_TIM3_Init                           0x080017e8   Section        0  main.o(i.MX_TIM3_Init)
-    MX_TIM3_Init                             0x080017e9   Thumb Code    68  main.o(i.MX_TIM3_Init)
-    i.MX_TIM4_Init                           0x08001834   Section        0  main.o(i.MX_TIM4_Init)
-    MX_TIM4_Init                             0x08001835   Thumb Code    70  main.o(i.MX_TIM4_Init)
-    i.MemManage_Handler                      0x08001884   Section        0  stm32f4xx_it.o(i.MemManage_Handler)
-    i.NMI_Handler                            0x08001886   Section        0  stm32f4xx_it.o(i.NMI_Handler)
-    i.NVIC_SetPriority                       0x08001888   Section        0  stm32f4xx_hal_cortex.o(i.NVIC_SetPriority)
-    NVIC_SetPriority                         0x08001889   Thumb Code    32  stm32f4xx_hal_cortex.o(i.NVIC_SetPriority)
-    i.PendSV_Handler                         0x080018a8   Section        0  stm32f4xx_it.o(i.PendSV_Handler)
-    i.SPI_CheckFlag_BSY                      0x080018aa   Section        0  stm32f4xx_hal_spi.o(i.SPI_CheckFlag_BSY)
-    SPI_CheckFlag_BSY                        0x080018ab   Thumb Code    32  stm32f4xx_hal_spi.o(i.SPI_CheckFlag_BSY)
-    i.SPI_WaitFlagStateUntilTimeout          0x080018ca   Section        0  stm32f4xx_hal_spi.o(i.SPI_WaitFlagStateUntilTimeout)
-    SPI_WaitFlagStateUntilTimeout            0x080018cb   Thumb Code   150  stm32f4xx_hal_spi.o(i.SPI_WaitFlagStateUntilTimeout)
-    i.SVC_Handler                            0x08001960   Section        0  stm32f4xx_it.o(i.SVC_Handler)
-    i.SysTick_Handler                        0x08001962   Section        0  stm32f4xx_it.o(i.SysTick_Handler)
-    i.SystemClock_Config                     0x08001970   Section        0  main.o(i.SystemClock_Config)
-    i.SystemInit                             0x080019f8   Section        0  system_stm32f4xx.o(i.SystemInit)
-    i.TIM3_IRQHandler                        0x08001a4c   Section        0  stm32f4xx_it.o(i.TIM3_IRQHandler)
-    i.TIM4_IRQHandler                        0x08001a58   Section        0  stm32f4xx_it.o(i.TIM4_IRQHandler)
-    i.TIM_Base_SetConfig                     0x08001a64   Section        0  stm32f4xx_hal_tim.o(i.TIM_Base_SetConfig)
-    i.TIM_ETR_SetConfig                      0x08001af4   Section        0  stm32f4xx_hal_tim.o(i.TIM_ETR_SetConfig)
-    TIM_ETR_SetConfig                        0x08001af5   Thumb Code    20  stm32f4xx_hal_tim.o(i.TIM_ETR_SetConfig)
-    i.TIM_ITRx_SetConfig                     0x08001b08   Section        0  stm32f4xx_hal_tim.o(i.TIM_ITRx_SetConfig)
-    TIM_ITRx_SetConfig                       0x08001b09   Thumb Code    16  stm32f4xx_hal_tim.o(i.TIM_ITRx_SetConfig)
-    i.TIM_TI1_ConfigInputStage               0x08001b18   Section        0  stm32f4xx_hal_tim.o(i.TIM_TI1_ConfigInputStage)
-    TIM_TI1_ConfigInputStage                 0x08001b19   Thumb Code    34  stm32f4xx_hal_tim.o(i.TIM_TI1_ConfigInputStage)
-    i.TIM_TI2_ConfigInputStage               0x08001b3a   Section        0  stm32f4xx_hal_tim.o(i.TIM_TI2_ConfigInputStage)
-    TIM_TI2_ConfigInputStage                 0x08001b3b   Thumb Code    36  stm32f4xx_hal_tim.o(i.TIM_TI2_ConfigInputStage)
-    i.UART_DMAAbortOnError                   0x08001b5e   Section        0  stm32f4xx_hal_uart.o(i.UART_DMAAbortOnError)
-    UART_DMAAbortOnError                     0x08001b5f   Thumb Code    16  stm32f4xx_hal_uart.o(i.UART_DMAAbortOnError)
-    i.UART_EndRxTransfer                     0x08001b6e   Section        0  stm32f4xx_hal_uart.o(i.UART_EndRxTransfer)
-    UART_EndRxTransfer                       0x08001b6f   Thumb Code    28  stm32f4xx_hal_uart.o(i.UART_EndRxTransfer)
-    i.UART_Receive_IT                        0x08001b8a   Section        0  stm32f4xx_hal_uart.o(i.UART_Receive_IT)
-    UART_Receive_IT                          0x08001b8b   Thumb Code   140  stm32f4xx_hal_uart.o(i.UART_Receive_IT)
-    i.UART_Transmit_IT                       0x08001c16   Section        0  stm32f4xx_hal_uart.o(i.UART_Transmit_IT)
-    UART_Transmit_IT                         0x08001c17   Thumb Code    98  stm32f4xx_hal_uart.o(i.UART_Transmit_IT)
-    i.USART6_IRQHandler                      0x08001c78   Section        0  stm32f4xx_it.o(i.USART6_IRQHandler)
-    i.UsageFault_Handler                     0x08001c84   Section        0  stm32f4xx_it.o(i.UsageFault_Handler)
-    i.__0sprintf$4                           0x08001c88   Section        0  printf4.o(i.__0sprintf$4)
-    i.__scatterload_copy                     0x08001cb0   Section       14  handlers.o(i.__scatterload_copy)
-    i.__scatterload_null                     0x08001cbe   Section        2  handlers.o(i.__scatterload_null)
-    i.__scatterload_zeroinit                 0x08001cc0   Section       14  handlers.o(i.__scatterload_zeroinit)
-    i._printf_core                           0x08001cd0   Section        0  printf4.o(i._printf_core)
-    _printf_core                             0x08001cd1   Thumb Code   552  printf4.o(i._printf_core)
-    i._sputc                                 0x08001efc   Section        0  printf4.o(i._sputc)
-    _sputc                                   0x08001efd   Thumb Code    10  printf4.o(i._sputc)
-    i.delayus_block                          0x08001f08   Section        0  main.o(i.delayus_block)
-    i.display_d                              0x08001f3c   Section        0  lcd_txt.o(i.display_d)
-    i.display_e                              0x08001f88   Section        0  lcd_txt.o(i.display_e)
-    i.display_escribir                       0x08001fa4   Section        0  main.o(i.display_escribir)
-    i.display_rs                             0x08002014   Section        0  lcd_txt.o(i.display_rs)
-    i.main                                   0x08002030   Section        0  main.o(i.main)
-    i.rfid_Check                             0x0800258c   Section        0  main.o(i.rfid_Check)
-    i.rfid_init                              0x080025c8   Section        0  main.o(i.rfid_init)
-    i.rfid_sub_AntennaOn                     0x08002628   Section        0  main.o(i.rfid_sub_AntennaOn)
-    i.rfid_sub_Anticoll                      0x08002654   Section        0  main.o(i.rfid_sub_Anticoll)
-    i.rfid_sub_CalculateCRC                  0x0800269c   Section        0  main.o(i.rfid_sub_CalculateCRC)
-    i.rfid_sub_Halt                          0x08002728   Section        0  main.o(i.rfid_sub_Halt)
-    i.rfid_sub_ReadRegister                  0x08002754   Section        0  main.o(i.rfid_sub_ReadRegister)
-    i.rfid_sub_ToCard                        0x0800279c   Section        0  main.o(i.rfid_sub_ToCard)
-    i.rfid_sub_WriteRegister                 0x08002900   Section        0  main.o(i.rfid_sub_WriteRegister)
-    .constdata                               0x08002950   Section       16  system_stm32f4xx.o(.constdata)
+    i.HAL_Delay                              0x080002a4   Section        0  stm32f4xx_hal.o(i.HAL_Delay)
+    i.HAL_GPIO_EXTI_Callback                 0x080002c8   Section        0  main.o(i.HAL_GPIO_EXTI_Callback)
+    i.HAL_GPIO_EXTI_IRQHandler               0x080002f8   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
+    i.HAL_GPIO_Init                          0x08000310   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
+    i.HAL_GPIO_ReadPin                       0x08000498   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin)
+    i.HAL_GPIO_TogglePin                     0x080004a2   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_TogglePin)
+    i.HAL_GPIO_WritePin                      0x080004aa   Section        0  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
+    i.HAL_GetTick                            0x080004b4   Section        0  stm32f4xx_hal.o(i.HAL_GetTick)
+    i.HAL_IncTick                            0x080004c0   Section        0  stm32f4xx_hal.o(i.HAL_IncTick)
+    i.HAL_Init                               0x080004d0   Section        0  stm32f4xx_hal.o(i.HAL_Init)
+    i.HAL_InitTick                           0x08000504   Section        0  stm32f4xx_hal.o(i.HAL_InitTick)
+    i.HAL_MspInit                            0x08000544   Section        0  stm32f4xx_hal_msp.o(i.HAL_MspInit)
+    i.HAL_NVIC_EnableIRQ                     0x0800059c   Section        0  stm32f4xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ)
+    i.HAL_NVIC_SetPriority                   0x080005b4   Section        0  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
+    i.HAL_NVIC_SetPriorityGrouping           0x080005f4   Section        0  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriorityGrouping)
+    i.HAL_RCC_ClockConfig                    0x08000618   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
+    i.HAL_RCC_GetHCLKFreq                    0x08000748   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetHCLKFreq)
+    i.HAL_RCC_GetSysClockFreq                0x08000754   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
+    i.HAL_RCC_OscConfig                      0x080007b8   Section        0  stm32f4xx_hal_rcc.o(i.HAL_RCC_OscConfig)
+    i.HAL_SPI_Init                           0x08000ad4   Section        0  stm32f4xx_hal_spi.o(i.HAL_SPI_Init)
+    i.HAL_SPI_MspInit                        0x08000b54   Section        0  stm32f4xx_hal_msp.o(i.HAL_SPI_MspInit)
+    i.HAL_SPI_TransmitReceive                0x08000ba0   Section        0  stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive)
+    i.HAL_SYSTICK_CLKSourceConfig            0x08000d78   Section        0  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_CLKSourceConfig)
+    i.HAL_SYSTICK_Callback                   0x08000d90   Section        0  main.o(i.HAL_SYSTICK_Callback)
+    i.HAL_SYSTICK_Config                     0x08000d92   Section        0  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_Config)
+    i.HAL_SYSTICK_IRQHandler                 0x08000dba   Section        0  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_IRQHandler)
+    i.HAL_TIMEx_BreakCallback                0x08000dc2   Section        0  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_BreakCallback)
+    i.HAL_TIMEx_CommutationCallback          0x08000dc4   Section        0  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_CommutationCallback)
+    i.HAL_TIMEx_MasterConfigSynchronization  0x08000dc6   Section        0  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization)
+    i.HAL_TIM_Base_Init                      0x08000e16   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Init)
+    i.HAL_TIM_Base_MspInit                   0x08000e4c   Section        0  stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspInit)
+    i.HAL_TIM_Base_Start_IT                  0x08000eb0   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT)
+    i.HAL_TIM_Base_Stop_IT                   0x08000ec8   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Stop_IT)
+    i.HAL_TIM_ConfigClockSource              0x08000ef2   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_ConfigClockSource)
+    i.HAL_TIM_IC_CaptureCallback             0x08000fe4   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback)
+    i.HAL_TIM_IRQHandler                     0x08000fe6   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_IRQHandler)
+    i.HAL_TIM_OC_DelayElapsedCallback        0x0800114c   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback)
+    i.HAL_TIM_PWM_PulseFinishedCallback      0x0800114e   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback)
+    i.HAL_TIM_PeriodElapsedCallback          0x08001150   Section        0  main.o(i.HAL_TIM_PeriodElapsedCallback)
+    i.HAL_TIM_TriggerCallback                0x08001168   Section        0  stm32f4xx_hal_tim.o(i.HAL_TIM_TriggerCallback)
+    i.HardFault_Handler                      0x0800116a   Section        0  stm32f4xx_it.o(i.HardFault_Handler)
+    i.LCD_Clear                              0x0800116c   Section        0  lcd_txt.o(i.LCD_Clear)
+    i.LCD_Command                            0x0800117e   Section        0  lcd_txt.o(i.LCD_Command)
+    i.LCD_CursorOff                          0x080011c2   Section        0  lcd_txt.o(i.LCD_CursorOff)
+    i.LCD_Data                               0x080011d4   Section        0  lcd_txt.o(i.LCD_Data)
+    i.LCD_SetPos                             0x08001212   Section        0  lcd_txt.o(i.LCD_SetPos)
+    i.LCD_String                             0x08001248   Section        0  lcd_txt.o(i.LCD_String)
+    i.LCD_WriteData                          0x08001266   Section        0  lcd_txt.o(i.LCD_WriteData)
+    i.LCD_ini                                0x080012ae   Section        0  lcd_txt.o(i.LCD_ini)
+    i.MFRC522_Anticoll                       0x08001358   Section        0  rc522.o(i.MFRC522_Anticoll)
+    i.MFRC522_CalculateCRC                   0x0800139a   Section        0  rc522.o(i.MFRC522_CalculateCRC)
+    i.MFRC522_Check                          0x080013f8   Section        0  rc522.o(i.MFRC522_Check)
+    i.MFRC522_ClearBitMask                   0x08001418   Section        0  rc522.o(i.MFRC522_ClearBitMask)
+    i.MFRC522_Compare                        0x08001430   Section        0  rc522.o(i.MFRC522_Compare)
+    i.MFRC522_Halt                           0x0800144c   Section        0  rc522.o(i.MFRC522_Halt)
+    i.MFRC522_ReadRegister                   0x08001478   Section        0  rc522.o(i.MFRC522_ReadRegister)
+    i.MFRC522_Request                        0x08001486   Section        0  rc522.o(i.MFRC522_Request)
+    i.MFRC522_SetBitMask                     0x080014b4   Section        0  rc522.o(i.MFRC522_SetBitMask)
+    i.MFRC522_ToCard                         0x080014cc   Section        0  rc522.o(i.MFRC522_ToCard)
+    i.MFRC522_WriteRegister                  0x080015e0   Section        0  rc522.o(i.MFRC522_WriteRegister)
+    i.MX_GPIO_Init                           0x080015ec   Section        0  main.o(i.MX_GPIO_Init)
+    MX_GPIO_Init                             0x080015ed   Thumb Code   400  main.o(i.MX_GPIO_Init)
+    i.MX_SPI1_Init                           0x08001798   Section        0  main.o(i.MX_SPI1_Init)
+    MX_SPI1_Init                             0x08001799   Thumb Code    54  main.o(i.MX_SPI1_Init)
+    i.MX_TIM3_Init                           0x080017d8   Section        0  main.o(i.MX_TIM3_Init)
+    MX_TIM3_Init                             0x080017d9   Thumb Code    68  main.o(i.MX_TIM3_Init)
+    i.MX_TIM4_Init                           0x08001824   Section        0  main.o(i.MX_TIM4_Init)
+    MX_TIM4_Init                             0x08001825   Thumb Code    70  main.o(i.MX_TIM4_Init)
+    i.MemManage_Handler                      0x08001874   Section        0  stm32f4xx_it.o(i.MemManage_Handler)
+    i.NMI_Handler                            0x08001876   Section        0  stm32f4xx_it.o(i.NMI_Handler)
+    i.NVIC_SetPriority                       0x08001878   Section        0  stm32f4xx_hal_cortex.o(i.NVIC_SetPriority)
+    NVIC_SetPriority                         0x08001879   Thumb Code    32  stm32f4xx_hal_cortex.o(i.NVIC_SetPriority)
+    i.PendSV_Handler                         0x08001898   Section        0  stm32f4xx_it.o(i.PendSV_Handler)
+    i.SPI1SendByte                           0x0800189c   Section        0  rc522.o(i.SPI1SendByte)
+    i.SPI1_ReadReg                           0x080018bc   Section        0  rc522.o(i.SPI1_ReadReg)
+    i.SPI1_WriteReg                          0x080018ec   Section        0  rc522.o(i.SPI1_WriteReg)
+    i.SPI_CheckFlag_BSY                      0x0800191c   Section        0  stm32f4xx_hal_spi.o(i.SPI_CheckFlag_BSY)
+    SPI_CheckFlag_BSY                        0x0800191d   Thumb Code    32  stm32f4xx_hal_spi.o(i.SPI_CheckFlag_BSY)
+    i.SPI_WaitFlagStateUntilTimeout          0x0800193c   Section        0  stm32f4xx_hal_spi.o(i.SPI_WaitFlagStateUntilTimeout)
+    SPI_WaitFlagStateUntilTimeout            0x0800193d   Thumb Code   150  stm32f4xx_hal_spi.o(i.SPI_WaitFlagStateUntilTimeout)
+    i.SVC_Handler                            0x080019d2   Section        0  stm32f4xx_it.o(i.SVC_Handler)
+    i.SysTick_Handler                        0x080019d4   Section        0  stm32f4xx_it.o(i.SysTick_Handler)
+    i.SystemClock_Config                     0x080019e4   Section        0  main.o(i.SystemClock_Config)
+    i.SystemInit                             0x08001a6c   Section        0  system_stm32f4xx.o(i.SystemInit)
+    i.TIM3_IRQHandler                        0x08001ac0   Section        0  stm32f4xx_it.o(i.TIM3_IRQHandler)
+    i.TIM4_IRQHandler                        0x08001acc   Section        0  stm32f4xx_it.o(i.TIM4_IRQHandler)
+    i.TIM_Base_SetConfig                     0x08001ad8   Section        0  stm32f4xx_hal_tim.o(i.TIM_Base_SetConfig)
+    i.TIM_ETR_SetConfig                      0x08001b68   Section        0  stm32f4xx_hal_tim.o(i.TIM_ETR_SetConfig)
+    TIM_ETR_SetConfig                        0x08001b69   Thumb Code    20  stm32f4xx_hal_tim.o(i.TIM_ETR_SetConfig)
+    i.TIM_ITRx_SetConfig                     0x08001b7c   Section        0  stm32f4xx_hal_tim.o(i.TIM_ITRx_SetConfig)
+    TIM_ITRx_SetConfig                       0x08001b7d   Thumb Code    16  stm32f4xx_hal_tim.o(i.TIM_ITRx_SetConfig)
+    i.TIM_TI1_ConfigInputStage               0x08001b8c   Section        0  stm32f4xx_hal_tim.o(i.TIM_TI1_ConfigInputStage)
+    TIM_TI1_ConfigInputStage                 0x08001b8d   Thumb Code    34  stm32f4xx_hal_tim.o(i.TIM_TI1_ConfigInputStage)
+    i.TIM_TI2_ConfigInputStage               0x08001bae   Section        0  stm32f4xx_hal_tim.o(i.TIM_TI2_ConfigInputStage)
+    TIM_TI2_ConfigInputStage                 0x08001baf   Thumb Code    36  stm32f4xx_hal_tim.o(i.TIM_TI2_ConfigInputStage)
+    i.UsageFault_Handler                     0x08001bd2   Section        0  stm32f4xx_it.o(i.UsageFault_Handler)
+    i.__0sprintf$4                           0x08001bd4   Section        0  printf4.o(i.__0sprintf$4)
+    i.__scatterload_copy                     0x08001bfc   Section       14  handlers.o(i.__scatterload_copy)
+    i.__scatterload_null                     0x08001c0a   Section        2  handlers.o(i.__scatterload_null)
+    i.__scatterload_zeroinit                 0x08001c0c   Section       14  handlers.o(i.__scatterload_zeroinit)
+    i._printf_core                           0x08001c1c   Section        0  printf4.o(i._printf_core)
+    _printf_core                             0x08001c1d   Thumb Code   552  printf4.o(i._printf_core)
+    i._sputc                                 0x08001e48   Section        0  printf4.o(i._sputc)
+    _sputc                                   0x08001e49   Thumb Code    10  printf4.o(i._sputc)
+    i.delayus_block                          0x08001e54   Section        0  main.o(i.delayus_block)
+    i.display_d                              0x08001e88   Section        0  lcd_txt.o(i.display_d)
+    i.display_e                              0x08001ed4   Section        0  lcd_txt.o(i.display_e)
+    i.display_escribir                       0x08001ef0   Section        0  main.o(i.display_escribir)
+    i.display_rs                             0x08001f60   Section        0  lcd_txt.o(i.display_rs)
+    i.main                                   0x08001f7c   Section        0  main.o(i.main)
+    .constdata                               0x0800254c   Section       16  system_stm32f4xx.o(.constdata)
     .data                                    0x20000000   Section       12  stm32f4xx_hal.o(.data)
     .data                                    0x2000000c   Section        4  system_stm32f4xx.o(.data)
-    .data                                    0x20000010   Section       48  main.o(.data)
-    .bss                                     0x20000040   Section     1235  main.o(.bss)
-    .bss                                     0x20000514   Section       64  main.o(.bss)
-    STACK                                    0x20000558   Section     1024  startup_stm32f411xe.o(STACK)
+    .data                                    0x20000010   Section       45  main.o(.data)
+    .bss                                     0x20000040   Section      963  main.o(.bss)
+    STACK                                    0x20000408   Section     1024  startup_stm32f411xe.o(STACK)
 
     Global Symbols
 
@@ -1631,6 +1537,7 @@ Image Symbol Table
     TIM5_IRQHandler                          0x080001c7   Thumb Code     0  startup_stm32f411xe.o(.text)
     USART1_IRQHandler                        0x080001c7   Thumb Code     0  startup_stm32f411xe.o(.text)
     USART2_IRQHandler                        0x080001c7   Thumb Code     0  startup_stm32f411xe.o(.text)
+    USART6_IRQHandler                        0x080001c7   Thumb Code     0  startup_stm32f411xe.o(.text)
     WWDG_IRQHandler                          0x080001c7   Thumb Code     0  startup_stm32f411xe.o(.text)
     __aeabi_uldivmod                         0x080001d1   Thumb Code    98  uldiv.o(.text)
     __aeabi_llsl                             0x08000233   Thumb Code    30  llshl.o(.text)
@@ -1643,125 +1550,119 @@ Image Symbol Table
     DebugMon_Handler                         0x08000297   Thumb Code     2  stm32f4xx_it.o(i.DebugMon_Handler)
     EXTI4_IRQHandler                         0x08000299   Thumb Code     6  stm32f4xx_it.o(i.EXTI4_IRQHandler)
     EXTI9_5_IRQHandler                       0x0800029f   Thumb Code     6  stm32f4xx_it.o(i.EXTI9_5_IRQHandler)
-    HAL_DMA_Abort_IT                         0x080002a5   Thumb Code    36  stm32f4xx_hal_dma.o(i.HAL_DMA_Abort_IT)
-    HAL_Delay                                0x080002c9   Thumb Code    32  stm32f4xx_hal.o(i.HAL_Delay)
-    HAL_GPIO_EXTI_Callback                   0x080002ed   Thumb Code    40  main.o(i.HAL_GPIO_EXTI_Callback)
-    HAL_GPIO_EXTI_IRQHandler                 0x0800031d   Thumb Code    18  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
-    HAL_GPIO_Init                            0x08000335   Thumb Code   358  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
-    HAL_GPIO_ReadPin                         0x080004bd   Thumb Code    10  stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin)
-    HAL_GPIO_TogglePin                       0x080004c7   Thumb Code     8  stm32f4xx_hal_gpio.o(i.HAL_GPIO_TogglePin)
-    HAL_GPIO_WritePin                        0x080004cf   Thumb Code    10  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
-    HAL_GetTick                              0x080004d9   Thumb Code     6  stm32f4xx_hal.o(i.HAL_GetTick)
-    HAL_IncTick                              0x080004e5   Thumb Code    12  stm32f4xx_hal.o(i.HAL_IncTick)
-    HAL_Init                                 0x080004f5   Thumb Code    48  stm32f4xx_hal.o(i.HAL_Init)
-    HAL_InitTick                             0x08000529   Thumb Code    54  stm32f4xx_hal.o(i.HAL_InitTick)
-    HAL_MspInit                              0x08000569   Thumb Code    88  stm32f4xx_hal_msp.o(i.HAL_MspInit)
-    HAL_NVIC_EnableIRQ                       0x080005c1   Thumb Code    22  stm32f4xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ)
-    HAL_NVIC_SetPriority                     0x080005d9   Thumb Code    60  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
-    HAL_NVIC_SetPriorityGrouping             0x08000619   Thumb Code    26  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriorityGrouping)
-    HAL_RCC_ClockConfig                      0x0800063d   Thumb Code   286  stm32f4xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
-    HAL_RCC_GetHCLKFreq                      0x0800076d   Thumb Code     6  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetHCLKFreq)
-    HAL_RCC_GetSysClockFreq                  0x08000779   Thumb Code    88  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
-    HAL_RCC_OscConfig                        0x080007dd   Thumb Code   770  stm32f4xx_hal_rcc.o(i.HAL_RCC_OscConfig)
-    HAL_SPI_Init                             0x08000af9   Thumb Code   128  stm32f4xx_hal_spi.o(i.HAL_SPI_Init)
-    HAL_SPI_MspInit                          0x08000b79   Thumb Code    62  stm32f4xx_hal_msp.o(i.HAL_SPI_MspInit)
-    HAL_SPI_Transmit                         0x08000bc5   Thumb Code   360  stm32f4xx_hal_spi.o(i.HAL_SPI_Transmit)
-    HAL_SPI_TransmitReceive                  0x08000d2d   Thumb Code   472  stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive)
-    HAL_SYSTICK_CLKSourceConfig              0x08000f05   Thumb Code    24  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_CLKSourceConfig)
-    HAL_SYSTICK_Callback                     0x08000f1d   Thumb Code     2  main.o(i.HAL_SYSTICK_Callback)
-    HAL_SYSTICK_Config                       0x08000f1f   Thumb Code    40  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_Config)
-    HAL_SYSTICK_IRQHandler                   0x08000f47   Thumb Code     8  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_IRQHandler)
-    HAL_TIMEx_BreakCallback                  0x08000f4f   Thumb Code     2  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_BreakCallback)
-    HAL_TIMEx_CommutationCallback            0x08000f51   Thumb Code     2  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_CommutationCallback)
-    HAL_TIMEx_MasterConfigSynchronization    0x08000f53   Thumb Code    80  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization)
-    HAL_TIM_Base_Init                        0x08000fa3   Thumb Code    54  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Init)
-    HAL_TIM_Base_MspInit                     0x08000fd9   Thumb Code    86  stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspInit)
-    HAL_TIM_Base_Start_IT                    0x0800103d   Thumb Code    24  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT)
-    HAL_TIM_Base_Stop_IT                     0x08001055   Thumb Code    42  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Stop_IT)
-    HAL_TIM_ConfigClockSource                0x0800107f   Thumb Code   242  stm32f4xx_hal_tim.o(i.HAL_TIM_ConfigClockSource)
-    HAL_TIM_IC_CaptureCallback               0x08001171   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback)
-    HAL_TIM_IRQHandler                       0x08001173   Thumb Code   358  stm32f4xx_hal_tim.o(i.HAL_TIM_IRQHandler)
-    HAL_TIM_OC_DelayElapsedCallback          0x080012d9   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback)
-    HAL_TIM_PWM_PulseFinishedCallback        0x080012db   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback)
-    HAL_TIM_PeriodElapsedCallback            0x080012dd   Thumb Code    16  main.o(i.HAL_TIM_PeriodElapsedCallback)
-    HAL_TIM_TriggerCallback                  0x080012f5   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_TriggerCallback)
-    HAL_UART_ErrorCallback                   0x080012f7   Thumb Code     2  stm32f4xx_hal_uart.o(i.HAL_UART_ErrorCallback)
-    HAL_UART_IRQHandler                      0x080012f9   Thumb Code   266  stm32f4xx_hal_uart.o(i.HAL_UART_IRQHandler)
-    HAL_UART_RxCpltCallback                  0x08001409   Thumb Code     2  stm32f4xx_hal_uart.o(i.HAL_UART_RxCpltCallback)
-    HAL_UART_TxCpltCallback                  0x0800140b   Thumb Code     2  stm32f4xx_hal_uart.o(i.HAL_UART_TxCpltCallback)
-    HardFault_Handler                        0x0800140d   Thumb Code     2  stm32f4xx_it.o(i.HardFault_Handler)
-    LCD_Clear                                0x0800140f   Thumb Code    18  lcd_txt.o(i.LCD_Clear)
-    LCD_Command                              0x08001421   Thumb Code    68  lcd_txt.o(i.LCD_Command)
-    LCD_CursorOff                            0x08001465   Thumb Code    18  lcd_txt.o(i.LCD_CursorOff)
-    LCD_Data                                 0x08001477   Thumb Code    62  lcd_txt.o(i.LCD_Data)
-    LCD_SetPos                               0x080014b5   Thumb Code    54  lcd_txt.o(i.LCD_SetPos)
-    LCD_String                               0x080014eb   Thumb Code    30  lcd_txt.o(i.LCD_String)
-    LCD_WriteData                            0x08001509   Thumb Code    72  lcd_txt.o(i.LCD_WriteData)
-    LCD_ini                                  0x08001551   Thumb Code   170  lcd_txt.o(i.LCD_ini)
-    MemManage_Handler                        0x08001885   Thumb Code     2  stm32f4xx_it.o(i.MemManage_Handler)
-    NMI_Handler                              0x08001887   Thumb Code     2  stm32f4xx_it.o(i.NMI_Handler)
-    PendSV_Handler                           0x080018a9   Thumb Code     2  stm32f4xx_it.o(i.PendSV_Handler)
-    SVC_Handler                              0x08001961   Thumb Code     2  stm32f4xx_it.o(i.SVC_Handler)
-    SysTick_Handler                          0x08001963   Thumb Code    14  stm32f4xx_it.o(i.SysTick_Handler)
-    SystemClock_Config                       0x08001971   Thumb Code   126  main.o(i.SystemClock_Config)
-    SystemInit                               0x080019f9   Thumb Code    66  system_stm32f4xx.o(i.SystemInit)
-    TIM3_IRQHandler                          0x08001a4d   Thumb Code     6  stm32f4xx_it.o(i.TIM3_IRQHandler)
-    TIM4_IRQHandler                          0x08001a59   Thumb Code     6  stm32f4xx_it.o(i.TIM4_IRQHandler)
-    TIM_Base_SetConfig                       0x08001a65   Thumb Code   114  stm32f4xx_hal_tim.o(i.TIM_Base_SetConfig)
-    USART6_IRQHandler                        0x08001c79   Thumb Code     6  stm32f4xx_it.o(i.USART6_IRQHandler)
-    UsageFault_Handler                       0x08001c85   Thumb Code     2  stm32f4xx_it.o(i.UsageFault_Handler)
-    __0sprintf$4                             0x08001c89   Thumb Code    34  printf4.o(i.__0sprintf$4)
-    __1sprintf$4                             0x08001c89   Thumb Code     0  printf4.o(i.__0sprintf$4)
-    __2sprintf                               0x08001c89   Thumb Code     0  printf4.o(i.__0sprintf$4)
-    __scatterload_copy                       0x08001cb1   Thumb Code    14  handlers.o(i.__scatterload_copy)
-    __scatterload_null                       0x08001cbf   Thumb Code     2  handlers.o(i.__scatterload_null)
-    __scatterload_zeroinit                   0x08001cc1   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
-    delayus_block                            0x08001f09   Thumb Code    42  main.o(i.delayus_block)
-    display_d                                0x08001f3d   Thumb Code    66  lcd_txt.o(i.display_d)
-    display_e                                0x08001f89   Thumb Code    22  lcd_txt.o(i.display_e)
-    display_escribir                         0x08001fa5   Thumb Code   106  main.o(i.display_escribir)
-    display_rs                               0x08002015   Thumb Code    22  lcd_txt.o(i.display_rs)
-    main                                     0x08002031   Thumb Code   962  main.o(i.main)
-    rfid_Check                               0x0800258d   Thumb Code    54  main.o(i.rfid_Check)
-    rfid_init                                0x080025c9   Thumb Code    90  main.o(i.rfid_init)
-    rfid_sub_AntennaOn                       0x08002629   Thumb Code    36  main.o(i.rfid_sub_AntennaOn)
-    rfid_sub_Anticoll                        0x08002655   Thumb Code    70  main.o(i.rfid_sub_Anticoll)
-    rfid_sub_CalculateCRC                    0x0800269d   Thumb Code   132  main.o(i.rfid_sub_CalculateCRC)
-    rfid_sub_Halt                            0x08002729   Thumb Code    44  main.o(i.rfid_sub_Halt)
-    rfid_sub_ReadRegister                    0x08002755   Thumb Code    62  main.o(i.rfid_sub_ReadRegister)
-    rfid_sub_ToCard                          0x0800279d   Thumb Code   348  main.o(i.rfid_sub_ToCard)
-    rfid_sub_WriteRegister                   0x08002901   Thumb Code    72  main.o(i.rfid_sub_WriteRegister)
-    AHBPrescTable                            0x08002950   Data          16  system_stm32f4xx.o(.constdata)
-    Region$$Table$$Base                      0x08002960   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x08002980   Number         0  anon$$obj.o(Region$$Table)
+    HAL_Delay                                0x080002a5   Thumb Code    32  stm32f4xx_hal.o(i.HAL_Delay)
+    HAL_GPIO_EXTI_Callback                   0x080002c9   Thumb Code    40  main.o(i.HAL_GPIO_EXTI_Callback)
+    HAL_GPIO_EXTI_IRQHandler                 0x080002f9   Thumb Code    18  stm32f4xx_hal_gpio.o(i.HAL_GPIO_EXTI_IRQHandler)
+    HAL_GPIO_Init                            0x08000311   Thumb Code   358  stm32f4xx_hal_gpio.o(i.HAL_GPIO_Init)
+    HAL_GPIO_ReadPin                         0x08000499   Thumb Code    10  stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin)
+    HAL_GPIO_TogglePin                       0x080004a3   Thumb Code     8  stm32f4xx_hal_gpio.o(i.HAL_GPIO_TogglePin)
+    HAL_GPIO_WritePin                        0x080004ab   Thumb Code    10  stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin)
+    HAL_GetTick                              0x080004b5   Thumb Code     6  stm32f4xx_hal.o(i.HAL_GetTick)
+    HAL_IncTick                              0x080004c1   Thumb Code    12  stm32f4xx_hal.o(i.HAL_IncTick)
+    HAL_Init                                 0x080004d1   Thumb Code    48  stm32f4xx_hal.o(i.HAL_Init)
+    HAL_InitTick                             0x08000505   Thumb Code    54  stm32f4xx_hal.o(i.HAL_InitTick)
+    HAL_MspInit                              0x08000545   Thumb Code    88  stm32f4xx_hal_msp.o(i.HAL_MspInit)
+    HAL_NVIC_EnableIRQ                       0x0800059d   Thumb Code    22  stm32f4xx_hal_cortex.o(i.HAL_NVIC_EnableIRQ)
+    HAL_NVIC_SetPriority                     0x080005b5   Thumb Code    60  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriority)
+    HAL_NVIC_SetPriorityGrouping             0x080005f5   Thumb Code    26  stm32f4xx_hal_cortex.o(i.HAL_NVIC_SetPriorityGrouping)
+    HAL_RCC_ClockConfig                      0x08000619   Thumb Code   286  stm32f4xx_hal_rcc.o(i.HAL_RCC_ClockConfig)
+    HAL_RCC_GetHCLKFreq                      0x08000749   Thumb Code     6  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetHCLKFreq)
+    HAL_RCC_GetSysClockFreq                  0x08000755   Thumb Code    88  stm32f4xx_hal_rcc.o(i.HAL_RCC_GetSysClockFreq)
+    HAL_RCC_OscConfig                        0x080007b9   Thumb Code   770  stm32f4xx_hal_rcc.o(i.HAL_RCC_OscConfig)
+    HAL_SPI_Init                             0x08000ad5   Thumb Code   128  stm32f4xx_hal_spi.o(i.HAL_SPI_Init)
+    HAL_SPI_MspInit                          0x08000b55   Thumb Code    62  stm32f4xx_hal_msp.o(i.HAL_SPI_MspInit)
+    HAL_SPI_TransmitReceive                  0x08000ba1   Thumb Code   472  stm32f4xx_hal_spi.o(i.HAL_SPI_TransmitReceive)
+    HAL_SYSTICK_CLKSourceConfig              0x08000d79   Thumb Code    24  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_CLKSourceConfig)
+    HAL_SYSTICK_Callback                     0x08000d91   Thumb Code     2  main.o(i.HAL_SYSTICK_Callback)
+    HAL_SYSTICK_Config                       0x08000d93   Thumb Code    40  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_Config)
+    HAL_SYSTICK_IRQHandler                   0x08000dbb   Thumb Code     8  stm32f4xx_hal_cortex.o(i.HAL_SYSTICK_IRQHandler)
+    HAL_TIMEx_BreakCallback                  0x08000dc3   Thumb Code     2  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_BreakCallback)
+    HAL_TIMEx_CommutationCallback            0x08000dc5   Thumb Code     2  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_CommutationCallback)
+    HAL_TIMEx_MasterConfigSynchronization    0x08000dc7   Thumb Code    80  stm32f4xx_hal_tim_ex.o(i.HAL_TIMEx_MasterConfigSynchronization)
+    HAL_TIM_Base_Init                        0x08000e17   Thumb Code    54  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Init)
+    HAL_TIM_Base_MspInit                     0x08000e4d   Thumb Code    86  stm32f4xx_hal_msp.o(i.HAL_TIM_Base_MspInit)
+    HAL_TIM_Base_Start_IT                    0x08000eb1   Thumb Code    24  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Start_IT)
+    HAL_TIM_Base_Stop_IT                     0x08000ec9   Thumb Code    42  stm32f4xx_hal_tim.o(i.HAL_TIM_Base_Stop_IT)
+    HAL_TIM_ConfigClockSource                0x08000ef3   Thumb Code   242  stm32f4xx_hal_tim.o(i.HAL_TIM_ConfigClockSource)
+    HAL_TIM_IC_CaptureCallback               0x08000fe5   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_IC_CaptureCallback)
+    HAL_TIM_IRQHandler                       0x08000fe7   Thumb Code   358  stm32f4xx_hal_tim.o(i.HAL_TIM_IRQHandler)
+    HAL_TIM_OC_DelayElapsedCallback          0x0800114d   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_OC_DelayElapsedCallback)
+    HAL_TIM_PWM_PulseFinishedCallback        0x0800114f   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_PWM_PulseFinishedCallback)
+    HAL_TIM_PeriodElapsedCallback            0x08001151   Thumb Code    16  main.o(i.HAL_TIM_PeriodElapsedCallback)
+    HAL_TIM_TriggerCallback                  0x08001169   Thumb Code     2  stm32f4xx_hal_tim.o(i.HAL_TIM_TriggerCallback)
+    HardFault_Handler                        0x0800116b   Thumb Code     2  stm32f4xx_it.o(i.HardFault_Handler)
+    LCD_Clear                                0x0800116d   Thumb Code    18  lcd_txt.o(i.LCD_Clear)
+    LCD_Command                              0x0800117f   Thumb Code    68  lcd_txt.o(i.LCD_Command)
+    LCD_CursorOff                            0x080011c3   Thumb Code    18  lcd_txt.o(i.LCD_CursorOff)
+    LCD_Data                                 0x080011d5   Thumb Code    62  lcd_txt.o(i.LCD_Data)
+    LCD_SetPos                               0x08001213   Thumb Code    54  lcd_txt.o(i.LCD_SetPos)
+    LCD_String                               0x08001249   Thumb Code    30  lcd_txt.o(i.LCD_String)
+    LCD_WriteData                            0x08001267   Thumb Code    72  lcd_txt.o(i.LCD_WriteData)
+    LCD_ini                                  0x080012af   Thumb Code   170  lcd_txt.o(i.LCD_ini)
+    MFRC522_Anticoll                         0x08001359   Thumb Code    66  rc522.o(i.MFRC522_Anticoll)
+    MFRC522_CalculateCRC                     0x0800139b   Thumb Code    94  rc522.o(i.MFRC522_CalculateCRC)
+    MFRC522_Check                            0x080013f9   Thumb Code    32  rc522.o(i.MFRC522_Check)
+    MFRC522_ClearBitMask                     0x08001419   Thumb Code    24  rc522.o(i.MFRC522_ClearBitMask)
+    MFRC522_Compare                          0x08001431   Thumb Code    28  rc522.o(i.MFRC522_Compare)
+    MFRC522_Halt                             0x0800144d   Thumb Code    44  rc522.o(i.MFRC522_Halt)
+    MFRC522_ReadRegister                     0x08001479   Thumb Code    14  rc522.o(i.MFRC522_ReadRegister)
+    MFRC522_Request                          0x08001487   Thumb Code    46  rc522.o(i.MFRC522_Request)
+    MFRC522_SetBitMask                       0x080014b5   Thumb Code    24  rc522.o(i.MFRC522_SetBitMask)
+    MFRC522_ToCard                           0x080014cd   Thumb Code   276  rc522.o(i.MFRC522_ToCard)
+    MFRC522_WriteRegister                    0x080015e1   Thumb Code    10  rc522.o(i.MFRC522_WriteRegister)
+    MemManage_Handler                        0x08001875   Thumb Code     2  stm32f4xx_it.o(i.MemManage_Handler)
+    NMI_Handler                              0x08001877   Thumb Code     2  stm32f4xx_it.o(i.NMI_Handler)
+    PendSV_Handler                           0x08001899   Thumb Code     2  stm32f4xx_it.o(i.PendSV_Handler)
+    SPI1SendByte                             0x0800189d   Thumb Code    28  rc522.o(i.SPI1SendByte)
+    SPI1_ReadReg                             0x080018bd   Thumb Code    44  rc522.o(i.SPI1_ReadReg)
+    SPI1_WriteReg                            0x080018ed   Thumb Code    44  rc522.o(i.SPI1_WriteReg)
+    SVC_Handler                              0x080019d3   Thumb Code     2  stm32f4xx_it.o(i.SVC_Handler)
+    SysTick_Handler                          0x080019d5   Thumb Code    14  stm32f4xx_it.o(i.SysTick_Handler)
+    SystemClock_Config                       0x080019e5   Thumb Code   126  main.o(i.SystemClock_Config)
+    SystemInit                               0x08001a6d   Thumb Code    66  system_stm32f4xx.o(i.SystemInit)
+    TIM3_IRQHandler                          0x08001ac1   Thumb Code     6  stm32f4xx_it.o(i.TIM3_IRQHandler)
+    TIM4_IRQHandler                          0x08001acd   Thumb Code     6  stm32f4xx_it.o(i.TIM4_IRQHandler)
+    TIM_Base_SetConfig                       0x08001ad9   Thumb Code   114  stm32f4xx_hal_tim.o(i.TIM_Base_SetConfig)
+    UsageFault_Handler                       0x08001bd3   Thumb Code     2  stm32f4xx_it.o(i.UsageFault_Handler)
+    __0sprintf$4                             0x08001bd5   Thumb Code    34  printf4.o(i.__0sprintf$4)
+    __1sprintf$4                             0x08001bd5   Thumb Code     0  printf4.o(i.__0sprintf$4)
+    __2sprintf                               0x08001bd5   Thumb Code     0  printf4.o(i.__0sprintf$4)
+    __scatterload_copy                       0x08001bfd   Thumb Code    14  handlers.o(i.__scatterload_copy)
+    __scatterload_null                       0x08001c0b   Thumb Code     2  handlers.o(i.__scatterload_null)
+    __scatterload_zeroinit                   0x08001c0d   Thumb Code    14  handlers.o(i.__scatterload_zeroinit)
+    delayus_block                            0x08001e55   Thumb Code    42  main.o(i.delayus_block)
+    display_d                                0x08001e89   Thumb Code    66  lcd_txt.o(i.display_d)
+    display_e                                0x08001ed5   Thumb Code    22  lcd_txt.o(i.display_e)
+    display_escribir                         0x08001ef1   Thumb Code   106  main.o(i.display_escribir)
+    display_rs                               0x08001f61   Thumb Code    22  lcd_txt.o(i.display_rs)
+    main                                     0x08001f7d   Thumb Code  1488  main.o(i.main)
+    AHBPrescTable                            0x0800254c   Data          16  system_stm32f4xx.o(.constdata)
+    Region$$Table$$Base                      0x0800255c   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0800257c   Number         0  anon$$obj.o(Region$$Table)
     uwTickFreq                               0x20000000   Data           1  stm32f4xx_hal.o(.data)
     uwTickPrio                               0x20000004   Data           4  stm32f4xx_hal.o(.data)
     uwTick                                   0x20000008   Data           4  stm32f4xx_hal.o(.data)
     SystemCoreClock                          0x2000000c   Data           4  system_stm32f4xx.o(.data)
-    leido                                    0x20000010   Data           1  main.o(.data)
-    boton                                    0x20000014   Data           4  main.o(.data)
-    operario_activo                          0x20000018   Data           4  main.o(.data)
-    cont_unidades                            0x2000001c   Data           4  main.o(.data)
-    cont_golpes                              0x20000020   Data           4  main.o(.data)
-    f_unidades                               0x20000024   Data           4  main.o(.data)
-    flag                                     0x20000028   Data           4  main.o(.data)
-    f_boton                                  0x2000002c   Data           4  main.o(.data)
-    f_sensor                                 0x20000030   Data           4  main.o(.data)
-    instancia                                0x20000034   Data           4  main.o(.data)
-    i                                        0x20000038   Data           4  main.o(.data)
-    cardid                                   0x2000003c   Data           4  main.o(.data)
+    boton                                    0x20000010   Data           4  main.o(.data)
+    operario_activo                          0x20000014   Data           4  main.o(.data)
+    cont_unidades                            0x20000018   Data           4  main.o(.data)
+    cont_golpes                              0x2000001c   Data           4  main.o(.data)
+    f_unidades                               0x20000020   Data           4  main.o(.data)
+    flag                                     0x20000024   Data           4  main.o(.data)
+    f_boton                                  0x20000028   Data           4  main.o(.data)
+    f_sensor                                 0x2000002c   Data           4  main.o(.data)
+    instancia                                0x20000030   Data           4  main.o(.data)
+    i                                        0x20000034   Data           4  main.o(.data)
+    CardID                                   0x20000038   Data           5  main.o(.data)
     tecla                                    0x20000040   Data          64  main.o(.bss)
     hspi1                                    0x20000080   Data          88  main.o(.bss)
     htim3                                    0x200000d8   Data          60  main.o(.bss)
     htim4                                    0x20000114   Data          60  main.o(.bss)
-    rxbuffer                                 0x20000150   Data          16  main.o(.bss)
-    txbuffer                                 0x20000160   Data          16  main.o(.bss)
-    operarios                                0x20000170   Data         880  main.o(.bss)
-    str_golpes                               0x200004e0   Data          17  main.o(.bss)
-    str_unidades                             0x200004f1   Data          17  main.o(.bss)
-    str_productividad                        0x20000502   Data          17  main.o(.bss)
-    huart6                                   0x20000514   Data          64  main.o(.bss)
-    __initial_sp                             0x20000958   Data           0  startup_stm32f411xe.o(STACK)
+    operarios                                0x20000150   Data         640  main.o(.bss)
+    str_golpes                               0x200003d0   Data          17  main.o(.bss)
+    str_unidades                             0x200003e1   Data          17  main.o(.bss)
+    str_productividad                        0x200003f2   Data          17  main.o(.bss)
+    __initial_sp                             0x20000808   Data           0  startup_stm32f411xe.o(STACK)
 
 
 
@@ -1771,156 +1672,149 @@ Memory Map of the image
 
   Image Entry point : 0x08000199
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000029c0, Max: 0x00080000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x000025bc, Max: 0x00080000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x00002980, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000257c, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x00000198   Data   RO            3    RESET               startup_stm32f411xe.o
-    0x08000198   0x08000198   0x00000000   Code   RO         3207  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x08000198   0x08000198   0x00000004   Code   RO         3473    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x0800019c   0x0800019c   0x00000004   Code   RO         3476    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x080001a0   0x080001a0   0x00000000   Code   RO         3478    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x080001a0   0x080001a0   0x00000000   Code   RO         3480    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x080001a0   0x080001a0   0x00000008   Code   RO         3481    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x080001a8   0x080001a8   0x00000000   Code   RO         3483    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x080001a8   0x080001a8   0x00000000   Code   RO         3485    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x080001a8   0x080001a8   0x00000004   Code   RO         3474    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x08000198   0x08000198   0x00000000   Code   RO         2976  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x08000198   0x08000198   0x00000004   Code   RO         3242    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x0800019c   0x0800019c   0x00000004   Code   RO         3245    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x080001a0   0x080001a0   0x00000000   Code   RO         3247    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x080001a0   0x080001a0   0x00000000   Code   RO         3249    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x080001a0   0x080001a0   0x00000008   Code   RO         3250    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x080001a8   0x080001a8   0x00000000   Code   RO         3252    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x080001a8   0x080001a8   0x00000000   Code   RO         3254    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x080001a8   0x080001a8   0x00000004   Code   RO         3243    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x080001ac   0x080001ac   0x00000024   Code   RO            4    .text               startup_stm32f411xe.o
-    0x080001d0   0x080001d0   0x00000062   Code   RO         3210    .text               mc_w.l(uldiv.o)
-    0x08000232   0x08000232   0x0000001e   Code   RO         3492    .text               mc_w.l(llshl.o)
-    0x08000250   0x08000250   0x00000020   Code   RO         3494    .text               mc_w.l(llushr.o)
-    0x08000270   0x08000270   0x00000024   Code   RO         3507    .text               mc_w.l(init.o)
-    0x08000294   0x08000294   0x00000002   Code   RO         2844    i.BusFault_Handler  stm32f4xx_it.o
-    0x08000296   0x08000296   0x00000002   Code   RO         2845    i.DebugMon_Handler  stm32f4xx_it.o
-    0x08000298   0x08000298   0x00000006   Code   RO         2846    i.EXTI4_IRQHandler  stm32f4xx_it.o
-    0x0800029e   0x0800029e   0x00000006   Code   RO         2847    i.EXTI9_5_IRQHandler  stm32f4xx_it.o
-    0x080002a4   0x080002a4   0x00000024   Code   RO         2114    i.HAL_DMA_Abort_IT  stm32f4xx_hal_dma.o
-    0x080002c8   0x080002c8   0x00000024   Code   RO         2223    i.HAL_Delay         stm32f4xx_hal.o
-    0x080002ec   0x080002ec   0x00000030   Code   RO         2950    i.HAL_GPIO_EXTI_Callback  main.o
-    0x0800031c   0x0800031c   0x00000018   Code   RO          451    i.HAL_GPIO_EXTI_IRQHandler  stm32f4xx_hal_gpio.o
-    0x08000334   0x08000334   0x00000188   Code   RO          452    i.HAL_GPIO_Init     stm32f4xx_hal_gpio.o
-    0x080004bc   0x080004bc   0x0000000a   Code   RO          454    i.HAL_GPIO_ReadPin  stm32f4xx_hal_gpio.o
-    0x080004c6   0x080004c6   0x00000008   Code   RO          455    i.HAL_GPIO_TogglePin  stm32f4xx_hal_gpio.o
-    0x080004ce   0x080004ce   0x0000000a   Code   RO          456    i.HAL_GPIO_WritePin  stm32f4xx_hal_gpio.o
-    0x080004d8   0x080004d8   0x0000000c   Code   RO         2229    i.HAL_GetTick       stm32f4xx_hal.o
-    0x080004e4   0x080004e4   0x00000010   Code   RO         2233    i.HAL_IncTick       stm32f4xx_hal.o
-    0x080004f4   0x080004f4   0x00000034   Code   RO         2234    i.HAL_Init          stm32f4xx_hal.o
-    0x08000528   0x08000528   0x00000040   Code   RO         2235    i.HAL_InitTick      stm32f4xx_hal.o
-    0x08000568   0x08000568   0x00000058   Code   RO         2784    i.HAL_MspInit       stm32f4xx_hal_msp.o
-    0x080005c0   0x080005c0   0x00000016   Code   RO           18    i.HAL_NVIC_EnableIRQ  stm32f4xx_hal_cortex.o
-    0x080005d6   0x080005d6   0x00000002   PAD
-    0x080005d8   0x080005d8   0x00000040   Code   RO           24    i.HAL_NVIC_SetPriority  stm32f4xx_hal_cortex.o
-    0x08000618   0x08000618   0x00000024   Code   RO           25    i.HAL_NVIC_SetPriorityGrouping  stm32f4xx_hal_cortex.o
-    0x0800063c   0x0800063c   0x00000130   Code   RO         1770    i.HAL_RCC_ClockConfig  stm32f4xx_hal_rcc.o
-    0x0800076c   0x0800076c   0x0000000c   Code   RO         1775    i.HAL_RCC_GetHCLKFreq  stm32f4xx_hal_rcc.o
-    0x08000778   0x08000778   0x00000064   Code   RO         1779    i.HAL_RCC_GetSysClockFreq  stm32f4xx_hal_rcc.o
-    0x080007dc   0x080007dc   0x0000031c   Code   RO         1782    i.HAL_RCC_OscConfig  stm32f4xx_hal_rcc.o
-    0x08000af8   0x08000af8   0x00000080   Code   RO         2440    i.HAL_SPI_Init      stm32f4xx_hal_spi.o
-    0x08000b78   0x08000b78   0x0000004c   Code   RO         2786    i.HAL_SPI_MspInit   stm32f4xx_hal_msp.o
-    0x08000bc4   0x08000bc4   0x00000168   Code   RO         2448    i.HAL_SPI_Transmit  stm32f4xx_hal_spi.o
-    0x08000d2c   0x08000d2c   0x000001d8   Code   RO         2449    i.HAL_SPI_TransmitReceive  stm32f4xx_hal_spi.o
-    0x08000f04   0x08000f04   0x00000018   Code   RO           27    i.HAL_SYSTICK_CLKSourceConfig  stm32f4xx_hal_cortex.o
-    0x08000f1c   0x08000f1c   0x00000002   Code   RO         2951    i.HAL_SYSTICK_Callback  main.o
-    0x08000f1e   0x08000f1e   0x00000028   Code   RO           29    i.HAL_SYSTICK_Config  stm32f4xx_hal_cortex.o
-    0x08000f46   0x08000f46   0x00000008   Code   RO           30    i.HAL_SYSTICK_IRQHandler  stm32f4xx_hal_cortex.o
-    0x08000f4e   0x08000f4e   0x00000002   Code   RO         1871    i.HAL_TIMEx_BreakCallback  stm32f4xx_hal_tim_ex.o
-    0x08000f50   0x08000f50   0x00000002   Code   RO         1872    i.HAL_TIMEx_CommutationCallback  stm32f4xx_hal_tim_ex.o
-    0x08000f52   0x08000f52   0x00000050   Code   RO         1888    i.HAL_TIMEx_MasterConfigSynchronization  stm32f4xx_hal_tim_ex.o
-    0x08000fa2   0x08000fa2   0x00000036   Code   RO          636    i.HAL_TIM_Base_Init  stm32f4xx_hal_tim.o
-    0x08000fd8   0x08000fd8   0x00000064   Code   RO         2788    i.HAL_TIM_Base_MspInit  stm32f4xx_hal_msp.o
-    0x0800103c   0x0800103c   0x00000018   Code   RO          641    i.HAL_TIM_Base_Start_IT  stm32f4xx_hal_tim.o
-    0x08001054   0x08001054   0x0000002a   Code   RO          644    i.HAL_TIM_Base_Stop_IT  stm32f4xx_hal_tim.o
-    0x0800107e   0x0800107e   0x000000f2   Code   RO          645    i.HAL_TIM_ConfigClockSource  stm32f4xx_hal_tim.o
-    0x08001170   0x08001170   0x00000002   Code   RO          665    i.HAL_TIM_IC_CaptureCallback  stm32f4xx_hal_tim.o
-    0x08001172   0x08001172   0x00000166   Code   RO          678    i.HAL_TIM_IRQHandler  stm32f4xx_hal_tim.o
-    0x080012d8   0x080012d8   0x00000002   Code   RO          681    i.HAL_TIM_OC_DelayElapsedCallback  stm32f4xx_hal_tim.o
-    0x080012da   0x080012da   0x00000002   Code   RO          708    i.HAL_TIM_PWM_PulseFinishedCallback  stm32f4xx_hal_tim.o
-    0x080012dc   0x080012dc   0x00000018   Code   RO         2952    i.HAL_TIM_PeriodElapsedCallback  main.o
-    0x080012f4   0x080012f4   0x00000002   Code   RO          719    i.HAL_TIM_TriggerCallback  stm32f4xx_hal_tim.o
-    0x080012f6   0x080012f6   0x00000002   Code   RO         1346    i.HAL_UART_ErrorCallback  stm32f4xx_hal_uart.o
-    0x080012f8   0x080012f8   0x00000110   Code   RO         1349    i.HAL_UART_IRQHandler  stm32f4xx_hal_uart.o
-    0x08001408   0x08001408   0x00000002   Code   RO         1356    i.HAL_UART_RxCpltCallback  stm32f4xx_hal_uart.o
-    0x0800140a   0x0800140a   0x00000002   Code   RO         1361    i.HAL_UART_TxCpltCallback  stm32f4xx_hal_uart.o
-    0x0800140c   0x0800140c   0x00000002   Code   RO         2848    i.HardFault_Handler  stm32f4xx_it.o
-    0x0800140e   0x0800140e   0x00000012   Code   RO         3112    i.LCD_Clear         lcd_txt.o
-    0x08001420   0x08001420   0x00000044   Code   RO         3113    i.LCD_Command       lcd_txt.o
-    0x08001464   0x08001464   0x00000012   Code   RO         3114    i.LCD_CursorOff     lcd_txt.o
-    0x08001476   0x08001476   0x0000003e   Code   RO         3116    i.LCD_Data          lcd_txt.o
-    0x080014b4   0x080014b4   0x00000036   Code   RO         3118    i.LCD_SetPos        lcd_txt.o
-    0x080014ea   0x080014ea   0x0000001e   Code   RO         3119    i.LCD_String        lcd_txt.o
-    0x08001508   0x08001508   0x00000048   Code   RO         3120    i.LCD_WriteData     lcd_txt.o
-    0x08001550   0x08001550   0x000000aa   Code   RO         3121    i.LCD_ini           lcd_txt.o
-    0x080015fa   0x080015fa   0x00000002   PAD
-    0x080015fc   0x080015fc   0x000001ac   Code   RO         2953    i.MX_GPIO_Init      main.o
-    0x080017a8   0x080017a8   0x00000040   Code   RO         2954    i.MX_SPI1_Init      main.o
-    0x080017e8   0x080017e8   0x0000004c   Code   RO         2955    i.MX_TIM3_Init      main.o
-    0x08001834   0x08001834   0x00000050   Code   RO         2956    i.MX_TIM4_Init      main.o
-    0x08001884   0x08001884   0x00000002   Code   RO         2849    i.MemManage_Handler  stm32f4xx_it.o
-    0x08001886   0x08001886   0x00000002   Code   RO         2850    i.NMI_Handler       stm32f4xx_it.o
-    0x08001888   0x08001888   0x00000020   Code   RO           31    i.NVIC_SetPriority  stm32f4xx_hal_cortex.o
-    0x080018a8   0x080018a8   0x00000002   Code   RO         2851    i.PendSV_Handler    stm32f4xx_it.o
-    0x080018aa   0x080018aa   0x00000020   Code   RO         2464    i.SPI_CheckFlag_BSY  stm32f4xx_hal_spi.o
-    0x080018ca   0x080018ca   0x00000096   Code   RO         2482    i.SPI_WaitFlagStateUntilTimeout  stm32f4xx_hal_spi.o
-    0x08001960   0x08001960   0x00000002   Code   RO         2852    i.SVC_Handler       stm32f4xx_it.o
-    0x08001962   0x08001962   0x0000000e   Code   RO         2853    i.SysTick_Handler   stm32f4xx_it.o
-    0x08001970   0x08001970   0x00000088   Code   RO         2957    i.SystemClock_Config  main.o
-    0x080019f8   0x080019f8   0x00000054   Code   RO         2747    i.SystemInit        system_stm32f4xx.o
-    0x08001a4c   0x08001a4c   0x0000000c   Code   RO         2854    i.TIM3_IRQHandler   stm32f4xx_it.o
-    0x08001a58   0x08001a58   0x0000000c   Code   RO         2855    i.TIM4_IRQHandler   stm32f4xx_it.o
-    0x08001a64   0x08001a64   0x00000090   Code   RO          720    i.TIM_Base_SetConfig  stm32f4xx_hal_tim.o
-    0x08001af4   0x08001af4   0x00000014   Code   RO          727    i.TIM_ETR_SetConfig  stm32f4xx_hal_tim.o
-    0x08001b08   0x08001b08   0x00000010   Code   RO          728    i.TIM_ITRx_SetConfig  stm32f4xx_hal_tim.o
-    0x08001b18   0x08001b18   0x00000022   Code   RO          734    i.TIM_TI1_ConfigInputStage  stm32f4xx_hal_tim.o
-    0x08001b3a   0x08001b3a   0x00000024   Code   RO          736    i.TIM_TI2_ConfigInputStage  stm32f4xx_hal_tim.o
-    0x08001b5e   0x08001b5e   0x00000010   Code   RO         1363    i.UART_DMAAbortOnError  stm32f4xx_hal_uart.o
-    0x08001b6e   0x08001b6e   0x0000001c   Code   RO         1373    i.UART_EndRxTransfer  stm32f4xx_hal_uart.o
-    0x08001b8a   0x08001b8a   0x0000008c   Code   RO         1375    i.UART_Receive_IT   stm32f4xx_hal_uart.o
-    0x08001c16   0x08001c16   0x00000062   Code   RO         1377    i.UART_Transmit_IT  stm32f4xx_hal_uart.o
-    0x08001c78   0x08001c78   0x0000000c   Code   RO         2856    i.USART6_IRQHandler  stm32f4xx_it.o
-    0x08001c84   0x08001c84   0x00000002   Code   RO         2857    i.UsageFault_Handler  stm32f4xx_it.o
-    0x08001c86   0x08001c86   0x00000002   PAD
-    0x08001c88   0x08001c88   0x00000028   Code   RO         3325    i.__0sprintf$4      mc_w.l(printf4.o)
-    0x08001cb0   0x08001cb0   0x0000000e   Code   RO         3517    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08001cbe   0x08001cbe   0x00000002   Code   RO         3518    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08001cc0   0x08001cc0   0x0000000e   Code   RO         3519    i.__scatterload_zeroinit  mc_w.l(handlers.o)
-    0x08001cce   0x08001cce   0x00000002   PAD
-    0x08001cd0   0x08001cd0   0x0000022c   Code   RO         3330    i._printf_core      mc_w.l(printf4.o)
-    0x08001efc   0x08001efc   0x0000000a   Code   RO         3332    i._sputc            mc_w.l(printf4.o)
-    0x08001f06   0x08001f06   0x00000002   PAD
-    0x08001f08   0x08001f08   0x00000034   Code   RO         2959    i.delayus_block     main.o
-    0x08001f3c   0x08001f3c   0x0000004c   Code   RO         3122    i.display_d         lcd_txt.o
-    0x08001f88   0x08001f88   0x0000001c   Code   RO         3123    i.display_e         lcd_txt.o
-    0x08001fa4   0x08001fa4   0x00000070   Code   RO         2960    i.display_escribir  main.o
-    0x08002014   0x08002014   0x0000001c   Code   RO         3124    i.display_rs        lcd_txt.o
-    0x08002030   0x08002030   0x0000055c   Code   RO         2963    i.main              main.o
-    0x0800258c   0x0800258c   0x0000003c   Code   RO         2964    i.rfid_Check        main.o
-    0x080025c8   0x080025c8   0x00000060   Code   RO         2965    i.rfid_init         main.o
-    0x08002628   0x08002628   0x0000002c   Code   RO         2966    i.rfid_sub_AntennaOn  main.o
-    0x08002654   0x08002654   0x00000046   Code   RO         2967    i.rfid_sub_Anticoll  main.o
-    0x0800269a   0x0800269a   0x00000002   PAD
-    0x0800269c   0x0800269c   0x0000008c   Code   RO         2968    i.rfid_sub_CalculateCRC  main.o
-    0x08002728   0x08002728   0x0000002c   Code   RO         2969    i.rfid_sub_Halt     main.o
-    0x08002754   0x08002754   0x00000048   Code   RO         2970    i.rfid_sub_ReadRegister  main.o
-    0x0800279c   0x0800279c   0x00000164   Code   RO         2971    i.rfid_sub_ToCard   main.o
-    0x08002900   0x08002900   0x00000050   Code   RO         2972    i.rfid_sub_WriteRegister  main.o
-    0x08002950   0x08002950   0x00000010   Data   RO         2748    .constdata          system_stm32f4xx.o
-    0x08002960   0x08002960   0x00000020   Data   RO         3515    Region$$Table       anon$$obj.o
+    0x080001d0   0x080001d0   0x00000062   Code   RO         2979    .text               mc_w.l(uldiv.o)
+    0x08000232   0x08000232   0x0000001e   Code   RO         3261    .text               mc_w.l(llshl.o)
+    0x08000250   0x08000250   0x00000020   Code   RO         3263    .text               mc_w.l(llushr.o)
+    0x08000270   0x08000270   0x00000024   Code   RO         3276    .text               mc_w.l(init.o)
+    0x08000294   0x08000294   0x00000002   Code   RO         2521    i.BusFault_Handler  stm32f4xx_it.o
+    0x08000296   0x08000296   0x00000002   Code   RO         2522    i.DebugMon_Handler  stm32f4xx_it.o
+    0x08000298   0x08000298   0x00000006   Code   RO         2523    i.EXTI4_IRQHandler  stm32f4xx_it.o
+    0x0800029e   0x0800029e   0x00000006   Code   RO         2524    i.EXTI9_5_IRQHandler  stm32f4xx_it.o
+    0x080002a4   0x080002a4   0x00000024   Code   RO         1912    i.HAL_Delay         stm32f4xx_hal.o
+    0x080002c8   0x080002c8   0x00000030   Code   RO         2621    i.HAL_GPIO_EXTI_Callback  main.o
+    0x080002f8   0x080002f8   0x00000018   Code   RO          448    i.HAL_GPIO_EXTI_IRQHandler  stm32f4xx_hal_gpio.o
+    0x08000310   0x08000310   0x00000188   Code   RO          449    i.HAL_GPIO_Init     stm32f4xx_hal_gpio.o
+    0x08000498   0x08000498   0x0000000a   Code   RO          451    i.HAL_GPIO_ReadPin  stm32f4xx_hal_gpio.o
+    0x080004a2   0x080004a2   0x00000008   Code   RO          452    i.HAL_GPIO_TogglePin  stm32f4xx_hal_gpio.o
+    0x080004aa   0x080004aa   0x0000000a   Code   RO          453    i.HAL_GPIO_WritePin  stm32f4xx_hal_gpio.o
+    0x080004b4   0x080004b4   0x0000000c   Code   RO         1918    i.HAL_GetTick       stm32f4xx_hal.o
+    0x080004c0   0x080004c0   0x00000010   Code   RO         1922    i.HAL_IncTick       stm32f4xx_hal.o
+    0x080004d0   0x080004d0   0x00000034   Code   RO         1923    i.HAL_Init          stm32f4xx_hal.o
+    0x08000504   0x08000504   0x00000040   Code   RO         1924    i.HAL_InitTick      stm32f4xx_hal.o
+    0x08000544   0x08000544   0x00000058   Code   RO         2473    i.HAL_MspInit       stm32f4xx_hal_msp.o
+    0x0800059c   0x0800059c   0x00000016   Code   RO           18    i.HAL_NVIC_EnableIRQ  stm32f4xx_hal_cortex.o
+    0x080005b2   0x080005b2   0x00000002   PAD
+    0x080005b4   0x080005b4   0x00000040   Code   RO           24    i.HAL_NVIC_SetPriority  stm32f4xx_hal_cortex.o
+    0x080005f4   0x080005f4   0x00000024   Code   RO           25    i.HAL_NVIC_SetPriorityGrouping  stm32f4xx_hal_cortex.o
+    0x08000618   0x08000618   0x00000130   Code   RO         1459    i.HAL_RCC_ClockConfig  stm32f4xx_hal_rcc.o
+    0x08000748   0x08000748   0x0000000c   Code   RO         1464    i.HAL_RCC_GetHCLKFreq  stm32f4xx_hal_rcc.o
+    0x08000754   0x08000754   0x00000064   Code   RO         1468    i.HAL_RCC_GetSysClockFreq  stm32f4xx_hal_rcc.o
+    0x080007b8   0x080007b8   0x0000031c   Code   RO         1471    i.HAL_RCC_OscConfig  stm32f4xx_hal_rcc.o
+    0x08000ad4   0x08000ad4   0x00000080   Code   RO         2129    i.HAL_SPI_Init      stm32f4xx_hal_spi.o
+    0x08000b54   0x08000b54   0x0000004c   Code   RO         2475    i.HAL_SPI_MspInit   stm32f4xx_hal_msp.o
+    0x08000ba0   0x08000ba0   0x000001d8   Code   RO         2138    i.HAL_SPI_TransmitReceive  stm32f4xx_hal_spi.o
+    0x08000d78   0x08000d78   0x00000018   Code   RO           27    i.HAL_SYSTICK_CLKSourceConfig  stm32f4xx_hal_cortex.o
+    0x08000d90   0x08000d90   0x00000002   Code   RO         2622    i.HAL_SYSTICK_Callback  main.o
+    0x08000d92   0x08000d92   0x00000028   Code   RO           29    i.HAL_SYSTICK_Config  stm32f4xx_hal_cortex.o
+    0x08000dba   0x08000dba   0x00000008   Code   RO           30    i.HAL_SYSTICK_IRQHandler  stm32f4xx_hal_cortex.o
+    0x08000dc2   0x08000dc2   0x00000002   Code   RO         1560    i.HAL_TIMEx_BreakCallback  stm32f4xx_hal_tim_ex.o
+    0x08000dc4   0x08000dc4   0x00000002   Code   RO         1561    i.HAL_TIMEx_CommutationCallback  stm32f4xx_hal_tim_ex.o
+    0x08000dc6   0x08000dc6   0x00000050   Code   RO         1577    i.HAL_TIMEx_MasterConfigSynchronization  stm32f4xx_hal_tim_ex.o
+    0x08000e16   0x08000e16   0x00000036   Code   RO          633    i.HAL_TIM_Base_Init  stm32f4xx_hal_tim.o
+    0x08000e4c   0x08000e4c   0x00000064   Code   RO         2477    i.HAL_TIM_Base_MspInit  stm32f4xx_hal_msp.o
+    0x08000eb0   0x08000eb0   0x00000018   Code   RO          638    i.HAL_TIM_Base_Start_IT  stm32f4xx_hal_tim.o
+    0x08000ec8   0x08000ec8   0x0000002a   Code   RO          641    i.HAL_TIM_Base_Stop_IT  stm32f4xx_hal_tim.o
+    0x08000ef2   0x08000ef2   0x000000f2   Code   RO          642    i.HAL_TIM_ConfigClockSource  stm32f4xx_hal_tim.o
+    0x08000fe4   0x08000fe4   0x00000002   Code   RO          662    i.HAL_TIM_IC_CaptureCallback  stm32f4xx_hal_tim.o
+    0x08000fe6   0x08000fe6   0x00000166   Code   RO          675    i.HAL_TIM_IRQHandler  stm32f4xx_hal_tim.o
+    0x0800114c   0x0800114c   0x00000002   Code   RO          678    i.HAL_TIM_OC_DelayElapsedCallback  stm32f4xx_hal_tim.o
+    0x0800114e   0x0800114e   0x00000002   Code   RO          705    i.HAL_TIM_PWM_PulseFinishedCallback  stm32f4xx_hal_tim.o
+    0x08001150   0x08001150   0x00000018   Code   RO         2623    i.HAL_TIM_PeriodElapsedCallback  main.o
+    0x08001168   0x08001168   0x00000002   Code   RO          716    i.HAL_TIM_TriggerCallback  stm32f4xx_hal_tim.o
+    0x0800116a   0x0800116a   0x00000002   Code   RO         2525    i.HardFault_Handler  stm32f4xx_it.o
+    0x0800116c   0x0800116c   0x00000012   Code   RO         2737    i.LCD_Clear         lcd_txt.o
+    0x0800117e   0x0800117e   0x00000044   Code   RO         2738    i.LCD_Command       lcd_txt.o
+    0x080011c2   0x080011c2   0x00000012   Code   RO         2739    i.LCD_CursorOff     lcd_txt.o
+    0x080011d4   0x080011d4   0x0000003e   Code   RO         2741    i.LCD_Data          lcd_txt.o
+    0x08001212   0x08001212   0x00000036   Code   RO         2743    i.LCD_SetPos        lcd_txt.o
+    0x08001248   0x08001248   0x0000001e   Code   RO         2744    i.LCD_String        lcd_txt.o
+    0x08001266   0x08001266   0x00000048   Code   RO         2745    i.LCD_WriteData     lcd_txt.o
+    0x080012ae   0x080012ae   0x000000aa   Code   RO         2746    i.LCD_ini           lcd_txt.o
+    0x08001358   0x08001358   0x00000042   Code   RO         2837    i.MFRC522_Anticoll  rc522.o
+    0x0800139a   0x0800139a   0x0000005e   Code   RO         2839    i.MFRC522_CalculateCRC  rc522.o
+    0x080013f8   0x080013f8   0x00000020   Code   RO         2840    i.MFRC522_Check     rc522.o
+    0x08001418   0x08001418   0x00000018   Code   RO         2841    i.MFRC522_ClearBitMask  rc522.o
+    0x08001430   0x08001430   0x0000001c   Code   RO         2842    i.MFRC522_Compare   rc522.o
+    0x0800144c   0x0800144c   0x0000002c   Code   RO         2843    i.MFRC522_Halt      rc522.o
+    0x08001478   0x08001478   0x0000000e   Code   RO         2846    i.MFRC522_ReadRegister  rc522.o
+    0x08001486   0x08001486   0x0000002e   Code   RO         2847    i.MFRC522_Request   rc522.o
+    0x080014b4   0x080014b4   0x00000018   Code   RO         2850    i.MFRC522_SetBitMask  rc522.o
+    0x080014cc   0x080014cc   0x00000114   Code   RO         2851    i.MFRC522_ToCard    rc522.o
+    0x080015e0   0x080015e0   0x0000000a   Code   RO         2853    i.MFRC522_WriteRegister  rc522.o
+    0x080015ea   0x080015ea   0x00000002   PAD
+    0x080015ec   0x080015ec   0x000001ac   Code   RO         2624    i.MX_GPIO_Init      main.o
+    0x08001798   0x08001798   0x00000040   Code   RO         2625    i.MX_SPI1_Init      main.o
+    0x080017d8   0x080017d8   0x0000004c   Code   RO         2626    i.MX_TIM3_Init      main.o
+    0x08001824   0x08001824   0x00000050   Code   RO         2627    i.MX_TIM4_Init      main.o
+    0x08001874   0x08001874   0x00000002   Code   RO         2526    i.MemManage_Handler  stm32f4xx_it.o
+    0x08001876   0x08001876   0x00000002   Code   RO         2527    i.NMI_Handler       stm32f4xx_it.o
+    0x08001878   0x08001878   0x00000020   Code   RO           31    i.NVIC_SetPriority  stm32f4xx_hal_cortex.o
+    0x08001898   0x08001898   0x00000002   Code   RO         2528    i.PendSV_Handler    stm32f4xx_it.o
+    0x0800189a   0x0800189a   0x00000002   PAD
+    0x0800189c   0x0800189c   0x00000020   Code   RO         2854    i.SPI1SendByte      rc522.o
+    0x080018bc   0x080018bc   0x00000030   Code   RO         2855    i.SPI1_ReadReg      rc522.o
+    0x080018ec   0x080018ec   0x00000030   Code   RO         2856    i.SPI1_WriteReg     rc522.o
+    0x0800191c   0x0800191c   0x00000020   Code   RO         2153    i.SPI_CheckFlag_BSY  stm32f4xx_hal_spi.o
+    0x0800193c   0x0800193c   0x00000096   Code   RO         2171    i.SPI_WaitFlagStateUntilTimeout  stm32f4xx_hal_spi.o
+    0x080019d2   0x080019d2   0x00000002   Code   RO         2529    i.SVC_Handler       stm32f4xx_it.o
+    0x080019d4   0x080019d4   0x0000000e   Code   RO         2530    i.SysTick_Handler   stm32f4xx_it.o
+    0x080019e2   0x080019e2   0x00000002   PAD
+    0x080019e4   0x080019e4   0x00000088   Code   RO         2628    i.SystemClock_Config  main.o
+    0x08001a6c   0x08001a6c   0x00000054   Code   RO         2436    i.SystemInit        system_stm32f4xx.o
+    0x08001ac0   0x08001ac0   0x0000000c   Code   RO         2531    i.TIM3_IRQHandler   stm32f4xx_it.o
+    0x08001acc   0x08001acc   0x0000000c   Code   RO         2532    i.TIM4_IRQHandler   stm32f4xx_it.o
+    0x08001ad8   0x08001ad8   0x00000090   Code   RO          717    i.TIM_Base_SetConfig  stm32f4xx_hal_tim.o
+    0x08001b68   0x08001b68   0x00000014   Code   RO          724    i.TIM_ETR_SetConfig  stm32f4xx_hal_tim.o
+    0x08001b7c   0x08001b7c   0x00000010   Code   RO          725    i.TIM_ITRx_SetConfig  stm32f4xx_hal_tim.o
+    0x08001b8c   0x08001b8c   0x00000022   Code   RO          731    i.TIM_TI1_ConfigInputStage  stm32f4xx_hal_tim.o
+    0x08001bae   0x08001bae   0x00000024   Code   RO          733    i.TIM_TI2_ConfigInputStage  stm32f4xx_hal_tim.o
+    0x08001bd2   0x08001bd2   0x00000002   Code   RO         2533    i.UsageFault_Handler  stm32f4xx_it.o
+    0x08001bd4   0x08001bd4   0x00000028   Code   RO         3094    i.__0sprintf$4      mc_w.l(printf4.o)
+    0x08001bfc   0x08001bfc   0x0000000e   Code   RO         3286    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08001c0a   0x08001c0a   0x00000002   Code   RO         3287    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08001c0c   0x08001c0c   0x0000000e   Code   RO         3288    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08001c1a   0x08001c1a   0x00000002   PAD
+    0x08001c1c   0x08001c1c   0x0000022c   Code   RO         3099    i._printf_core      mc_w.l(printf4.o)
+    0x08001e48   0x08001e48   0x0000000a   Code   RO         3101    i._sputc            mc_w.l(printf4.o)
+    0x08001e52   0x08001e52   0x00000002   PAD
+    0x08001e54   0x08001e54   0x00000034   Code   RO         2630    i.delayus_block     main.o
+    0x08001e88   0x08001e88   0x0000004c   Code   RO         2747    i.display_d         lcd_txt.o
+    0x08001ed4   0x08001ed4   0x0000001c   Code   RO         2748    i.display_e         lcd_txt.o
+    0x08001ef0   0x08001ef0   0x00000070   Code   RO         2631    i.display_escribir  main.o
+    0x08001f60   0x08001f60   0x0000001c   Code   RO         2749    i.display_rs        lcd_txt.o
+    0x08001f7c   0x08001f7c   0x000005d0   Code   RO         2634    i.main              main.o
+    0x0800254c   0x0800254c   0x00000010   Data   RO         2437    .constdata          system_stm32f4xx.o
+    0x0800255c   0x0800255c   0x00000020   Data   RO         3284    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x08002980, Size: 0x00000958, Max: 0x00020000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800257c, Size: 0x00000808, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x08002980   0x0000000c   Data   RW         2241    .data               stm32f4xx_hal.o
-    0x2000000c   0x0800298c   0x00000004   Data   RW         2750    .data               system_stm32f4xx.o
-    0x20000010   0x08002990   0x00000030   Data   RW         2976    .data               main.o
-    0x20000040        -       0x000004d3   Zero   RW         2973    .bss                main.o
-    0x20000513   0x080029c0   0x00000001   PAD
-    0x20000514        -       0x00000040   Zero   RW         2974    .bss                main.o
-    0x20000554   0x080029c0   0x00000004   PAD
-    0x20000558        -       0x00000400   Zero   RW            1    STACK               startup_stm32f411xe.o
+    0x20000000   0x0800257c   0x0000000c   Data   RW         1930    .data               stm32f4xx_hal.o
+    0x2000000c   0x08002588   0x00000004   Data   RW         2439    .data               system_stm32f4xx.o
+    0x20000010   0x0800258c   0x0000002d   Data   RW         2639    .data               main.o
+    0x2000003d   0x080025b9   0x00000003   PAD
+    0x20000040        -       0x000003c3   Zero   RW         2635    .bss                main.o
+    0x20000403   0x080025b9   0x00000005   PAD
+    0x20000408        -       0x00000400   Zero   RW            1    STACK               startup_stm32f411xe.o
 
 
 ==============================================================================
@@ -1930,26 +1824,25 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       624         22          0          0          0       6948   lcd_txt.o
-      3356        624          0         48       1299      18903   main.o
-        36          8        408          0       1024        872   startup_stm32f411xe.o
-       180         28          0         12          0       4841   stm32f4xx_hal.o
-       226         14          0          0          0     447902   stm32f4xx_hal_cortex.o
-        36          0          0          0          0       1291   stm32f4xx_hal_dma.o
-       444         40          0          0          0       4527   stm32f4xx_hal_gpio.o
-       264         28          0          0          0       2347   stm32f4xx_hal_msp.o
-      1212         62          0          0          0       4626   stm32f4xx_hal_rcc.o
-      1142          0          0          0          0       5932   stm32f4xx_hal_spi.o
-       978         30          0          0          0      11022   stm32f4xx_hal_tim.o
-        84          0          0          0          0       2566   stm32f4xx_hal_tim_ex.o
-       560          6          0          0          0       6327   stm32f4xx_hal_uart.o
-        78         18          0          0          0       6946   stm32f4xx_it.o
-        84         18         16          4          0       1275   system_stm32f4xx.o
+       624         22          0          0          0       7156   lcd_txt.o
+      2510        568          0         45        963      10512   main.o
+       786         12          0          0          0      10223   rc522.o
+        36          8        408          0       1024        892   startup_stm32f411xe.o
+       180         28          0         12          0       4969   stm32f4xx_hal.o
+       226         14          0          0          0     439678   stm32f4xx_hal_cortex.o
+       444         40          0          0          0       4631   stm32f4xx_hal_gpio.o
+       264         28          0          0          0       2411   stm32f4xx_hal_msp.o
+      1212         62          0          0          0       4714   stm32f4xx_hal_rcc.o
+       782          0          0          0          0       4689   stm32f4xx_hal_spi.o
+       978         30          0          0          0      11286   stm32f4xx_hal_tim.o
+        84          0          0          0          0       2638   stm32f4xx_hal_tim_ex.o
+        66         12          0          0          0       6674   stm32f4xx_it.o
+        84         18         16          4          0       1327   system_stm32f4xx.o
 
     ----------------------------------------------------------------------
-      9312        898        456         64       2328     526325   Object Totals
+      8284        842        456         64       1992     511800   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         8          0          0          0          5          0   (incl. Padding)
+         8          0          0          3          5          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1990,15 +1883,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     10168        924        456         64       2328     517469   Grand Totals
-     10168        924        456         64       2328     517469   ELF Image Totals
-     10168        924        456         64          0          0   ROM Totals
+      9140        868        456         64       1992     503544   Grand Totals
+      9140        868        456         64       1992     503544   ELF Image Totals
+      9140        868        456         64          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                10624 (  10.38kB)
-    Total RW  Size (RW Data + ZI Data)              2392 (   2.34kB)
-    Total ROM Size (Code + RO Data + RW Data)      10688 (  10.44kB)
+    Total RO  Size (Code + RO Data)                 9596 (   9.37kB)
+    Total RW  Size (RW Data + ZI Data)              2056 (   2.01kB)
+    Total ROM Size (Code + RO Data + RW Data)       9660 (   9.43kB)
 
 ==============================================================================
 

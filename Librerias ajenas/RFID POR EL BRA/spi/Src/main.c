@@ -67,7 +67,7 @@ static void MX_SPI1_Init(void);
 uint8_t dataUDP_permit[]="Ma the hop le ";
 uint8_t dataUDP_deny[]="Ma the khong hop le ";
 unsigned char CardID[5];
-unsigned char MyID[5] = {0x56, 0x3B, 0x5C, 0xAC, 0x9D};	//My card on my keys
+unsigned char MyID[5] = {0xD4, 0x8E, 0x70, 0x1F, 0x35};	//My card on my keys
 
 uint8_t MFRC522_Check(uint8_t* id);
 uint8_t MFRC522_Compare(uint8_t* CardID, uint8_t* CompareID);
