@@ -42,111 +42,19 @@
 
 /* USER CODE BEGIN Includes */
 #include "lcd_txt.h"
+#include "rc522.h"
 
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi1;
+
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 
-/*--------------------RFID  MFRC522 Commands ----------------------------*/
-#define PCD_IDLE						0x00   //NO action; Cancel the current command
-#define PCD_AUTHENT						0x0E   //Authentication Key
-#define PCD_RECEIVE						0x08   //Receive Data
-#define PCD_TRANSMIT					0x04   //Transmit data
-#define PCD_TRANSCEIVE					0x0C   //Transmit and receive data,
-#define PCD_RESETPHASE					0x0F   //Reset
-#define PCD_CALCCRC						0x03   //CRC Calculate
-
-/* Mifare_One card command word */
-#define PICC_REQIDL						0x26   // find the antenna area does not enter hibernation
-#define PICC_REQALL						0x52   // find all the cards antenna area
-#define PICC_ANTICOLL					0x93   // anti-collision
-#define PICC_SElECTTAG					0x93   // election card
-#define PICC_AUTHENT1A					0x60   // authentication key A
-#define PICC_AUTHENT1B					0x61   // authentication key B
-#define PICC_READ						0x30   // Read Block
-#define PICC_WRITE						0xA0   // write block
-#define PICC_DECREMENT					0xC0   // debit
-#define PICC_INCREMENT					0xC1   // recharge
-#define PICC_RESTORE					0xC2   // transfer block data to the buffer
-#define PICC_TRANSFER					0xB0   // save the data in the buffer
-#define PICC_HALT						0x50   // Sleep
-
-/* MFRC522 Registers */
-//Page 0: Command and Status
-#define MFRC522_REG_RESERVED00			0x00    
-#define MFRC522_REG_COMMAND				0x01    
-#define MFRC522_REG_COMM_IE_N			0x02    
-#define MFRC522_REG_DIV1_EN				0x03    
-#define MFRC522_REG_COMM_IRQ			0x04    
-#define MFRC522_REG_DIV_IRQ				0x05
-#define MFRC522_REG_ERROR				0x06    
-#define MFRC522_REG_STATUS1				0x07    
-#define MFRC522_REG_STATUS2				0x08    
-#define MFRC522_REG_FIFO_DATA			0x09
-#define MFRC522_REG_FIFO_LEVEL			0x0A
-#define MFRC522_REG_WATER_LEVEL			0x0B
-#define MFRC522_REG_CONTROL				0x0C
-#define MFRC522_REG_BIT_FRAMING			0x0D
-#define MFRC522_REG_COLL				0x0E
-#define MFRC522_REG_RESERVED01			0x0F
-//Page 1: Command 
-#define MFRC522_REG_RESERVED10			0x10
-#define MFRC522_REG_MODE				0x11
-#define MFRC522_REG_TX_MODE				0x12
-#define MFRC522_REG_RX_MODE				0x13
-#define MFRC522_REG_TX_CONTROL			0x14
-#define MFRC522_REG_TX_AUTO				0x15
-#define MFRC522_REG_TX_SELL				0x16
-#define MFRC522_REG_RX_SELL				0x17
-#define MFRC522_REG_RX_THRESHOLD		0x18
-#define MFRC522_REG_DEMOD				0x19
-#define MFRC522_REG_RESERVED11			0x1A
-#define MFRC522_REG_RESERVED12			0x1B
-#define MFRC522_REG_MIFARE				0x1C
-#define MFRC522_REG_RESERVED13			0x1D
-#define MFRC522_REG_RESERVED14			0x1E
-#define MFRC522_REG_SERIALSPEED			0x1F
-//Page 2: CFG    
-#define MFRC522_REG_RESERVED20			0x20  
-#define MFRC522_REG_CRC_RESULT_M		0x21
-#define MFRC522_REG_CRC_RESULT_L		0x22
-#define MFRC522_REG_RESERVED21			0x23
-#define MFRC522_REG_MOD_WIDTH			0x24
-#define MFRC522_REG_RESERVED22			0x25
-#define MFRC522_REG_RF_CFG				0x26
-#define MFRC522_REG_GS_N				0x27
-#define MFRC522_REG_CWGS_PREG			0x28
-#define MFRC522_REG__MODGS_PREG			0x29
-#define MFRC522_REG_T_MODE				0x2A
-#define MFRC522_REG_T_PRESCALER			0x2B
-#define MFRC522_REG_T_RELOAD_H			0x2C
-#define MFRC522_REG_T_RELOAD_L			0x2D
-#define MFRC522_REG_T_COUNTER_VALUE_H	0x2E
-#define MFRC522_REG_T_COUNTER_VALUE_L	0x2F
-//Page 3:TestRegister 
-#define MFRC522_REG_RESERVED30			0x30
-#define MFRC522_REG_TEST_SEL1			0x31
-#define MFRC522_REG_TEST_SEL2			0x32
-#define MFRC522_REG_TEST_PIN_EN			0x33
-#define MFRC522_REG_TEST_PIN_VALUE		0x34
-#define MFRC522_REG_TEST_BUS			0x35
-#define MFRC522_REG_AUTO_TEST			0x36
-#define MFRC522_REG_VERSION				0x37
-#define MFRC522_REG_ANALOG_TEST			0x38
-#define MFRC522_REG_TEST_ADC1			0x39  
-#define MFRC522_REG_TEST_ADC2			0x3A   
-#define MFRC522_REG_TEST_ADC0			0x3B   
-#define MFRC522_REG_RESERVED31			0x3C   
-#define MFRC522_REG_RESERVED32			0x3D
-#define MFRC522_REG_RESERVED33			0x3E   
-#define MFRC522_REG_RESERVED34			0x3F
-//---------------END RFID--------------------//
 #define Inicio 0
 #define Menu_1 1
 #define Menu_2 2
@@ -186,9 +94,6 @@ TIM_HandleTypeDef htim4;
 #define b_C 11
 #define b_D 15
 
-#define MI_ERR 2
-#define MI_OK 0
-#define MI_NOTAGERR 1
 
 //-----------------------
 int ms_ar=30; //milisegundos anti-rebote
@@ -200,17 +105,19 @@ int state;
 uint8_t leido;
 uint8_t rxbuffer[16];
 uint8_t txbuffer[16];
-uint8_t cardid[4];
+unsigned char CardID[5];
+unsigned char MyID[5] = {0xD4, 0x8E, 0x70, 0x1F, 0x35};
 //-----------------------
 
 struct Operario{
 	int master;
 	char nombre[9];
-	char id[17];
+	unsigned char id[5];
 	long golpes;
 	long unidades;
 	int productividad;
 } operarios[20];
+
 
 long cont_unidades=0;
 long cont_golpes=0;
@@ -241,14 +148,26 @@ void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
 void introducir_nombre(void);
 void rfid_init(void);
-int rfid_Check(uint8_t* id);
-int rfid_sub_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t* backData, uint16_t* backLen);
-int rfid_sub_Anticoll(uint8_t* id);
-void rfid_sub_Halt(void);
-void rfid_sub_CalculateCRC(uint8_t*  pIndata, uint8_t len, uint8_t* pOutData);
-void rfid_sub_WriteRegister(uint8_t address, uint8_t value);
-void rfid_sub_ReadRegister(uint8_t address);
-void rfid_sub_AntennaOn(void);
+
+uint8_t MFRC522_Check(uint8_t* id);
+uint8_t MFRC522_Compare(uint8_t* CardID, uint8_t* CompareID);
+void MFRC522_WriteRegister(uint8_t addr, uint8_t val);
+uint8_t MFRC522_ReadRegister(uint8_t addr);
+void MFRC522_SetBitMask(uint8_t reg, uint8_t mask);
+void MFRC522_ClearBitMask(uint8_t reg, uint8_t mask);
+uint8_t MFRC522_Request(uint8_t reqMode, uint8_t* TagType);
+uint8_t MFRC522_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t* backData, uint16_t* backLen);
+uint8_t MFRC522_Anticoll(uint8_t* serNum);
+void MFRC522_CalulateCRC(uint8_t* pIndata, uint8_t len, uint8_t* pOutData);
+uint8_t MFRC522_SelectTag(uint8_t* serNum);
+uint8_t MFRC522_Auth(uint8_t authMode, uint8_t BlockAddr, uint8_t* Sectorkey, uint8_t* serNum);
+uint8_t MFRC522_Read(uint8_t blockAddr, uint8_t* recvData);
+uint8_t MFRC522_Write(uint8_t blockAddr, uint8_t* writeData);
+void MFRC522_Init(void);
+void MFRC522_Reset(void);
+void MFRC522_AntennaOn(void);
+void MFRC522_AntennaOff(void);
+void MFRC522_Halt(void);
 
 /* USER CODE END PFP */
 
@@ -289,7 +208,20 @@ int main(void)
   MX_TIM3_Init();
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
-		
+	
+	//Carga de IDs de tarjetas
+	operarios[0].id[0] = 0xD4;
+	operarios[0].id[1] = 0x8E;
+	operarios[0].id[2] = 0x70;
+	operarios[0].id[3] = 0x1F;
+	operarios[0].id[4] = 0x35;
+
+	operarios[1].id[0] = 0x49;
+	operarios[1].id[1] = 0x23;
+	operarios[1].id[2] = 0x2F;
+	operarios[1].id[3] = 0x63;
+	operarios[1].id[4] = 0x26;
+	
 	LCD_ini();
 	HAL_Delay(3);
 	LCD_Clear();
@@ -299,7 +231,7 @@ int main(void)
 	LCD_CursorOff();
 	HAL_Delay(3);	
 	
-	rfid_init();
+	void MFRC522_Init(void);
 	
 	//TECLADO - Apago todo
 	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
@@ -309,7 +241,7 @@ int main(void)
 		
 	display_escribir("INICIO DE","LA MAQUINA");
   instancia= Inicio;
-
+	
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -638,13 +570,20 @@ int main(void)
 			f_sensor=0;
 		}
 			
-		state = rfid_Check(cardid); // Cuando state sea 0 es que leyó correctamente la tarjeta.
-		if(cardid[0]){
-			HAL_GPIO_TogglePin(Led_Rojo_GPIO_Port, Led_Rojo_Pin);
-			
-		}
-		
-		
+		if(MFRC522_Check(CardID) == MI_OK){
+			HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_SET);
+			if(MFRC522_Compare(CardID,operarios[0].id)== MI_OK){
+				HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_SET);
+			}
+			MFRC522_Check(CardID) == MI_OK;
+			if(MFRC522_Compare(CardID,operarios[1].id)== MI_OK){
+				HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_SET);
+			}
+			HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_RESET);
+		}			
+	
 		/* Esto son los antirrebotes, lo tengo que analizar a lo ultimo
 		//-------	Seccion teclado -----------
 		if(!ms_ar&&f_boton_pres){
@@ -817,7 +756,6 @@ static void MX_TIM4_Init(void)
 
 }
 
-
 /** Configure pins as 
         * Analog 
         * Input 
@@ -977,253 +915,7 @@ void delayus_block(int n){
 //------------END IT CALLBACK FUNCTIONS------------------//
 
 //------------RFID FUNCTIONS------------------------------//
-void rfid_init(void){
-	//Deshabilita el Chip Select por las dudas (se activa con estado bajo)
-	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_SET);
-	//Hace un reset por software del micro del RFID
-	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, PCD_RESETPHASE);
-	//Configuracion inicial
-	HAL_Delay(1);
-	rfid_sub_WriteRegister(MFRC522_REG_T_MODE, 0x8D);
-	rfid_sub_WriteRegister(MFRC522_REG_T_PRESCALER, 0x3E);
-	rfid_sub_WriteRegister(MFRC522_REG_T_RELOAD_L, 30);           
-	rfid_sub_WriteRegister(MFRC522_REG_T_RELOAD_H, 0);
-	rfid_sub_WriteRegister(MFRC522_REG_RF_CFG, 0x70);
-	rfid_sub_WriteRegister(MFRC522_REG_TX_AUTO, 0x40);
-	rfid_sub_WriteRegister(MFRC522_REG_MODE, 0x3D);
-	//Prende la antena
-	rfid_sub_AntennaOn();
-}
 
-int rfid_Check(uint8_t* id) {
-	int estado=MI_ERR;
-	uint16_t backBits;
-	//Find cards, return card type
-	//status = TM_MFRC522_Request(PICC_REQIDL, id);	
-	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x07);
-	txbuffer[0]=PICC_REQIDL;
-	estado = rfid_sub_ToCard(PCD_TRANSCEIVE, txbuffer, 1, rxbuffer, &backBits);
-	
-	if (estado == MI_OK) {
-		//Card detected
-		//Anti-collision, return card serial number 4 bytes
-		estado = rfid_sub_Anticoll(id);	
-	}
-	rfid_sub_Halt();			//Command card into hibernation 
-
-	
-	return estado;
-}
-
-int rfid_sub_ToCard(uint8_t command, uint8_t* sendData, uint8_t sendLen, uint8_t* backData, uint16_t* backLen){
-	int status = MI_ERR;
-	uint8_t irqEn = 0x00;
-	uint8_t waitIRq = 0x00;
-	uint8_t lastBits;
-	uint8_t n;
-	uint16_t i;
-
-	switch (command) {
-		case PCD_AUTHENT: {
-			irqEn = 0x12;
-			waitIRq = 0x10;
-			break;
-		}
-		case PCD_TRANSCEIVE: {
-			irqEn = 0x77;
-			waitIRq = 0x30;
-			break;
-		}
-		default:
-			break;
-	}
-
-	rfid_sub_WriteRegister(MFRC522_REG_COMM_IE_N, irqEn | 0x80);
-	rfid_sub_ReadRegister(MFRC522_REG_COMM_IRQ);
-	leido=rxbuffer[1];
-	rfid_sub_WriteRegister(MFRC522_REG_COMM_IRQ, leido&~(0x80));
-	rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
-	leido=rxbuffer[1];
-	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL, leido|(0x80));
-
-	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, PCD_IDLE);
-
-	//Writing data to the FIFO
-	for (i = 0; i < sendLen; i++) {   
-		rfid_sub_WriteRegister(MFRC522_REG_FIFO_DATA, sendData[i]);    
-	}
-
-	//Execute the command
-	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, command);
-	if (command == PCD_TRANSCEIVE) {    
-		//StartSend=1,transmission of data starts  
-		rfid_sub_ReadRegister(MFRC522_REG_BIT_FRAMING);
-		leido=rxbuffer[1];
-		rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, leido|(0x80));
-	}   
-
-	//Waiting to receive data to complete
-	i = 2000;	//i according to the clock frequency adjustment, the operator M1 card maximum waiting time 25ms???
-	do {
-		//CommIrqReg[7..0]
-		//Set1 TxIRq RxIRq IdleIRq HiAlerIRq LoAlertIRq ErrIRq TimerIRq
-		rfid_sub_ReadRegister(MFRC522_REG_COMM_IRQ);
-		n = rxbuffer[1];
-		i--;
-	} while ((i!=0) && !(n&0x01) && !(n&waitIRq));
-
-	//StartSend=0
-	rfid_sub_ReadRegister(MFRC522_REG_BIT_FRAMING);
-	leido=rxbuffer[1];
-	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, leido&~(0x80));
-	
-	if (i != 0)  {
-		rfid_sub_ReadRegister(MFRC522_REG_ERROR);
-		if (!(rxbuffer[1] & 0x1B)) {
-			status = MI_OK;
-			if (n & irqEn & 0x01) {   
-				status = MI_NOTAGERR;			
-			}
-
-			if (command == PCD_TRANSCEIVE) {
-				rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
-				n = rxbuffer[1];
-				rfid_sub_ReadRegister(MFRC522_REG_CONTROL) ;
-				lastBits = rxbuffer[1]& 0x07;
-				if (lastBits) {   
-					*backLen = (n - 1) * 8 + lastBits;   
-				} else {   
-					*backLen = n * 8;   
-				}
-
-				if (n == 0) {   
-					n = 1;    
-				}
-				if (n > 16) {   
-					n = 16;   
-				}
-
-				//Reading the received data in FIFO
-				for (i = 0; i < n; i++) {   
-					rfid_sub_ReadRegister(MFRC522_REG_FIFO_DATA);   
-					backData[i] = rxbuffer[1];
-				}
-			}
-		} else {   
-			status = MI_ERR;  
-		}
-	}
-
-	return status;
-}
-
-int rfid_sub_Anticoll(uint8_t* id){
-	int status;
-	uint8_t i;
-	uint8_t serNumCheck = 0;
-	uint16_t unLen;
-	uint8_t serNum[4];
-
-	rfid_sub_WriteRegister(MFRC522_REG_BIT_FRAMING, 0x00);		//TxLastBists = BitFramingReg[2..0]
-
-	serNum[0] = PICC_ANTICOLL;
-	serNum[1] = 0x20;
-	status = rfid_sub_ToCard(PCD_TRANSCEIVE, serNum, 2, serNum, &unLen);
-
-	if (status == MI_OK) {
-		//Check card serial number
-		for (i = 0; i < 4; i++) {   
-			serNumCheck ^= serNum[i];
-		}
-		if (serNumCheck != serNum[i]) {   
-			status = MI_ERR;    
-		}
-		id[0] = serNum[0];
-		id[1] = serNum[1];
-		id[2] = serNum[2];
-		id[3] = serNum[3];
-		
-	}
-	return status;
-} 
-
-void rfid_sub_Halt(void){
-	uint16_t unLen;
-	uint8_t buff[4]; 
-
-	buff[0] = PICC_HALT;
-	buff[1] = 0;
-	rfid_sub_CalculateCRC(buff, 2, &buff[2]);
-
-	rfid_sub_ToCard(PCD_TRANSCEIVE, buff, 4, buff, &unLen);
-}
-void rfid_sub_CalculateCRC(uint8_t*  pIndata, uint8_t len, uint8_t* pOutData) {
-	uint8_t i, n;
-
-	//CRCIrq = 0
-	rfid_sub_ReadRegister(MFRC522_REG_DIV_IRQ);
-	leido=rxbuffer[1];
-	rfid_sub_WriteRegister(MFRC522_REG_DIV_IRQ,leido&~(0x04));
-	//Clear the FIFO pointer
-	rfid_sub_ReadRegister(MFRC522_REG_FIFO_LEVEL);
-	leido=rxbuffer[1];
-	rfid_sub_WriteRegister(MFRC522_REG_FIFO_LEVEL,leido|(0x80));
-
-	//Writing data to the FIFO	
-	for (i = 0; i < len; i++) {   
-		rfid_sub_WriteRegister(MFRC522_REG_FIFO_DATA, *(pIndata+i));   
-	}
-	rfid_sub_WriteRegister(MFRC522_REG_COMMAND, PCD_CALCCRC);
-
-	//Wait CRC calculation is complete
-	i = 0xFF;
-	do {
-		rfid_sub_ReadRegister(MFRC522_REG_DIV_IRQ);
-		n = rxbuffer[1];
-		i--;
-	} while ((i!=0) && !(n&0x04));			//CRCIrq = 1
-
-	//Read CRC calculation result
-	rfid_sub_ReadRegister(MFRC522_REG_CRC_RESULT_L);
-	pOutData[0] = rxbuffer[1];
-	rfid_sub_ReadRegister(MFRC522_REG_CRC_RESULT_M);
-	pOutData[1] = rxbuffer[1];
-}
-
-void rfid_sub_WriteRegister(uint8_t address, uint8_t value){// donde address es la direccion del registro que quiero escribir.
-	//CS low
-	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_RESET);
-	//Send address
-	txbuffer[0]=(address << 1) & 0x7E;
-	HAL_SPI_Transmit(&hspi1,txbuffer,1,10);
-	//Send data	
-	txbuffer[0]=value;
-	HAL_SPI_Transmit(&hspi1,txbuffer,1,10);
-	//CS high
-	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_SET);
-}
-
-void rfid_sub_ReadRegister(uint8_t address){
-	//CS low
-	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_RESET);
-	
-	txbuffer[0]=((address << 1) & 0x7E) | 0x80;
-	HAL_SPI_TransmitReceive(&hspi1,txbuffer,rxbuffer,2,10);
-	
-	//CS high
-	HAL_GPIO_WritePin(RFID_SDA_GPIO_Port, RFID_SDA_Pin,GPIO_PIN_SET);
-}
-
-void rfid_sub_AntennaOn(void){
-	rfid_sub_ReadRegister(MFRC522_REG_TX_CONTROL);
-	
-	if (!(rxbuffer[1] & 0x03)) {
-		leido=rxbuffer[1];
-		rfid_sub_WriteRegister(MFRC522_REG_TX_CONTROL,leido | 0x03);
-	}
-}
-
-//------------END RFID FUNCTIONS--------------------------//
 
 //-------------DISPLAY FUNCTIONS-------------------------//
 void display_escribir(char* linea1, char* linea2){

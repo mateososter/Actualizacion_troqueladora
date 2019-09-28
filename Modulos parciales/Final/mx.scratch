@@ -11,6 +11,7 @@
 <filestoremove>
     <file>
     <name>..\Drivers\CMSIS\Device\ST\STM32F4xx\Source\Templates\arm\startup_stm32f411xe.s</name>
+    <name>..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</name>
     </file>
 </filestoremove>
 
@@ -83,9 +84,6 @@
 						</file>
 						<file>
 							<name>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c</name>
-						</file>
-						<file>
-							<name>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c</name>
 						</file>
 						<file>
 							<name>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c</name>
