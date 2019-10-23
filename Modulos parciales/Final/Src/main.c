@@ -125,6 +125,7 @@ char str_golpes[17];
 char str_unidades[17];
 char str_productividad[17];
 int f_unidades=0;
+int f_confirmacion=0;
 int flag=0;
 int evento=0;
 
@@ -550,39 +551,66 @@ int main(void)
 		}	//rutina boton
 				
 		if(f_sensor){
-			if(f_unidades){
-				HAL_GPIO_TogglePin(Led_Verde_GPIO_Port, Led_Verde_Pin);
-				cont_unidades++;
-				sprintf(str_unidades, "%ld", cont_unidades);
-				display_escribir("ACTUAL: UNIDADES",str_unidades);
-				if(operario_activo){
+			if(operario_activo){
+				if(f_unidades){
+					//HAL_GPIO_TogglePin(Led_Verde_GPIO_Port, Led_Verde_Pin);
+					cont_unidades++;
 					operarios[operario_activo].unidades++;
-				}
-			}else{
-				HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
-				cont_golpes++;
-				sprintf(str_golpes, "%ld", cont_golpes);
-				display_escribir("ACTUAL: GOLPES",str_golpes);
-				if(operario_activo){
+					sprintf(str_unidades, "%ld", cont_unidades);
+					display_escribir("ACTUAL: UNIDADES",str_unidades);
+				}else{
+					//HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
+					cont_golpes++;
 					operarios[operario_activo].golpes++;
+					sprintf(str_golpes, "%ld", cont_golpes);
+					display_escribir("ACTUAL: GOLPES",str_golpes);
 				}
 			}
 			f_sensor=0;
 		}
 			
 		if(MFRC522_Check(CardID) == MI_OK){
-			HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_SET);
-			if(MFRC522_Compare(CardID,operarios[0].id)== MI_OK){
-				HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_SET);
+			//Si se acerca una tarjeta puede ser para... Iniciar un trabajo, o bien, dar de alta una tarjeta.
+			switch(instancia){
+				case Menu_441:
+					for(int n=0;n<20;n++){
+						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
+							operario_activo=n;
+						}
+					}
+					instancia=Menu_442;
+					display_escribir("AGREGAR OPERARIO", "PASE TAG MAESTRO");
+					break;
 			}
-			MFRC522_Check(CardID) == MI_OK;
-			if(MFRC522_Compare(CardID,operarios[1].id)== MI_OK){
-				HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_RESET);
-				HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_SET);
-			}
-			HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_RESET);
-		}			
+			
+			
+			if(!operario_activo){
+				if(!f_confirmacion){
+					for(int n=0;n<20;n++){
+						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
+							operario_activo=n;
+						}
+					}
+				}
+//				Esta era la primer prueba que andaba
+//				HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_SET);
+//				if(MFRC522_Compare(CardID,operarios[0].id)== MI_OK){
+//					HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_RESET);
+//					HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_SET);
+//				}
+//				MFRC522_Check(CardID);
+//				if(MFRC522_Compare(CardID,operarios[1].id)== MI_OK){
+//					HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_RESET);
+//					HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_SET);
+//				}
+//				HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_RESET);
+				}else{
+					if(MFRC522_Compare(CardID,operarios[operario_activo].id)== MI_OK){
+							operario_activo=0;
+					}
+				}
+
+		}//Sale de rutina de tarjeta			
 	
 		/* Esto son los antirrebotes, lo tengo que analizar a lo ultimo
 		//-------	Seccion teclado -----------
