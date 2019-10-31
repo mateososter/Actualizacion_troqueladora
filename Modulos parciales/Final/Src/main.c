@@ -43,6 +43,7 @@
 /* USER CODE BEGIN Includes */
 #include "lcd_txt.h"
 #include "rc522.h"
+#include "MY_FLASH.h"
 
 /* USER CODE END Includes */
 
@@ -100,19 +101,22 @@ int ms_ar=30; //milisegundos anti-rebote
 int tecla[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int boton=0;
 int operario_activo=0;
+int operario_chequeado=0;
 int i;
 int state;
 uint8_t leido;
 uint8_t rxbuffer[16];
 uint8_t txbuffer[16];
 unsigned char CardID[5];
-unsigned char MyID[5] = {0xD4, 0x8E, 0x70, 0x1F, 0x35};
+unsigned char MyID[5] = {0,0,0,0,0};
 //-----------------------
 
 struct Operario{
-	int master;
+	int condicion; 	//Si condición==0, el operario NO está cargado.
+									//Si condición==1, el operario SI está cargado pero NO es master.
+									//Si condición==2, el operario SI está cargado y SI es master.
 	char nombre[9];
-	unsigned char id[5];
+	char id[5];
 	long golpes;
 	long unidades;
 	int productividad;
@@ -147,8 +151,7 @@ static void MX_SPI1_Init(void);
 void delayus_block(int n);
 void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
-void introducir_nombre(void);
-void rfid_init(void);
+void introducir_texto(void);
 
 uint8_t MFRC522_Check(uint8_t* id);
 uint8_t MFRC522_Compare(uint8_t* CardID, uint8_t* CompareID);
@@ -210,19 +213,25 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 	
-	//Carga de IDs de tarjetas
-	operarios[0].id[0] = 0xD4;
-	operarios[0].id[1] = 0x8E;
-	operarios[0].id[2] = 0x70;
-	operarios[0].id[3] = 0x1F;
-	operarios[0].id[4] = 0x35;
-
-	operarios[1].id[0] = 0x49;
-	operarios[1].id[1] = 0x23;
-	operarios[1].id[2] = 0x2F;
-	operarios[1].id[3] = 0x63;
-	operarios[1].id[4] = 0x26;
+	//Carga de operarios de tarjetas
+	sprintf(operarios[1].nombre,"LIDER");
 	
+	operarios[1].id[0] = 0xD4;
+	operarios[1].id[1] = 0x8E;
+	operarios[1].id[2] = 0x70;
+	operarios[1].id[3] = 0x1F;
+	operarios[1].id[4] = 0x35;
+	operarios[1].condicion = 1;
+
+	sprintf(operarios[0].nombre,"JULI");
+	
+	operarios[0].id[0] = 0x49;
+	operarios[0].id[1] = 0x23;
+	operarios[0].id[2] = 0x2F;
+	operarios[0].id[3] = 0x63;
+	operarios[0].id[4] = 0x26;
+	operarios[0].condicion = 2;
+
 	LCD_ini();
 	HAL_Delay(3);
 	LCD_Clear();
@@ -232,7 +241,7 @@ int main(void)
 	LCD_CursorOff();
 	HAL_Delay(3);	
 	
-	void MFRC522_Init(void);
+	MFRC522_Init();
 	
 	//TECLADO - Apago todo
 	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
@@ -317,6 +326,17 @@ int main(void)
 							display_escribir("0.INICIO", "");
 							break;
 					
+						case Menu_1x:
+							do{
+								if(operario_chequeado==19){
+									operario_chequeado=0;
+								} else {
+									operario_chequeado++;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							display_escribir(operarios[operario_chequeado].nombre, operarios[operario_chequeado].id);
+							break;
+						
 						case Menu_21:
 							instancia=Menu_22;
 							sprintf(str_unidades, "%ld", cont_unidades);
@@ -329,6 +349,17 @@ int main(void)
 							display_escribir("2.1. TOT GOLPES",str_golpes);
 							break;
 						
+						case Menu_3x:
+							do{
+								if(operario_chequeado==19){
+									operario_chequeado=0;
+								} else {
+									operario_chequeado++;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							sprintf(str_productividad, "%d %%", operarios[operario_chequeado].productividad);
+							display_escribir(operarios[operario_chequeado].nombre, str_productividad);
+							break;
 						case Menu_41:
 							instancia=Menu_42;
 							display_escribir("4.2.RESET","    TOTALES");
@@ -378,6 +409,17 @@ int main(void)
 							display_escribir("3.PRODUCTIVIDAD", "");
 							break;
 						
+						case Menu_1x:
+							do{
+								if(!operario_chequeado){
+									operario_chequeado=19;
+								} else {
+									operario_chequeado--;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							display_escribir(operarios[operario_chequeado].nombre, operarios[operario_chequeado].id);
+							break;
+							
 						case Menu_21:
 							instancia=Menu_22;
 							sprintf(str_unidades, "%ld", cont_unidades);
@@ -390,6 +432,18 @@ int main(void)
 							display_escribir("2.1. TOT GOLPES",str_golpes);
 							break;
 						
+						case Menu_3x:
+							do{
+								if(!operario_chequeado){
+									operario_chequeado=19;
+								} else {
+									operario_chequeado--;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							sprintf(str_productividad, "%d %%", operarios[operario_chequeado].productividad);
+							display_escribir(operarios[operario_chequeado].nombre, str_productividad);
+							break;
+							
 						case Menu_41:
 							instancia=Menu_44;
 							display_escribir("4.4.ALTA","    OPERARIO");
@@ -419,7 +473,8 @@ int main(void)
 						
 						case Menu_1:
 							instancia=Menu_1x;
-							display_escribir(operarios[0].nombre, operarios[0].id);
+							operario_chequeado=0;
+							display_escribir(operarios[operario_chequeado].nombre, operarios[operario_chequeado].id);
 							break;
 					
 						case Menu_2:
@@ -575,23 +630,39 @@ int main(void)
 				case Menu_441:
 					for(int n=0;n<20;n++){
 						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
-							operario_activo=n;
+							operario_chequeado=n;
 						}
 					}
-					instancia=Menu_442;
-					display_escribir("AGREGAR OPERARIO", "PASE TAG MAESTRO");
+					if(operarios[operario_chequeado].condicion==2){
+						instancia=Menu_442;
+						display_escribir("AGREGAR OPERARIO", "PASE TAG NUEVO");
+					} else {
+						instancia=Inicio;
+						display_escribir("AGREGAR OPERARIO", "ERR TAG MAESTRO");
+					}
 					break;
-			}
+					
+				case Menu_442:
+					instancia=Inicio;
+					introducir_texto();
+					break;
+				
+			} // Sale del switch (instancia)
 			
 			
-			if(!operario_activo){
-				if(!f_confirmacion){
-					for(int n=0;n<20;n++){
-						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
-							operario_activo=n;
-						}
-					}
-				}
+//			if(!operario_activo){
+//				if(!f_confirmacion){
+//					for(int n=0;n<20;n++){
+//						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
+//							operario_activo=n;
+//						}
+//					}
+//				}
+//			}else{
+//				if(MFRC522_Compare(CardID,operarios[operario_activo].id)== MI_OK){
+//						operario_activo=0;
+//				}
+//			}
 //				Esta era la primer prueba que andaba
 //				HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_SET);
 //				if(MFRC522_Compare(CardID,operarios[0].id)== MI_OK){
@@ -604,16 +675,12 @@ int main(void)
 //					HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_SET);
 //				}
 //				HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_RESET);
-				}else{
-					if(MFRC522_Compare(CardID,operarios[operario_activo].id)== MI_OK){
-							operario_activo=0;
-					}
-				}
+				
 
 		}//Sale de rutina de tarjeta			
 	
-		/* Esto son los antirrebotes, lo tengo que analizar a lo ultimo
-		//-------	Seccion teclado -----------
+/* Esto son los antirrebotes, lo tengo que analizar a lo ultimo
+//-------	Seccion teclado -----------
 		if(!ms_ar&&f_boton_pres){
 			if(f_boton_pres){
 				if(!(ms_ar)&&f_boton_pres){
@@ -976,50 +1043,92 @@ void display_escribir(char* linea1, char* linea2){
 	LCD_String(l2);
 
 }
-
+//Esto anda re piola, pero cada vez que pulsas el botón toma como 300 pulsaciones.
 void introducir_texto(void){
 	char nombre[9];
-	int i = 0;
-	for (i = 0; i < 8; i++) {
-		sprintf(&nombre[i], "A");
+	int j = 0;
+	for (j = 0; j < 8; j++) {
+		sprintf(&nombre[j], "A");
 	}
 	int boton=0;
-	i = 0;
+	j = 0;
 	display_escribir("AGREGAR OPERARIO", "NOMBRE: AAAAAAAA");
 	LCD_CursorOn();
-	LCD_SetPos(8+i,1); //Porqe el "AAAAAAAA" arranca en la columna 9 (0-index) y la fila 2 (0-index)
+	LCD_SetPos(8+j,1); //Porqe el "AAAAAAAA" arranca en la columna 9 (0-index) y la fila 2 (0-index)
 	while (boton != b_Enter)
 		{
-				while(!f_boton) {};
+				//Encuesta teclado
+		//Prendo la Columna 1, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
+		tecla[0]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[4]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[8]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[12]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
+		tecla[1]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[5]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[9]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[13]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 3, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
+		tecla[2]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[6]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[10]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[14]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
+		tecla[3]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[7]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[11]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[15]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
+		
+		//Veo si alguna tecla fue presionada
+		f_boton=0;
+		i=0;
+		while(!f_boton && i<16){
+			f_boton=tecla[i];
+			boton=i;
+			i++;
+		}
+				if(f_boton) {
 				f_boton=0;
 				switch (boton)
 				{
 				case b_Arriba:
-					if (nombre[i] >= 65 && nombre[i] < 90) nombre[i]++;
-					else if (nombre[i] == 32) nombre[i] = 65;
-					else nombre[i] = 32;
-					LCD_SendChar(nombre[i]);
+					if (nombre[j] >= 65 && nombre[j] < 90) nombre[j]++;
+					else if (nombre[j] == 32) nombre[j] = 65;
+					else nombre[j] = 32;
+					LCD_SendChar(nombre[j]);
+					LCD_SetPos(8+j,1);
 					break;
 
 				case b_Abajo:
-					if (nombre[i] > 65 && nombre[i] <= 90) nombre[i]--;
-					else if (nombre[i] == 32) nombre[i] = 90;
-					else nombre[i] = 32;
-					LCD_SendChar(nombre[i]);
+					if (nombre[j] > 65 && nombre[j] <= 90) nombre[j]--;
+					else if (nombre[j] == 32) nombre[j] = 90;
+					else nombre[j] = 32;
+					LCD_SendChar(nombre[j]);
+					LCD_SetPos(8+j,1);	
 					break;
 
 				case b_Izquierda:
-					if (i) i--;
-					else i = 7;
-					LCD_SetPos(8+i,1);
+					if (j) j--;
+					else j = 7;
+					LCD_SetPos(8+j,1);
 					break;
 
 				case b_Derecha:
-					if (i!=7) i++;
-					else i = 0;
-					LCD_SetPos(8+i,1);
+					if (j!=7) j++;
+					else j = 0;
+					LCD_SetPos(8+j,1);
 					break;
 				}
+			}
+			HAL_Delay(100);
 		}
 }
 

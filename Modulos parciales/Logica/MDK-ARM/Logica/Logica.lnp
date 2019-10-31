@@ -3,6 +3,7 @@
 "logica\stm32f4xx_it.o"
 "logica\main.o"
 "logica\stm32f4xx_hal_msp.o"
+"logica\my_flash.o"
 "logica\system_stm32f4xx.o"
 "logica\stm32f4xx_hal_rcc_ex.o"
 "logica\stm32f4xx_hal_dma_ex.o"
