@@ -56,7 +56,7 @@ int col =0;
 int f_boton_pres =0; // flag boton presionado
 int ms_ar=30; //milisegundos anti-rebote
 uint8_t id[5] = {0xAA,0xBB,0xCC,0xDD,0xEE};
-uint8_t read[5] = {0,0,0,0,0};
+uint8_t read[32] = {0,0,0,0,0};
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -106,10 +106,12 @@ int main(void)
 	
 	//Elijo el sector con el que voy a trabajar.
 	MY_FLASH_SetSectorAddrs(7, 0x08060000);
+	MY_FLASH_WriteN(offset,&operarios[op_vacio].condicion,2,DATA_TYPE_8);
+			HAL_Delay(5);
 	//Escribo un dato en la memoria
 	//MY_FLASH_WriteN(0,id, 5, DATA_TYPE_8);
 	//Leo los datos en la memoria
-	MY_FLASH_ReadN(0,read,5, DATA_TYPE_8);
+	MY_FLASH_ReadN(64,read,26, DATA_TYPE_8);
 	
 	HAL_GPIO_WritePin(GPIOE,0x0F00,GPIO_PIN_SET); //Prende E8, 9, 10 y 11 al mismo tiempo.
 	HAL_GPIO_WritePin(GPIOD,GPIO_PIN_12,GPIO_PIN_RESET);

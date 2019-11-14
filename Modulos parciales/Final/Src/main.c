@@ -107,19 +107,21 @@ int state;
 uint8_t leido;
 uint8_t rxbuffer[16];
 uint8_t txbuffer[16];
-unsigned char CardID[5];
-unsigned char MyID[5] = {0,0,0,0,0};
+char CardID[5];
+char MyID[5] = {0,0,0,0,0};
+char leer[32];
+char escribir[640];
 //-----------------------
 
 struct Operario{
-	int condicion; 	//Si condición==0, el operario NO está cargado.
-									//Si condición==1, el operario SI está cargado pero NO es master.
-									//Si condición==2, el operario SI está cargado y SI es master.
+	short condicion; 		//Si condición==0, el operario NO está cargado.
+											//Si condición==1, el operario SI está cargado pero NO es master.
+											//Si condición==2, el operario SI está cargado y SI es master.
 	char nombre[9];
 	char id[5];
-	long golpes;
-	long unidades;
-	int productividad;
+	int golpes;
+	int unidades;
+	short productividad;
 } operarios[20];
 
 
@@ -152,6 +154,10 @@ void delayus_block(int n);
 void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
 void introducir_texto(void);
+
+void flash_guardar_op(void);
+void flash_guardar_actual(int operario);
+void flash_cargar_operarios(void);
 
 uint8_t MFRC522_Check(uint8_t* id);
 uint8_t MFRC522_Compare(uint8_t* CardID, uint8_t* CompareID);
@@ -214,24 +220,37 @@ int main(void)
   /* USER CODE BEGIN 2 */
 	
 	//Carga de operarios de tarjetas
-	sprintf(operarios[1].nombre,"LIDER");
 	
-	operarios[1].id[0] = 0xD4;
-	operarios[1].id[1] = 0x8E;
-	operarios[1].id[2] = 0x70;
-	operarios[1].id[3] = 0x1F;
-	operarios[1].id[4] = 0x35;
-	operarios[1].condicion = 1;
-
-	sprintf(operarios[0].nombre,"JULI");
+	MY_FLASH_SetSectorAddrs(7,0x08060000);
+//	Secuencia de borrado que fue necesaria para inicializar la parte que voy a usar de la flash.	
+//	uint8_t borrar[640];
+//	for(int l=0;l<640;l++){
+//		borrar[l]=0;
+//	}
+//	MY_FLASH_WriteN(640,borrar,32,DATA_TYPE_8);
+		flash_cargar_operarios();
 	
-	operarios[0].id[0] = 0x49;
-	operarios[0].id[1] = 0x23;
-	operarios[0].id[2] = 0x2F;
-	operarios[0].id[3] = 0x63;
-	operarios[0].id[4] = 0x26;
-	operarios[0].condicion = 2;
+//	sprintf(operarios[1].nombre,"LIDER");
+//	
+//	operarios[1].id[0] = 0xD4;
+//	operarios[1].id[1] = 0x8E;
+//	operarios[1].id[2] = 0x70;
+//	operarios[1].id[3] = 0x1F;
+//	operarios[1].id[4] = 0x35;
+//	operarios[1].condicion = 1;
 
+//	sprintf(operarios[0].nombre,"JULI");
+//	
+//	operarios[0].id[0] = 0x49;
+//	operarios[0].id[1] = 0x23;
+//	operarios[0].id[2] = 0x2F;
+//	operarios[0].id[3] = 0x63;
+//	operarios[0].id[4] = 0x26;
+//	operarios[0].condicion = 2;
+	
+	//flash_guardar_op();
+	//operarios[2].condicion = 0; // NO OLVIDAR QUITAR ESTA LINEA DE PRUEBA
+	
 	LCD_ini();
 	HAL_Delay(3);
 	LCD_Clear();
@@ -249,6 +268,8 @@ int main(void)
 	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
 	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
 		
+	
+	
 	display_escribir("INICIO DE","LA MAQUINA");
   instancia= Inicio;
 	
@@ -1051,6 +1072,13 @@ void introducir_texto(void){
 		sprintf(&nombre[j], "A");
 	}
 	int boton=0;
+	int op_vacio=1;
+	char str_op_vacio[12];
+	int offset;
+	uint8_t escribir[26];
+	for (j = 0; j < 26; j++) {
+		escribir[j]=0;
+	}
 	j = 0;
 	display_escribir("AGREGAR OPERARIO", "NOMBRE: AAAAAAAA");
 	LCD_CursorOn();
@@ -1128,7 +1156,38 @@ void introducir_texto(void){
 					break;
 				}
 			}
-			HAL_Delay(100);
+			HAL_Delay(150);
+		}//Esto es que apreto Enter, entonces, guarda el operario.
+		
+		while(operarios[op_vacio].condicion && op_vacio<=19){
+			op_vacio++;
+		}
+		if(op_vacio==20){
+			display_escribir("NO HAY ESPACIO","MEMORIA COMPLETA");
+			instancia=Inicio;
+		} else {//Esto lo hace si encontro lugar en la memoria.
+			operarios[op_vacio].condicion=1;
+			escribir[0]=(uint16_t)operarios[op_vacio].condicion;
+			for(int i=0;i<9;i++){
+				operarios[op_vacio].nombre[i]=nombre[i];
+				escribir[2+i]=(uint8_t)nombre[i];
+			}
+			for(int i=0;i<5;i++){
+				operarios[op_vacio].id[i]=CardID[i];
+				escribir[11+i]=CardID[i];
+			}
+			operarios[op_vacio].golpes=20;
+			escribir[16]=(uint32_t)operarios[op_vacio].golpes;
+			operarios[op_vacio].unidades=30;
+			escribir[20]=(uint32_t)operarios[op_vacio].unidades;
+			operarios[op_vacio].productividad=40;
+			escribir[24]=(uint16_t)operarios[op_vacio].productividad;
+			
+			offset=32*op_vacio; //Aca fijo el offset del operario general. A partir de aca cada campo tiene su offset;
+			MY_FLASH_WriteN(offset,escribir,26,DATA_TYPE_8);
+			sprintf(str_op_vacio, "ORDEN: %d OK",op_vacio);
+			display_escribir("AGREGAR OPERARIO",str_op_vacio);
+
 		}
 }
 
@@ -1146,6 +1205,60 @@ void display_unidades(void){
 	LCD_String(linea2);
 }
 //-------------END DISPLAY FUNCTIONS-------------------//
+
+//-------------FLASH FUNCTIONS-------------------------//
+
+void flash_guardar_op(){
+	int desfasaje=0;
+	for (int i=0;i<20;i++){
+		desfasaje=32*i;
+		if(operarios[i].condicion){
+			escribir[desfasaje]=(uint16_t)operarios[i].condicion;
+			for (int k=0;k<9;k++){
+				escribir[desfasaje+2+k]=operarios[i].nombre[k];
+			}
+			for (int k=0;k<5;k++){
+				escribir[desfasaje+11+k]=operarios[i].id[k];
+			}
+			escribir[desfasaje+16]=(uint32_t)operarios[i].golpes;
+			escribir[desfasaje+20]=(uint32_t)operarios[i].unidades;
+			escribir[desfasaje+24]=(uint16_t)operarios[i].productividad;
+		}else{
+			for (int k=0;k<32;k++){
+				escribir[desfasaje+k]=0;
+			}
+		}
+	}
+	MY_FLASH_WriteN(0,escribir,640,DATA_TYPE_8);
+	HAL_Delay(1);
+}
+
+void flash_guardar_actual(int operario){
+
+}
+
+void flash_cargar_operarios(void){
+	for (int i=0;i<20;i++){
+		MY_FLASH_ReadN(32*i,leer,32,DATA_TYPE_8);
+		HAL_Delay(10);
+		if(leer[0]){
+			operarios[i].condicion=((uint16_t)leer[1]<<8)|leer[0];
+			for (int k=0;k<9;k++){
+				operarios[i].nombre[k]=leer[2+k];
+			}
+			for (int k=0;k<5;k++){
+				operarios[i].id[k]=leer[11+k];
+			}
+			operarios[i].golpes=((uint32_t)leer[19]<<24)|((uint32_t)leer[18]<<16)|((uint32_t)leer[17]<<8)|leer[16];
+			operarios[i].unidades=((uint32_t)leer[23]<<24)|((uint32_t)leer[22]<<16)|((uint32_t)leer[21]<<8)|leer[20];
+			operarios[i].condicion=((uint16_t)leer[25]<<8)|leer[24];
+		}
+		
+	}
+}
+
+
+//-------------END FLASH FUNCTIONS---------------------//
 /* USER CODE END 4 */
 
 /**
