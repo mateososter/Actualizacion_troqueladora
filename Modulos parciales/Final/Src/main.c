@@ -65,17 +65,19 @@ TIM_HandleTypeDef htim4;
 #define Menu_21 6
 #define Menu_22 7
 #define Menu_3x 8
+#define Menu_3x1 32
 #define Menu_41 9
+#define Menu_411 28
+#define Menu_412 29
 #define Menu_42 10
 #define Menu_43 11
+#define Menu_431 30
+#define Menu_432 31
 #define Menu_44 12
-#define Menu_41c 13
-#define Menu_42c 14
-#define Menu_43c 15
+#define Menu_421 14
+#define Menu_422 27
 #define Menu_441 16
 #define Menu_442 17
-#define Menu_443 18
-#define Menu_44c 19
 #define TrabajoEC_G 20 //Trabajo en curso - Golpes
 #define TrabajoEC_U 21 //Trabajo en curso - Unidades
 #define AgrOp_Maestro 22
@@ -100,15 +102,17 @@ TIM_HandleTypeDef htim4;
 int ms_ar=30; //milisegundos anti-rebote
 int tecla[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 int boton=0;
-int operario_activo=0;
+int operario_activo=20;
 int operario_chequeado=0;
+int operario_a_borrar=1;
+int operario_a_master=1;
 int i;
 int state;
 uint8_t leido;
 uint8_t rxbuffer[16];
 uint8_t txbuffer[16];
-char CardID[5];
-char MyID[5] = {0,0,0,0,0};
+uint8_t CardID[5];
+uint8_t MasterID[5] = {0,0,0,0,0};
 char leer[32];
 char escribir[640];
 //-----------------------
@@ -129,6 +133,9 @@ long cont_unidades=0;
 long cont_golpes=0;
 char str_golpes[17];
 char str_unidades[17];
+long total_golpes=0;
+long total_unidades=0;
+char id_display[10];
 char str_productividad[17];
 int f_unidades=0;
 int f_confirmacion=0;
@@ -154,8 +161,8 @@ void delayus_block(int n);
 void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
 void introducir_texto(void);
-
-void flash_guardar_op(void);
+void conv_hex(void);
+void flash_guardar_operarios(void);
 void flash_guardar_actual(int operario);
 void flash_cargar_operarios(void);
 
@@ -248,7 +255,7 @@ int main(void)
 //	operarios[0].id[4] = 0x26;
 //	operarios[0].condicion = 2;
 	
-	//flash_guardar_op();
+	//flash_guardar_operarios();
 	//operarios[2].condicion = 0; // NO OLVIDAR QUITAR ESTA LINEA DE PRUEBA
 	
 	LCD_ini();
@@ -355,18 +362,31 @@ int main(void)
 									operario_chequeado++;
 								}
 							} while(!operarios[operario_chequeado].condicion);
-							display_escribir(operarios[operario_chequeado].nombre, operarios[operario_chequeado].id);
+							conv_hex();
+							display_escribir(operarios[operario_chequeado].nombre, id_display);
 							break;
 						
 						case Menu_21:
 							instancia=Menu_22;
-							sprintf(str_unidades, "%ld", cont_unidades);
-							display_escribir("2.1. TOT UNIDADES",str_unidades);
+							total_unidades=0;
+							for (int i=0;i<20;i++){
+								if(operarios[i].condicion){
+									total_unidades+=operarios[i].unidades;
+								}
+							}
+							sprintf(str_unidades, "%ld", total_unidades);
+							display_escribir("2.2.TOT UNIDADES",str_unidades);
 							break;
 					
 						case Menu_22:
 							instancia=Menu_21;
-							sprintf(str_golpes, "%ld", cont_golpes);
+							total_golpes=0;
+							for (int i=0;i<20;i++){
+								if(operarios[i].condicion){
+									total_golpes+=operarios[i].golpes;
+								}
+							}
+							sprintf(str_golpes, "%ld", total_golpes);
 							display_escribir("2.1. TOT GOLPES",str_golpes);
 							break;
 						
@@ -381,6 +401,7 @@ int main(void)
 							sprintf(str_productividad, "%d %%", operarios[operario_chequeado].productividad);
 							display_escribir(operarios[operario_chequeado].nombre, str_productividad);
 							break;
+							
 						case Menu_41:
 							instancia=Menu_42;
 							display_escribir("4.2.RESET","    TOTALES");
@@ -388,7 +409,7 @@ int main(void)
 					
 						case Menu_42:
 							instancia=Menu_43;
-							display_escribir("4.3.RESET","    MASTER ID");
+							display_escribir("4.3.ALTA","    TAG MAESTRO");
 							break;
 						
 						case Menu_43:
@@ -398,7 +419,29 @@ int main(void)
 					
 						case Menu_44:
 							instancia=Menu_41;
-							display_escribir("4.1.RESET","    OPERARIOS");
+							display_escribir("4.1.BORRAR","    OPERARIO");
+							break;
+						
+						case Menu_411:
+							do{
+								if(operario_chequeado==19){
+									operario_chequeado=1;
+								} else {
+									operario_chequeado++;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							display_escribir("BORRAR OPERARIO", operarios[operario_chequeado].nombre);
+							break;
+							
+						case Menu_431:
+							do{
+								if(operario_chequeado==19){
+									operario_chequeado=1;
+								} else {
+									operario_chequeado++;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							display_escribir("ALTA MAESTRO", operarios[operario_chequeado].nombre);
 							break;
 					}
 					break; //Sale de switch(boton) 
@@ -438,18 +481,31 @@ int main(void)
 									operario_chequeado--;
 								}
 							} while(!operarios[operario_chequeado].condicion);
-							display_escribir(operarios[operario_chequeado].nombre, operarios[operario_chequeado].id);
+							conv_hex();
+							display_escribir(operarios[operario_chequeado].nombre, id_display);
 							break;
 							
 						case Menu_21:
 							instancia=Menu_22;
-							sprintf(str_unidades, "%ld", cont_unidades);
-							display_escribir("2.1. TOT UNIDADES",str_unidades);
+							total_unidades=0;
+							for (int i=0;i<20;i++){
+								if(operarios[i].condicion){
+									total_unidades+=operarios[i].unidades;
+								}
+							}
+							sprintf(str_unidades, "%ld", total_unidades);
+							display_escribir("2.2.TOT UNIDADES",str_unidades);
 							break;
 					
 						case Menu_22:
 							instancia=Menu_21;
-							sprintf(str_golpes, "%ld", cont_golpes);
+							total_golpes=0;
+							for (int i=0;i<20;i++){
+								if(operarios[i].condicion){
+									total_golpes+=operarios[i].golpes;
+								}
+							}
+							sprintf(str_golpes, "%ld", total_golpes);
 							display_escribir("2.1. TOT GOLPES",str_golpes);
 							break;
 						
@@ -472,7 +528,7 @@ int main(void)
 					
 						case Menu_42:
 							instancia=Menu_41;
-							display_escribir("4.1.RESET","    OPERARIOS");
+							display_escribir("4.1.BORRAR","    OPERARIO");
 							break;
 						
 						case Menu_43:
@@ -482,7 +538,29 @@ int main(void)
 					
 						case Menu_44:
 							instancia=Menu_43;
-							display_escribir("4.3.RESET","    MASTER ID");
+							display_escribir("4.3.ALTA","    TAG MAESTRO");
+							break;
+						
+						case Menu_411:
+							do{
+								if(operario_chequeado==1){
+									operario_chequeado=19;
+								} else {
+									operario_chequeado--;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							display_escribir("BORRAR OPERARIO", operarios[operario_chequeado].nombre);
+							break;
+							
+						case Menu_431:
+							do{
+								if(operario_chequeado==1){
+									operario_chequeado=19;
+								} else {
+									operario_chequeado--;
+								}
+							} while(!operarios[operario_chequeado].condicion);
+							display_escribir("ALTA MAESTRO", operarios[operario_chequeado].nombre);
 							break;
 					}
 					break; //Sale de switch(boton)
@@ -495,12 +573,19 @@ int main(void)
 						case Menu_1:
 							instancia=Menu_1x;
 							operario_chequeado=0;
-							display_escribir(operarios[operario_chequeado].nombre, operarios[operario_chequeado].id);
+							conv_hex();
+							display_escribir(operarios[operario_chequeado].nombre, id_display);
 							break;
 					
 						case Menu_2:
 							instancia=Menu_21;
-							sprintf(str_golpes, "%ld", cont_golpes);
+							total_golpes=0;
+							for (int i=0;i<20;i++){
+								if(operarios[i].condicion){
+									total_golpes+=operarios[i].golpes;
+								}
+							}
+							sprintf(str_golpes, "%ld", total_golpes);
 							display_escribir("2.1. TOT GOLPES",str_golpes);
 							break;
 					
@@ -510,9 +595,15 @@ int main(void)
 							display_escribir(operarios[0].nombre, str_productividad);
 							break;
 						
+						case Menu_3x:
+							instancia=Menu_3x1;
+							sprintf(str_unidades, "%ld", operarios[operario_chequeado].unidades);
+							display_escribir("UNIDADES",str_unidades);
+							break;
+						
 						case Menu_4:
 							instancia=Menu_41;
-							display_escribir("4.1.RESET","    OPERARIOS");
+							display_escribir("4.1.BORRAR","    OPERARIO");
 							break;
 												
 					}
@@ -538,6 +629,12 @@ int main(void)
 						case Menu_3x:
 							instancia=Menu_3;
 							display_escribir("3.PRODUCTIVIDAD", "");
+							break;
+						
+						case Menu_3x1:
+							instancia=Menu_3x;
+							sprintf(str_productividad, "%d %%",operarios[0].productividad); 
+							display_escribir(operarios[0].nombre, str_productividad);
 							break;
 						
 						case Menu_41:
@@ -570,12 +667,20 @@ int main(void)
 						
 						case Menu_1:
 							instancia=Menu_1x;
-							display_escribir(operarios[0].nombre, operarios[0].id);
+							operario_chequeado=0;
+							conv_hex();
+							display_escribir(operarios[operario_chequeado].nombre, id_display);
 							break;
 					
 						case Menu_2:
 							instancia=Menu_21;
-							sprintf(str_golpes, "%ld", cont_golpes);
+							total_golpes=0;
+							for (int i=0;i<20;i++){
+								if(operarios[i].condicion){
+									total_golpes+=operarios[i].golpes;
+								}
+							}
+							sprintf(str_golpes, "%ld", total_golpes);
 							display_escribir("2.1. TOT GOLPES",str_golpes);
 							break;
 					
@@ -585,23 +690,43 @@ int main(void)
 							display_escribir(operarios[0].nombre, str_productividad);
 							break;
 						
+						case Menu_3x:
+							instancia=Menu_3x1;
+							sprintf(str_unidades, "%ld", operarios[operario_chequeado].unidades);
+							display_escribir("UNIDADES",str_unidades);
+							break;
+						
 						case Menu_4:
 							instancia=Menu_41;
-							display_escribir("4.1.RESET","    OPERARIOS");
+							display_escribir("4.1.BORRAR","    OPERARIO");
 							break;
 						
 						case Menu_41:
-							instancia=Menu_41c;
+							instancia=Menu_411;
+							operario_chequeado=1;
+							display_escribir("BORRAR OPERARIO", operarios[operario_chequeado].nombre);
+							break;
+						
+						case Menu_411:
+							instancia=Menu_412;
+							operario_a_borrar=operario_chequeado;
 							display_escribir("PARA CONFIRMAR", "PASE TAG MAESTRO");
 							break;
 						
 						case Menu_42:
-							instancia=Menu_42c;
+							instancia=Menu_421;
 							display_escribir("PARA CONFIRMAR", "PASE TAG MAESTRO");
 							break;
 						
 						case Menu_43:
-							instancia=Menu_43c;
+							instancia=Menu_431;
+							operario_chequeado=1;
+							display_escribir("ALTA MAESTRO", operarios[operario_chequeado].nombre);
+							break;
+						
+						case Menu_431:
+							instancia=Menu_432;
+							operario_a_master=operario_chequeado;
 							display_escribir("PARA CONFIRMAR", "PASE TAG MAESTRO");
 							break;
 						
@@ -609,11 +734,7 @@ int main(void)
 							instancia=Menu_441;
 							display_escribir("AGREGAR OPERARIO", "PASE TAG MAESTRO");
 							break;
-						
-						case Menu_443:
-							instancia=Menu_44c;
-							display_escribir("AGREGAR OPERARIO","  CORRECTO");
-							break;					
+										
 					}
 					break; //Sale de switch(boton)
 					
@@ -626,8 +747,8 @@ int main(void)
 			
 		}	//rutina boton
 				
-		if(f_sensor){
-			if(operario_activo){
+		if(f_sensor){//RESETEAR EL CONTADOR CUANDO CAMBIA DE OPERARIO.
+			if(operario_activo!=20){
 				if(f_unidades){
 					//HAL_GPIO_TogglePin(Led_Verde_GPIO_Port, Led_Verde_Pin);
 					cont_unidades++;
@@ -640,6 +761,9 @@ int main(void)
 					operarios[operario_activo].golpes++;
 					sprintf(str_golpes, "%ld", cont_golpes);
 					display_escribir("ACTUAL: GOLPES",str_golpes);
+				}
+				if(operarios[operario_activo].golpes){
+				operarios[operario_activo].productividad=100*operarios[operario_activo].unidades/operarios[operario_activo].golpes;	
 				}
 			}
 			f_sensor=0;
@@ -656,6 +780,9 @@ int main(void)
 					}
 					if(operarios[operario_chequeado].condicion==2){
 						instancia=Menu_442;
+						for(int k=0;k<5;k++){
+							MasterID[k]=CardID[k];
+						}
 						display_escribir("AGREGAR OPERARIO", "PASE TAG NUEVO");
 					} else {
 						instancia=Inicio;
@@ -663,40 +790,92 @@ int main(void)
 					}
 					break;
 					
+				case Menu_412:
+					for(int n=0;n<20;n++){
+						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
+							operario_chequeado=n;
+						}
+					}
+					if(operarios[operario_chequeado].condicion==2){
+						instancia=Inicio;
+						operarios[operario_a_borrar].condicion=0;
+						flash_guardar_operarios();
+						display_escribir("BORRAR OPERARIO","CORRECTO");
+					} else {
+						instancia=Inicio;
+						display_escribir("BORRAR OPERARIO", "ERR TAG MAESTRO");
+					}
+					break;
+					
+				case Menu_421:
+					for(int n=0;n<20;n++){
+						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
+							operario_chequeado=n;
+						}
+					}
+					if(operarios[operario_chequeado].condicion==2){
+						instancia=Inicio;
+						for(int n=0;n<20;n++){
+							operarios[n].golpes=0;
+							operarios[n].unidades=0;
+							operarios[n].productividad=0;
+						}
+						flash_guardar_operarios();
+						display_escribir("RESET TOTALES","CORRECTO");
+					} else {
+						instancia=Inicio;
+						display_escribir("RESET TOTALES", "ERR TAG MAESTRO");
+					}
+					break;
+					
+				case Menu_432:
+					for(int n=0;n<20;n++){
+						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
+							operario_chequeado=n;
+						}
+					}
+					if(operarios[operario_chequeado].condicion==2){
+						instancia=Inicio;
+						operarios[operario_a_master].condicion=2;
+						flash_guardar_operarios();
+						display_escribir("ALTA MAESTRO","CORRECTO");
+					} else {
+						instancia=Inicio;
+						display_escribir("ALTA MAESTRO", "ERR TAG MAESTRO");
+					}
+					break;
+					
 				case Menu_442:
 					instancia=Inicio;
-					introducir_texto();
+					if(MFRC522_Compare(CardID,MasterID)!=MI_OK){
+						introducir_texto();
+					}
 					break;
 				
+				default:
+					if(operario_activo==20){//Cambiar condicion de no operario pq Juli es el 0
+						operario_activo=20;
+						for(int n=0;n<20;n++){//Busca una coincidencia de la tarjeta leida con la de algun operario guardado
+							if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
+								operario_activo=n;
+							}
+						}
+						if(operario_activo!=20){
+							display_escribir("INICIA TRABAJO",operarios[operario_activo].nombre);
+							HAL_Delay(100);
+						}
+					}else{
+						if(MFRC522_Compare(CardID,operarios[operario_activo].id)== MI_OK){
+							display_escribir("CIERRA TRABAJO",operarios[operario_activo].nombre);
+							operario_activo=20;
+							flash_guardar_operarios();
+							cont_golpes=0;
+							cont_unidades=0;
+						}
+					}
+					break;
+					
 			} // Sale del switch (instancia)
-			
-			
-//			if(!operario_activo){
-//				if(!f_confirmacion){
-//					for(int n=0;n<20;n++){
-//						if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
-//							operario_activo=n;
-//						}
-//					}
-//				}
-//			}else{
-//				if(MFRC522_Compare(CardID,operarios[operario_activo].id)== MI_OK){
-//						operario_activo=0;
-//				}
-//			}
-//				Esta era la primer prueba que andaba
-//				HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_SET);
-//				if(MFRC522_Compare(CardID,operarios[0].id)== MI_OK){
-//					HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_RESET);
-//					HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_SET);
-//				}
-//				MFRC522_Check(CardID);
-//				if(MFRC522_Compare(CardID,operarios[1].id)== MI_OK){
-//					HAL_GPIO_WritePin(Led_Verde_GPIO_Port, Led_Verde_Pin, GPIO_PIN_RESET);
-//					HAL_GPIO_WritePin(Led_Naranja_GPIO_Port, Led_Naranja_Pin, GPIO_PIN_SET);
-//				}
-//				HAL_GPIO_WritePin(Led_Azul_GPIO_Port, Led_Azul_Pin, GPIO_PIN_RESET);
-				
 
 		}//Sale de rutina de tarjeta			
 	
@@ -1065,6 +1244,8 @@ void display_escribir(char* linea1, char* linea2){
 
 }
 //Esto anda re piola, pero cada vez que pulsas el botón toma como 300 pulsaciones.
+//Esto anda re piola, lo de arriba ya no pasa.
+
 void introducir_texto(void){
 	char nombre[9];
 	int j = 0;
@@ -1167,24 +1348,17 @@ void introducir_texto(void){
 			instancia=Inicio;
 		} else {//Esto lo hace si encontro lugar en la memoria.
 			operarios[op_vacio].condicion=1;
-			escribir[0]=(uint16_t)operarios[op_vacio].condicion;
 			for(int i=0;i<9;i++){
 				operarios[op_vacio].nombre[i]=nombre[i];
-				escribir[2+i]=(uint8_t)nombre[i];
 			}
 			for(int i=0;i<5;i++){
 				operarios[op_vacio].id[i]=CardID[i];
-				escribir[11+i]=CardID[i];
 			}
-			operarios[op_vacio].golpes=20;
-			escribir[16]=(uint32_t)operarios[op_vacio].golpes;
-			operarios[op_vacio].unidades=30;
-			escribir[20]=(uint32_t)operarios[op_vacio].unidades;
-			operarios[op_vacio].productividad=40;
-			escribir[24]=(uint16_t)operarios[op_vacio].productividad;
+			operarios[op_vacio].golpes=0;
+			operarios[op_vacio].unidades=0;
+			operarios[op_vacio].productividad=0;
 			
-			offset=32*op_vacio; //Aca fijo el offset del operario general. A partir de aca cada campo tiene su offset;
-			MY_FLASH_WriteN(offset,escribir,26,DATA_TYPE_8);
+			flash_guardar_operarios();
 			sprintf(str_op_vacio, "ORDEN: %d OK",op_vacio);
 			display_escribir("AGREGAR OPERARIO",str_op_vacio);
 
@@ -1196,7 +1370,7 @@ void display_unidades(void){
 	char linea1[16];
 	char linea2[16];
 	sprintf(str_unidades, "%ld", cont_unidades);
-	display_escribir("2.1. TOT UNIDADES",str_unidades);
+	display_escribir("2.2.TOT UNIDADES",str_unidades);
 							
 	LCD_Clear();
 	LCD_SetPos(0,0);
@@ -1204,11 +1378,72 @@ void display_unidades(void){
 	LCD_SetPos(0,1);
 	LCD_String(linea2);
 }
+
+void conv_hex(void){
+	
+	for(int i=0;i<10;i++){
+		if(i%2){
+			id_display[i]=operarios[operario_chequeado].id[i/2]&0xF;
+		}else{
+			id_display[i]=operarios[operario_chequeado].id[i/2]>>4;
+		}
+		switch(id_display[i]){
+			case 0x0:
+				id_display[i]=0x30;
+				break;
+			case 0x1:
+				id_display[i]=0x31;
+				break;
+			case 0x2:
+				id_display[i]=0x32;
+				break;
+			case 0x3:
+				id_display[i]=0x33;
+				break;
+			case 0x4:
+				id_display[i]=0x34;
+				break;
+			case 0x5:
+				id_display[i]=0x35;
+				break;
+			case 0x6:
+				id_display[i]=0x36;
+				break;
+			case 0x7:
+				id_display[i]=0x37;
+				break;
+			case 0x8:
+				id_display[i]=0x38;
+				break;
+			case 0x9:
+				id_display[i]=0x39;
+				break;
+			case 0xA:
+				id_display[i]=0x41;
+				break;
+			case 0xB:
+				id_display[i]=0x42;
+				break;
+			case 0xC:
+				id_display[i]=0x43;
+				break;
+			case 0xD:
+				id_display[i]=0x44;
+				break;
+			case 0xE:
+				id_display[i]=0x45;
+				break;
+			case 0xF:
+				id_display[i]=0x46;
+				break;
+		}
+	}
+}
 //-------------END DISPLAY FUNCTIONS-------------------//
 
 //-------------FLASH FUNCTIONS-------------------------//
 
-void flash_guardar_op(){
+void flash_guardar_operarios(){
 	int desfasaje=0;
 	for (int i=0;i<20;i++){
 		desfasaje=32*i;
@@ -1223,18 +1458,17 @@ void flash_guardar_op(){
 			escribir[desfasaje+16]=(uint32_t)operarios[i].golpes;
 			escribir[desfasaje+20]=(uint32_t)operarios[i].unidades;
 			escribir[desfasaje+24]=(uint16_t)operarios[i].productividad;
+			for (int k=0;k<6;k++){//Relleno los ultimos bytes de memoria con FF. Por las dudas
+				escribir[desfasaje+26+k]=0xFF;
+			}
 		}else{
 			for (int k=0;k<32;k++){
-				escribir[desfasaje+k]=0;
+				escribir[desfasaje+k]=0x00;
 			}
 		}
 	}
 	MY_FLASH_WriteN(0,escribir,640,DATA_TYPE_8);
-	HAL_Delay(1);
-}
-
-void flash_guardar_actual(int operario){
-
+	HAL_Delay(10);
 }
 
 void flash_cargar_operarios(void){
@@ -1251,9 +1485,8 @@ void flash_cargar_operarios(void){
 			}
 			operarios[i].golpes=((uint32_t)leer[19]<<24)|((uint32_t)leer[18]<<16)|((uint32_t)leer[17]<<8)|leer[16];
 			operarios[i].unidades=((uint32_t)leer[23]<<24)|((uint32_t)leer[22]<<16)|((uint32_t)leer[21]<<8)|leer[20];
-			operarios[i].condicion=((uint16_t)leer[25]<<8)|leer[24];
+			operarios[i].productividad=((uint16_t)leer[25]<<8)|leer[24];
 		}
-		
 	}
 }
 
