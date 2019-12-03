@@ -158,6 +158,7 @@ static void MX_SPI1_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void delayus_block(int n);
+void encuesta_teclado(void);
 void display_escribir(char* linea1 ,char* linea2);
 void display_unidades(void);
 void introducir_texto(void);
@@ -226,16 +227,33 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 	
+	
+	LCD_ini();
+	HAL_Delay(3);
+	LCD_Clear();
+	HAL_Delay(3);
+	LCD_SetPos(0,0);
+	HAL_Delay(3);
+	LCD_CursorOff();
+	HAL_Delay(3);	
+	
+	MFRC522_Init();
+	
+	//TECLADO - Apago todo
+	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
+		
 	//Carga de operarios de tarjetas
 	
-	MY_FLASH_SetSectorAddrs(7,0x08060000);
 //	Secuencia de borrado que fue necesaria para inicializar la parte que voy a usar de la flash.	
 //	uint8_t borrar[640];
 //	for(int l=0;l<640;l++){
 //		borrar[l]=0;
 //	}
 //	MY_FLASH_WriteN(640,borrar,32,DATA_TYPE_8);
-		flash_cargar_operarios();
+	flash_cargar_operarios();
 	
 //	sprintf(operarios[1].nombre,"LIDER");
 //	
@@ -258,25 +276,6 @@ int main(void)
 	//flash_guardar_operarios();
 	//operarios[2].condicion = 0; // NO OLVIDAR QUITAR ESTA LINEA DE PRUEBA
 	
-	LCD_ini();
-	HAL_Delay(3);
-	LCD_Clear();
-	HAL_Delay(3);
-	LCD_SetPos(0,0);
-	HAL_Delay(3);
-	LCD_CursorOff();
-	HAL_Delay(3);	
-	
-	MFRC522_Init();
-	
-	//TECLADO - Apago todo
-	HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
-		
-	
-	
 	display_escribir("INICIO DE","LA MAQUINA");
   instancia= Inicio;
 	
@@ -287,43 +286,7 @@ int main(void)
   while (1)  {
 	
 		//Encuesta teclado
-		//Prendo la Columna 1, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
-		tecla[0]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[4]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[8]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[12]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
-		tecla[1]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[5]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[9]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[13]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 3, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
-		tecla[2]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[6]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[10]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[14]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
-		tecla[3]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[7]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[11]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[15]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
-		
-		//Veo si alguna tecla fue presionada
-		f_boton=0;
-		i=0;
-		while(!f_boton && i<16){
-			f_boton=tecla[i];
-			boton=i;
-			i++;
-		}
+		encuesta_teclado();
 		
 		if(f_boton){
 			switch(boton){
@@ -750,13 +713,11 @@ int main(void)
 		if(f_sensor){//RESETEAR EL CONTADOR CUANDO CAMBIA DE OPERARIO.
 			if(operario_activo!=20){
 				if(f_unidades){
-					//HAL_GPIO_TogglePin(Led_Verde_GPIO_Port, Led_Verde_Pin);
 					cont_unidades++;
 					operarios[operario_activo].unidades++;
 					sprintf(str_unidades, "%ld", cont_unidades);
 					display_escribir("ACTUAL: UNIDADES",str_unidades);
 				}else{
-					//HAL_GPIO_TogglePin(Led_Azul_GPIO_Port, Led_Azul_Pin);
 					cont_golpes++;
 					operarios[operario_activo].golpes++;
 					sprintf(str_golpes, "%ld", cont_golpes);
@@ -853,7 +814,7 @@ int main(void)
 					break;
 				
 				default:
-					if(operario_activo==20){//Cambiar condicion de no operario pq Juli es el 0
+					if(operario_activo==20){
 						operario_activo=20;
 						for(int n=0;n<20;n++){//Busca una coincidencia de la tarjeta leida con la de algun operario guardado
 							if(MFRC522_Compare(CardID,operarios[n].id)== MI_OK){
@@ -1209,7 +1170,48 @@ void delayus_block(int n){
 
 //------------END IT CALLBACK FUNCTIONS------------------//
 
-//------------RFID FUNCTIONS------------------------------//
+//------------TECLADO FUNCTIONS------------------------------//
+
+void encuesta_teclado(void){
+	
+	//Prendo la Columna 1, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
+		tecla[0]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[4]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[8]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[12]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
+		tecla[1]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[5]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[9]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[13]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 3, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
+		tecla[2]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[6]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[10]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[14]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
+		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
+		tecla[3]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
+		tecla[7]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
+		tecla[11]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
+		tecla[15]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
+		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
+		
+		//Veo si alguna tecla fue presionada
+		f_boton=0;
+		i=0;
+		while(!f_boton && i<16){
+			f_boton=tecla[i];
+			boton=i;
+			i++;
+		}
+}
 
 
 //-------------DISPLAY FUNCTIONS-------------------------//
@@ -1267,43 +1269,8 @@ void introducir_texto(void){
 	while (boton != b_Enter)
 		{
 				//Encuesta teclado
-		//Prendo la Columna 1, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
-		tecla[0]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[4]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[8]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[12]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
-		tecla[1]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[5]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[9]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[13]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 3, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
-		tecla[2]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[6]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[10]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[14]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
-		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
-		tecla[3]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
-		tecla[7]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
-		tecla[11]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
-		tecla[15]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
-		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_RESET);
-		
-		//Veo si alguna tecla fue presionada
-		f_boton=0;
-		i=0;
-		while(!f_boton && i<16){
-			f_boton=tecla[i];
-			boton=i;
-			i++;
-		}
+				encuesta_teclado();
+			
 				if(f_boton) {
 				f_boton=0;
 				switch (boton)
@@ -1381,6 +1348,7 @@ void display_unidades(void){
 
 void conv_hex(void){
 	
+	for(int i=0;i<10;i++) id_display[i]=0x00;
 	for(int i=0;i<10;i++){
 		if(i%2){
 			id_display[i]=operarios[operario_chequeado].id[i/2]&0xF;
@@ -1472,6 +1440,9 @@ void flash_guardar_operarios(){
 }
 
 void flash_cargar_operarios(void){
+	
+	MY_FLASH_SetSectorAddrs(7,0x08060000);
+	
 	for (int i=0;i<20;i++){
 		MY_FLASH_ReadN(32*i,leer,32,DATA_TYPE_8);
 		HAL_Delay(10);
