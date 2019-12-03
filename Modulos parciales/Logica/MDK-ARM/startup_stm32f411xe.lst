@@ -763,11 +763,11 @@ ARM Macro Assembler    Page 12
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M4.fp --apcs=int
 erwork --depend=logica\startup_stm32f411xe.d -ologica\startup_stm32f411xe.o -I.
-\RTE\_Logica -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.4.0\CMSIS\Core\Include -IC:\Keil
-_v5\ARM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Includ
-e --predefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UV
-ISION_VERSION SETA 525" --predefine="_RTE_ SETA 1" --predefine="STM32F411xE SET
-A 1" --list=startup_stm32f411xe.lst startup_stm32f411xe.s
+\RTE\_Logica -IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.3.0\CMSIS\Include -IC:\Keil_v5\A
+RM\PACK\Keil\STM32F4xx_DFP\2.13.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include --p
+redefine="__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION
+_VERSION SETA 525" --predefine="_RTE_ SETA 1" --predefine="STM32F411xE SETA 1" 
+--list=startup_stm32f411xe.lst startup_stm32f411xe.s
 
 
 
