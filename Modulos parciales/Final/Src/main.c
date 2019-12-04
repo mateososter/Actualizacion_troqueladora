@@ -135,7 +135,7 @@ char str_golpes[17];
 char str_unidades[17];
 long total_golpes=0;
 long total_unidades=0;
-char id_display[10];
+char id_display[11];
 char str_productividad[17];
 int f_unidades=0;
 int f_confirmacion=0;
@@ -1302,6 +1302,9 @@ void introducir_texto(void){
 					else j = 0;
 					LCD_SetPos(8+j,1);
 					break;
+				
+				default:
+					break;
 				}
 			}
 			HAL_Delay(150);
@@ -1348,7 +1351,7 @@ void display_unidades(void){
 
 void conv_hex(void){
 	
-	for(int i=0;i<10;i++) id_display[i]=0x00;
+	for(int i=0;i<11;i++) id_display[i]=0x00;
 	for(int i=0;i<10;i++){
 		if(i%2){
 			id_display[i]=operarios[operario_chequeado].id[i/2]&0xF;
