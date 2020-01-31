@@ -415,6 +415,7 @@ Section Cross References
     main.o(i.encuesta_teclado) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_ReadPin) for HAL_GPIO_ReadPin
     main.o(i.encuesta_teclado) refers to main.o(.bss) for .bss
     main.o(i.encuesta_teclado) refers to main.o(.data) for .data
+    main.o(i.flash_cargar_operarios) refers to my_flash.o(i.MY_FLASH_SetSectorAddrs) for MY_FLASH_SetSectorAddrs
     main.o(i.flash_cargar_operarios) refers to my_flash.o(i.MY_FLASH_ReadN) for MY_FLASH_ReadN
     main.o(i.flash_cargar_operarios) refers to stm32f4xx_hal.o(i.HAL_Delay) for HAL_Delay
     main.o(i.flash_cargar_operarios) refers to main.o(.bss) for .bss
@@ -437,8 +438,6 @@ Section Cross References
     main.o(i.main) refers to main.o(i.MX_TIM4_Init) for MX_TIM4_Init
     main.o(i.main) refers to main.o(i.MX_TIM3_Init) for MX_TIM3_Init
     main.o(i.main) refers to main.o(i.MX_SPI1_Init) for MX_SPI1_Init
-    main.o(i.main) refers to my_flash.o(i.MY_FLASH_SetSectorAddrs) for MY_FLASH_SetSectorAddrs
-    main.o(i.main) refers to main.o(i.flash_cargar_operarios) for flash_cargar_operarios
     main.o(i.main) refers to lcd_txt.o(i.LCD_ini) for LCD_ini
     main.o(i.main) refers to stm32f4xx_hal.o(i.HAL_Delay) for HAL_Delay
     main.o(i.main) refers to lcd_txt.o(i.LCD_Clear) for LCD_Clear
@@ -446,6 +445,7 @@ Section Cross References
     main.o(i.main) refers to lcd_txt.o(i.LCD_CursorOff) for LCD_CursorOff
     main.o(i.main) refers to rc522.o(i.MFRC522_Init) for MFRC522_Init
     main.o(i.main) refers to stm32f4xx_hal_gpio.o(i.HAL_GPIO_WritePin) for HAL_GPIO_WritePin
+    main.o(i.main) refers to main.o(i.flash_cargar_operarios) for flash_cargar_operarios
     main.o(i.main) refers to main.o(i.display_escribir) for display_escribir
     main.o(i.main) refers to main.o(i.encuesta_teclado) for encuesta_teclado
     main.o(i.main) refers to main.o(i.conv_hex) for conv_hex
@@ -1455,10 +1455,10 @@ Image Symbol Table
     i.display_rs                             0x080023e8   Section        0  lcd_txt.o(i.display_rs)
     i.encuesta_teclado                       0x08002404   Section        0  main.o(i.encuesta_teclado)
     i.flash_cargar_operarios                 0x0800254c   Section        0  main.o(i.flash_cargar_operarios)
-    i.flash_guardar_operarios                0x080025cc   Section        0  main.o(i.flash_guardar_operarios)
-    i.introducir_texto                       0x08002668   Section        0  main.o(i.introducir_texto)
-    i.main                                   0x08002848   Section        0  main.o(i.main)
-    .constdata                               0x080031a8   Section       16  system_stm32f4xx.o(.constdata)
+    i.flash_guardar_operarios                0x080025d8   Section        0  main.o(i.flash_guardar_operarios)
+    i.introducir_texto                       0x08002674   Section        0  main.o(i.introducir_texto)
+    i.main                                   0x08002854   Section        0  main.o(i.main)
+    .constdata                               0x080031ac   Section       16  system_stm32f4xx.o(.constdata)
     .data                                    0x20000000   Section       12  stm32f4xx_hal.o(.data)
     .data                                    0x2000000c   Section        4  system_stm32f4xx.o(.data)
     .data                                    0x20000010   Section       70  main.o(.data)
@@ -1466,8 +1466,8 @@ Image Symbol Table
     MY_SectorNum                             0x20000058   Data           1  my_flash.o(.data)
     MY_SectorAddrs                           0x2000005c   Data           4  my_flash.o(.data)
     .bss                                     0x20000060   Section       32  stm32f4xx_hal_flash.o(.bss)
-    .bss                                     0x20000080   Section     1565  main.o(.bss)
-    STACK                                    0x200006a0   Section     1024  startup_stm32f411xe.o(STACK)
+    .bss                                     0x20000080   Section     1572  main.o(.bss)
+    STACK                                    0x200006a8   Section     1024  startup_stm32f411xe.o(STACK)
 
     Global Symbols
 
@@ -1698,13 +1698,13 @@ Image Symbol Table
     display_escribir                         0x08002379   Thumb Code   106  main.o(i.display_escribir)
     display_rs                               0x080023e9   Thumb Code    22  lcd_txt.o(i.display_rs)
     encuesta_teclado                         0x08002405   Thumb Code   304  main.o(i.encuesta_teclado)
-    flash_cargar_operarios                   0x0800254d   Thumb Code   122  main.o(i.flash_cargar_operarios)
-    flash_guardar_operarios                  0x080025cd   Thumb Code   146  main.o(i.flash_guardar_operarios)
-    introducir_texto                         0x08002669   Thumb Code   374  main.o(i.introducir_texto)
-    main                                     0x08002849   Thumb Code  2196  main.o(i.main)
-    AHBPrescTable                            0x080031a8   Data          16  system_stm32f4xx.o(.constdata)
-    Region$$Table$$Base                      0x080031b8   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x080031d8   Number         0  anon$$obj.o(Region$$Table)
+    flash_cargar_operarios                   0x0800254d   Thumb Code   130  main.o(i.flash_cargar_operarios)
+    flash_guardar_operarios                  0x080025d9   Thumb Code   146  main.o(i.flash_guardar_operarios)
+    introducir_texto                         0x08002675   Thumb Code   374  main.o(i.introducir_texto)
+    main                                     0x08002855   Thumb Code  2188  main.o(i.main)
+    AHBPrescTable                            0x080031ac   Data          16  system_stm32f4xx.o(.constdata)
+    Region$$Table$$Base                      0x080031bc   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x080031dc   Number         0  anon$$obj.o(Region$$Table)
     uwTickFreq                               0x20000000   Data           1  stm32f4xx_hal.o(.data)
     uwTickPrio                               0x20000004   Data           4  stm32f4xx_hal.o(.data)
     uwTick                                   0x20000008   Data           4  stm32f4xx_hal.o(.data)
@@ -1736,9 +1736,9 @@ Image Symbol Table
     operarios                                0x20000430   Data         560  main.o(.bss)
     str_golpes                               0x20000660   Data          17  main.o(.bss)
     str_unidades                             0x20000671   Data          17  main.o(.bss)
-    id_display                               0x20000682   Data          10  main.o(.bss)
-    str_productividad                        0x2000068c   Data          17  main.o(.bss)
-    __initial_sp                             0x20000aa0   Data           0  startup_stm32f411xe.o(STACK)
+    id_display                               0x20000682   Data          17  main.o(.bss)
+    str_productividad                        0x20000693   Data          17  main.o(.bss)
+    __initial_sp                             0x20000aa8   Data           0  startup_stm32f411xe.o(STACK)
 
 
 
@@ -1748,9 +1748,9 @@ Memory Map of the image
 
   Image Entry point : 0x08000199
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x00003238, Max: 0x00080000, ABSOLUTE)
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000323c, Max: 0x00080000, ABSOLUTE)
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000031d8, Max: 0x00080000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x000031dc, Max: 0x00080000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -1894,27 +1894,27 @@ Memory Map of the image
     0x08002378   0x08002378   0x00000070   Code   RO         2632    i.display_escribir  main.o
     0x080023e8   0x080023e8   0x0000001c   Code   RO         2776    i.display_rs        lcd_txt.o
     0x08002404   0x08002404   0x00000148   Code   RO         2634    i.encuesta_teclado  main.o
-    0x0800254c   0x0800254c   0x00000080   Code   RO         2635    i.flash_cargar_operarios  main.o
-    0x080025cc   0x080025cc   0x0000009c   Code   RO         2636    i.flash_guardar_operarios  main.o
-    0x08002668   0x08002668   0x000001e0   Code   RO         2637    i.introducir_texto  main.o
-    0x08002848   0x08002848   0x00000960   Code   RO         2638    i.main              main.o
-    0x080031a8   0x080031a8   0x00000010   Data   RO         2437    .constdata          system_stm32f4xx.o
-    0x080031b8   0x080031b8   0x00000020   Data   RO         3352    Region$$Table       anon$$obj.o
+    0x0800254c   0x0800254c   0x0000008c   Code   RO         2635    i.flash_cargar_operarios  main.o
+    0x080025d8   0x080025d8   0x0000009c   Code   RO         2636    i.flash_guardar_operarios  main.o
+    0x08002674   0x08002674   0x000001e0   Code   RO         2637    i.introducir_texto  main.o
+    0x08002854   0x08002854   0x00000958   Code   RO         2638    i.main              main.o
+    0x080031ac   0x080031ac   0x00000010   Data   RO         2437    .constdata          system_stm32f4xx.o
+    0x080031bc   0x080031bc   0x00000020   Data   RO         3352    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080031d8, Size: 0x00000aa0, Max: 0x00020000, ABSOLUTE)
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x080031dc, Size: 0x00000aa8, Max: 0x00020000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
-    0x20000000   0x080031d8   0x0000000c   Data   RW         1930    .data               stm32f4xx_hal.o
-    0x2000000c   0x080031e4   0x00000004   Data   RW         2439    .data               system_stm32f4xx.o
-    0x20000010   0x080031e8   0x00000046   Data   RW         2643    .data               main.o
-    0x20000056   0x0800322e   0x00000002   PAD
-    0x20000058   0x08003230   0x00000008   Data   RW         3009    .data               my_flash.o
+    0x20000000   0x080031dc   0x0000000c   Data   RW         1930    .data               stm32f4xx_hal.o
+    0x2000000c   0x080031e8   0x00000004   Data   RW         2439    .data               system_stm32f4xx.o
+    0x20000010   0x080031ec   0x00000046   Data   RW         2643    .data               main.o
+    0x20000056   0x08003232   0x00000002   PAD
+    0x20000058   0x08003234   0x00000008   Data   RW         3009    .data               my_flash.o
     0x20000060        -       0x00000020   Zero   RW         1357    .bss                stm32f4xx_hal_flash.o
-    0x20000080        -       0x0000061d   Zero   RW         2639    .bss                main.o
-    0x2000069d   0x08003238   0x00000003   PAD
-    0x200006a0        -       0x00000400   Zero   RW            1    STACK               startup_stm32f411xe.o
+    0x20000080        -       0x00000624   Zero   RW         2639    .bss                main.o
+    0x200006a4   0x0800323c   0x00000004   PAD
+    0x200006a8        -       0x00000400   Zero   RW            1    STACK               startup_stm32f411xe.o
 
 
 ==============================================================================
@@ -1925,7 +1925,7 @@ Image component sizes
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
        658         22          0          0          0       8262   lcd_txt.o
-      4682        814          0         70       1565      16567   main.o
+      4686        814          0         70       1572      16563   main.o
        240         16          0          8          0       3501   my_flash.o
        890         12          0          0          0      11726   rc522.o
         36          8        408          0       1024        892   startup_stm32f411xe.o
@@ -1943,9 +1943,9 @@ Image component sizes
         84         18         16          4          0       1327   system_stm32f4xx.o
 
     ----------------------------------------------------------------------
-     11448       1176        456         96       2624     535316   Object Totals
+     11452       1176        456         96       2632     535312   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-         6          0          0          2          3          0   (incl. Padding)
+         6          0          0          2          4          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -1986,15 +1986,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     12304       1202        456         96       2624     524760   Grand Totals
-     12304       1202        456         96       2624     524760   ELF Image Totals
-     12304       1202        456         96          0          0   ROM Totals
+     12308       1202        456         96       2632     524756   Grand Totals
+     12308       1202        456         96       2632     524756   ELF Image Totals
+     12308       1202        456         96          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                12760 (  12.46kB)
-    Total RW  Size (RW Data + ZI Data)              2720 (   2.66kB)
-    Total ROM Size (Code + RO Data + RW Data)      12856 (  12.55kB)
+    Total RO  Size (Code + RO Data)                12764 (  12.46kB)
+    Total RW  Size (RW Data + ZI Data)              2728 (   2.66kB)
+    Total ROM Size (Code + RO Data + RW Data)      12860 (  12.56kB)
 
 ==============================================================================
 

@@ -118,9 +118,9 @@ char escribir[640];
 //-----------------------
 
 struct Operario{
-	short condicion; 		//Si condición==0, el operario NO está cargado.
-											//Si condición==1, el operario SI está cargado pero NO es master.
-											//Si condición==2, el operario SI está cargado y SI es master.
+	short condicion; 		//Si condiciï¿½n==0, el operario NO estï¿½ cargado.
+											//Si condiciï¿½n==1, el operario SI estï¿½ cargado pero NO es master.
+											//Si condiciï¿½n==2, el operario SI estï¿½ cargado y SI es master.
 	char nombre[9];
 	char id[5];
 	int golpes;
@@ -701,7 +701,7 @@ int main(void)
 					}
 					break; //Sale de switch(boton)
 					
-				case b_Salir: //Acá tengo que reinicializar todos los flags que levante en el desarrollo
+				case b_Salir: //Acï¿½ tengo que reinicializar todos los flags que levante en el desarrollo
 					instancia=Inicio;
 					display_escribir("0.INICIO", "");
 					break; //Sale de switch(boton)
@@ -1174,28 +1174,28 @@ void delayus_block(int n){
 
 void encuesta_teclado(void){
 	
-	//Prendo la Columna 1, veo si se activó alguna entrada y luego la apago.
+	//Prendo la Columna 1, veo si se activï¿½ alguna entrada y luego la apago.
 		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_SET);
 		tecla[0]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
 		tecla[4]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
 		tecla[8]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
 		tecla[12]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
 		HAL_GPIO_WritePin(Teclado_C1_GPIO_Port, Teclado_C1_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		//Prendo la Columna 2, veo si se activï¿½ alguna entrada y luego la apago.
 		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_SET);
 		tecla[1]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
 		tecla[5]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
 		tecla[9]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
 		tecla[13]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
 		HAL_GPIO_WritePin(Teclado_C2_GPIO_Port, Teclado_C2_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 3, veo si se activó alguna entrada y luego la apago.
+		//Prendo la Columna 3, veo si se activï¿½ alguna entrada y luego la apago.
 		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_SET);
 		tecla[2]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
 		tecla[6]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
 		tecla[10]= 	HAL_GPIO_ReadPin(Teclado_F3_GPIO_Port, Teclado_F3_Pin);
 		tecla[14]= 	HAL_GPIO_ReadPin(Teclado_F4_GPIO_Port, Teclado_F4_Pin);
 		HAL_GPIO_WritePin(Teclado_C3_GPIO_Port, Teclado_C3_Pin, GPIO_PIN_RESET);
-		//Prendo la Columna 2, veo si se activó alguna entrada y luego la apago.
+		//Prendo la Columna 2, veo si se activï¿½ alguna entrada y luego la apago.
 		HAL_GPIO_WritePin(Teclado_C4_GPIO_Port, Teclado_C4_Pin, GPIO_PIN_SET);
 		tecla[3]= 	HAL_GPIO_ReadPin(Teclado_F1_GPIO_Port, Teclado_F1_Pin);
 		tecla[7]= 	HAL_GPIO_ReadPin(Teclado_F2_GPIO_Port, Teclado_F2_Pin);
@@ -1220,20 +1220,20 @@ void display_escribir(char* linea1, char* linea2){
 	char l1[17];
 	char l2[17];
 
-	//Inicialización de l1 y l2. Acá lleno 16 caracteres de espacios.
+	//Inicializaciï¿½n de l1 y l2. Acï¿½ lleno 16 caracteres de espacios.
 	for (i = 0; i < 16; i++) {
 		sprintf(&l1[i], " ");
 		sprintf(&l2[i], " ");
 	}
-	//Relleno de l1. Acá lleno l1 con los caracteres que haya escrito como primer parámetro y dejo el resto como estaba (espacios).
+	//Relleno de l1. Acï¿½ lleno l1 con los caracteres que haya escrito como primer parï¿½metro y dejo el resto como estaba (espacios).
 	i = 0;
-	while(linea1[i]){						//Acá pregunto: "Si el caracter i de linea1 es un caracter..." En lugar de un End Of String.
+	while(linea1[i]){						//Acï¿½ pregunto: "Si el caracter i de linea1 es un caracter..." En lugar de un End Of String.
 			l1[i] = linea1[i];
 			i++;
 		}
-	//Relleno de l2. Acá lleno l2 con los caracteres que haya escrito como segundo parámetro y dejo el resto como estaba (espacios).
+	//Relleno de l2. Acï¿½ lleno l2 con los caracteres que haya escrito como segundo parï¿½metro y dejo el resto como estaba (espacios).
 	i = 0;
-	while (linea2[i]) {						//Acá pregunto: "Si el caracter i de linea2 es un caracter..." En lugar de un End Of String.
+	while (linea2[i]) {						//Acï¿½ pregunto: "Si el caracter i de linea2 es un caracter..." En lugar de un End Of String.
 			l2[i] = linea2[i];
 			i++;
 		}
@@ -1245,7 +1245,7 @@ void display_escribir(char* linea1, char* linea2){
 	LCD_String(l2);
 
 }
-//Esto anda re piola, pero cada vez que pulsas el botón toma como 300 pulsaciones.
+//Esto anda re piola, pero cada vez que pulsas el botï¿½n toma como 300 pulsaciones.
 //Esto anda re piola, lo de arriba ya no pasa.
 
 void introducir_texto(void){

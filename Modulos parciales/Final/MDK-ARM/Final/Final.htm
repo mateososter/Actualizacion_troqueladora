@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Final\Final.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Final\Final.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sun Dec 01 14:40:42 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Dec 12 18:18:38 2019
 <BR><P>
 <H3>Maximum Stack Usage =        224 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -367,8 +367,8 @@ Global Symbols
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_CursorOff
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
 <LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_cargar_operarios
 </UL>
 
@@ -721,7 +721,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Command
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
 </UL>
 
 <P><STRONG><a name="[85]"></a>LCD_Data</STRONG> (Thumb, 62 bytes, Stack size 8 bytes, lcd_txt.o(i.LCD_Data))
@@ -742,7 +742,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Data
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<BR>[Called By]<UL><LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
 </UL>
 
 <P><STRONG><a name="[87]"></a>LCD_SetPos</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, lcd_txt.o(i.LCD_SetPos))
@@ -752,7 +752,7 @@ Global Symbols
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Command
 </UL>
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;display_escribir
 </UL>
 
@@ -930,14 +930,14 @@ Global Symbols
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MFRC522_Init
 </UL>
 
-<P><STRONG><a name="[b1]"></a>MY_FLASH_ReadN</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, my_flash.o(i.MY_FLASH_ReadN))
+<P><STRONG><a name="[b2]"></a>MY_FLASH_ReadN</STRONG> (Thumb, 74 bytes, Stack size 8 bytes, my_flash.o(i.MY_FLASH_ReadN))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = MY_FLASH_ReadN
 </UL>
 <BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_cargar_operarios
 </UL>
 
-<P><STRONG><a name="[b4]"></a>MY_FLASH_SetSectorAddrs</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, my_flash.o(i.MY_FLASH_SetSectorAddrs))
-<BR><BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
+<P><STRONG><a name="[b1]"></a>MY_FLASH_SetSectorAddrs</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, my_flash.o(i.MY_FLASH_SetSectorAddrs))
+<BR><BR>[Called By]<UL><LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_cargar_operarios
 </UL>
 
 <P><STRONG><a name="[a0]"></a>MY_FLASH_WriteN</STRONG> (Thumb, 142 bytes, Stack size 24 bytes, my_flash.o(i.MY_FLASH_WriteN))
@@ -948,7 +948,7 @@ Global Symbols
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Program
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_FLASH_Lock
 </UL>
-<BR>[Called By]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
+<BR>[Called By]<UL><LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
 </UL>
 
 <P><STRONG><a name="[3]"></a>MemManage_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f4xx_it.o(i.MemManage_Handler))
@@ -1056,7 +1056,7 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = __2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;display_escribir
 </UL>
 
@@ -1107,7 +1107,7 @@ Global Symbols
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
 </UL>
 
 <P><STRONG><a name="[7f]"></a>display_rs</STRONG> (Thumb, 22 bytes, Stack size 0 bytes, lcd_txt.o(i.display_rs))
@@ -1125,36 +1125,37 @@ Global Symbols
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_ReadPin
 </UL>
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
 </UL>
 
-<P><STRONG><a name="[b0]"></a>flash_cargar_operarios</STRONG> (Thumb, 122 bytes, Stack size 24 bytes, main.o(i.flash_cargar_operarios))
+<P><STRONG><a name="[b0]"></a>flash_cargar_operarios</STRONG> (Thumb, 130 bytes, Stack size 24 bytes, main.o(i.flash_cargar_operarios))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = flash_cargar_operarios &rArr; HAL_Delay
 </UL>
 <BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_FLASH_ReadN
+<LI><a href="#[b1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_FLASH_SetSectorAddrs
+<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_FLASH_ReadN
 </UL>
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[b2]"></a>flash_guardar_operarios</STRONG> (Thumb, 146 bytes, Stack size 24 bytes, main.o(i.flash_guardar_operarios))
+<P><STRONG><a name="[b3]"></a>flash_guardar_operarios</STRONG> (Thumb, 146 bytes, Stack size 24 bytes, main.o(i.flash_guardar_operarios))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = flash_guardar_operarios &rArr; MY_FLASH_WriteN &rArr; HAL_FLASH_Program &rArr; FLASH_WaitForLastOperation
 </UL>
 <BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_FLASH_WriteN
 </UL>
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
 </UL>
 
-<P><STRONG><a name="[b3]"></a>introducir_texto</STRONG> (Thumb, 374 bytes, Stack size 104 bytes, main.o(i.introducir_texto))
+<P><STRONG><a name="[b4]"></a>introducir_texto</STRONG> (Thumb, 374 bytes, Stack size 104 bytes, main.o(i.introducir_texto))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = introducir_texto &rArr; display_escribir &rArr; LCD_SetPos &rArr; LCD_Command &rArr; delayus_block &rArr; HAL_TIM_Base_Init &rArr; HAL_TIM_Base_MspInit &rArr; HAL_NVIC_SetPriority
 </UL>
 <BR>[Calls]<UL><LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPos
 <LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SendChar
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_CursorOn
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;encuesta_teclado
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;display_escribir
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__2sprintf
@@ -1162,13 +1163,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[43]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 2196 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[43]"></a>main</STRONG> (Thumb, 2188 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 224<LI>Call Chain = main &rArr; MFRC522_Check &rArr; MFRC522_Request &rArr; MFRC522_ToCard &rArr; MFRC522_SetBitMask &rArr; MFRC522_WriteRegister &rArr; SPI1_WriteReg &rArr; SPI1SendByte &rArr; HAL_SPI_TransmitReceive &rArr; SPI_CheckFlag_BSY &rArr; SPI_WaitFlagStateUntilTimeout
 </UL>
 <BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GPIO_WritePin
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[59]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
-<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MY_FLASH_SetSectorAddrs
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MFRC522_Init
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MFRC522_Compare
 <LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MFRC522_Check
@@ -1176,8 +1176,8 @@ Global Symbols
 <LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_SetPos
 <LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_CursorOff
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LCD_Clear
-<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
+<LI><a href="#[b4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;introducir_texto
+<LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_guardar_operarios
 <LI><a href="#[b0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;flash_cargar_operarios
 <LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;encuesta_teclado
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;display_escribir
