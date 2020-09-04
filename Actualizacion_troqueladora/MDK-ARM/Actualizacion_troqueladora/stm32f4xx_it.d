@@ -30,4 +30,5 @@ actualizacion_troqueladora\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/s
 actualizacion_troqueladora\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h
 actualizacion_troqueladora\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h
 actualizacion_troqueladora\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h
+actualizacion_troqueladora\stm32f4xx_it.o: ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
 actualizacion_troqueladora\stm32f4xx_it.o: ../Inc/stm32f4xx_it.h
